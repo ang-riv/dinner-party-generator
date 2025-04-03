@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";
+
+h1 {
+  font-family: "Fleur De Leah", cursive;
+}
