@@ -1,3 +1,4 @@
+import { p } from "motion/react-client";
 import React, { useState, useEffect } from "react";
 
 // ? courses = main categories, dishes = individual dishes within those categories
@@ -21,9 +22,9 @@ function App() {
   for (let i = 1; i <= 10; i++) numOptions.push(i);
 
   // * num of dishes per course + button handlers for numOfDishes
-  const dishCounters = courses.map((course, index) => ({
+  const dishCounters = courses.map((course) => ({
     title: course,
-    counter: numOfDishes[index],
+    counter: numOfDishes[course],
   }));
 
   const handleAdd = (course) => {
@@ -45,7 +46,9 @@ function App() {
     0
   );
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // disable subtract btns to not go into negatives
+  }, []);
 
   // * food restrictions
   const [foodRestrictions, setFoodRestrictions] = useState([]);
@@ -73,27 +76,32 @@ function App() {
           ))}
         </select>
         <p className="text-center">How many dishes per course?</p>
-        <div className="flex flex-col w-full h-28">
-          <div className="flex justify-between">
-            <p>Title</p>
-            <div className="flex items-baseline">
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => handleAdd("Appetizers")}
-              >
-                +
-              </button>
-              <p className="mx-1">
-                {numOfDishes.Appetizers}/{guestNum}
-              </p>
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => handleSubtract("Appetizers")}
-              >
-                -
-              </button>
+        {dishCounters.map((course) => course.counter)}
+        <div className="flex flex-col w-full h-fit">
+          {dishCounters.map((course) => (
+            <div className="flex justify-between">
+              <p>{course.title}</p>
+              <div className="flex items-baseline">
+                <button
+                  className="btn btn-xs btn-primary"
+                  onClick={() => handleAdd(course.title)}
+                  disabled={totalDishes >= guestNum}
+                >
+                  +
+                </button>
+                <p className="mx-1">
+                  {numOfDishes[course.title]}/{guestNum}
+                </p>
+                <button
+                  className="btn btn-xs btn-primary"
+                  onClick={() => handleSubtract(course.title)}
+                  disabled={numOfDishes[course.title] === 0}
+                >
+                  -
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
       {/* GUEST INFO */}
