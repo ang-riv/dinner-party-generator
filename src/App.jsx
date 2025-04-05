@@ -1,5 +1,4 @@
-import { p } from "motion/react-client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // ? courses = main categories, dishes = individual dishes within those categories
 function App() {
@@ -16,6 +15,7 @@ function App() {
   );
   const [guests, setGuests] = useState([]);
   const [guestName, setGuestName] = useState("");
+  const nameRef = useRef(null);
 
   // * select number options
   const numOptions = [];
@@ -50,9 +50,29 @@ function App() {
     // disable subtract btns to not go into negatives
   }, []);
 
+  //* add new guest
+  const handleNewGuest = () => {
+    setGuests([...guests, { name: guestName, preference: "", recipe: "" }]);
+    if (nameRef.current) nameRef.current.value = "";
+  };
+
+  //* guest preference
+  const handlePref = (e, guestName) => {
+    setGuests((prevGuests) =>
+      prevGuests.map((guest) =>
+        guest.name === guestName ? { ...guest, preference: e } : guest
+      )
+    );
+  };
+
+  const handleRemoveGuest = (guestName) => {
+    const updatedArr = guests.filter((guest) => guest.name != guestName);
+    setGuests(updatedArr);
+  };
   // * food restrictions
   const [foodRestrictions, setFoodRestrictions] = useState([]);
   const [restrictionName, setRestrictionName] = useState("");
+  // console.log(guests);
   return (
     <>
       <div className="prose">
@@ -61,25 +81,32 @@ function App() {
       {/* PARTY INFO */}
       <div className="border border-red-300 prose">
         <h2 className="text-center">Party Info</h2>
-        <p>Functionality Goals: </p>
+        <p>
+          Functionality Goals: get the number of guests (therefore the number of
+          dishes that will be made), and let the user divide that number into
+          the courses they want
+        </p>
         <h3 className="text-center">
           Guests Cooking/number of dishes: {guestNum}
         </h3>
         <select
-          defaultValue="Select number of guests..."
+          defaultValue="0"
           className="select select-primary"
           onChange={(e) => setGuestNum(e.target.value)}
         >
-          <option disabled={true}>Select number of guests...</option>
+          <option disabled={true} value={0} key={0}>
+            Select number of guests...
+          </option>
           {numOptions.map((num) => (
-            <option value={num}>{num}</option>
+            <option key={num} value={num}>
+              {num}
+            </option>
           ))}
         </select>
         <p className="text-center">How many dishes per course?</p>
-        {dishCounters.map((course) => course.counter)}
         <div className="flex flex-col w-full h-fit">
           {dishCounters.map((course) => (
-            <div className="flex justify-between">
+            <div className="flex justify-between" key={course.title}>
               <p>{course.title}</p>
               <div className="flex items-baseline">
                 <button
@@ -107,7 +134,66 @@ function App() {
       {/* GUEST INFO */}
       <div className="border border-orange-300 prose">
         <h2 className="text-center">Guest Info</h2>
-        <p>Functionality Goals: </p>
+        <p>
+          Functionality Goals: gather names of the guests and their preference
+          of what course they want
+        </p>
+        <div className="w-full h-fit border border-purple-300 flex flex-col justify-center items-center">
+          <h2>Guest Names</h2>
+          <input
+            ref={nameRef}
+            type="input"
+            className="input validator join-item"
+            placeholder="Enter Guest Name..."
+            spellCheck={false}
+            pattern="[A-Za-z]*"
+            minLength="3"
+            maxLength="30"
+            title="letters only"
+            onChange={(e) => setGuestName(e.target.value)}
+            onKeyDown={(e) => (e.key === "Enter" ? handleNewGuest() : null)}
+          />
+          <div className="validator-hint hidden">
+            <p className="">Name must be 3 to 30 characters with no numbers</p>
+          </div>
+          <button className="btn btn-primary" onClick={handleNewGuest}>
+            +Add
+          </button>
+          <div className="w-full h-fit flex justify-between">
+            <p>Name</p>
+            <p>Preference</p>
+          </div>
+          <div className="bg-orange-200 w-full h-36 flex flex-col">
+            {guests.map((guest) => (
+              <div className="flex justify-between items-baseline">
+                <div className="flex items-center">
+                  <button
+                    className="btn btn-primary btn-xs mr-1"
+                    onClick={() => handleRemoveGuest(guest.name)}
+                  >
+                    X
+                  </button>
+                  <p className="text-black font-semibold">{guest.name}</p>
+                </div>
+
+                <select
+                  className="select select-primary select-md w-[50%]"
+                  onChange={(e) => handlePref(e.target.value, guest.name)}
+                  defaultValue="Any"
+                >
+                  <option key="Any" value="Any">
+                    Any
+                  </option>
+                  {courses.map((course) => (
+                    <option key={course} value={course}>
+                      {course}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       {/* RESTRICTIONS */}
       <div className="border border-blue-300 prose">
