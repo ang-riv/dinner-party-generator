@@ -1,3 +1,4 @@
+import { div, li } from "motion/react-client";
 import React, { useState, useEffect, useRef } from "react";
 
 // ? courses = main categories, dishes = individual dishes within those categories
@@ -53,7 +54,7 @@ function App() {
 
   //* add new guest
   const handleNewGuest = () => {
-    setGuests([...guests, { name: guestName, preference: "", recipe: "" }]);
+    setGuests([...guests, { name: guestName, preference: "Any", recipe: "" }]);
     if (nameRef.current) nameRef.current.value = "";
   };
 
@@ -204,7 +205,6 @@ function App() {
                 <select
                   className="select select-primary select-md w-[50%]"
                   onChange={(e) => handlePref(e.target.value, guest.name)}
-                  defaultValue="Any"
                 >
                   <option key="Any" value="Any">
                     Any
@@ -292,7 +292,33 @@ function App() {
       {/* CONFIRMATION */}
       <div className="border border-green-300 prose">
         <h2 className="text-center">Confirm Info</h2>
-        <p>Functionality Goals: </p>
+        <p>
+          Functionality Goals: Display all of the gathered information to let
+          the user confirm is everything is correct before making the API call.
+        </p>
+        <h3 className="text-center">Guest List</h3>
+        <div className="flex flex-col w-full h-fit">
+          {guests.map((guest) => (
+            <div className="flex justify-between">
+              <p>{guest.name}</p>
+              <p>{guest.preference}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-center font-semibold">
+          Total Number of Guests Attending: {guests.length}
+        </p>
+        <p className="text-center">
+          Dietary Restrictions, Allergies, and Dislikes:
+        </p>
+        {/* options: ✧ ➤ ➢ ➺*/}
+        <ul className="list-none p-0 m-0">
+          {foodRestrictions.map((foodItem) => (
+            <li className="before:content-['✧'] before:pr-3" key={foodItem}>
+              {foodItem}
+            </li>
+          ))}
+        </ul>
       </div>
       {/* MENU */}
       <div className="border border-purple-300 prose">
