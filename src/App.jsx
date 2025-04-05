@@ -236,7 +236,7 @@ function App() {
           <h3 className="text-center">Dietary Restrictions</h3>
           <div className="flex flex-wrap">
             {diets.map((diet) => (
-              <label className=" w-1/2">
+              <label key={diet} className="w-1/2">
                 <input
                   className="checkbox checkbox-primary mr-2"
                   type="checkbox"
@@ -308,6 +308,14 @@ function App() {
         <p className="text-center font-semibold">
           Total Number of Guests Attending: {guests.length}
         </p>
+        <h4 className="text-center">Dishes per Course</h4>
+        <div className="flex">
+          {courses.map((course) => (
+            <p>
+              {course}: {numOfDishes[course]}
+            </p>
+          ))}
+        </div>
         <p className="text-center">
           Dietary Restrictions, Allergies, and Dislikes:
         </p>
