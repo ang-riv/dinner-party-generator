@@ -16,6 +16,7 @@ function App() {
   const [guests, setGuests] = useState([]);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
+  const restrictionRef = useRef(null);
 
   // * select number options
   const numOptions = [];
@@ -72,7 +73,26 @@ function App() {
   // * food restrictions
   const [foodRestrictions, setFoodRestrictions] = useState([]);
   const [restrictionName, setRestrictionName] = useState("");
+  const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
   // console.log(guests);
+  const handleRestrictions = () => {
+    setFoodRestrictions([...foodRestrictions, restrictionName]);
+    if (restrictionRef.current) restrictionRef.current.value = "";
+  };
+
+  const handleRemove = (foodItem) => {
+    const updatedArr = foodRestrictions.filter((food) => food != foodItem);
+    setFoodRestrictions(updatedArr);
+  };
+
+  const handleDiet = (e) => {
+    if (e.target.checked === true) {
+      setFoodRestrictions([...foodRestrictions, e.target.value]);
+    } else {
+      const newArr = foodRestrictions.filter((item) => item != e.target.value);
+      setFoodRestrictions(newArr);
+    }
+  };
   return (
     <>
       <div className="prose">
@@ -206,7 +226,68 @@ function App() {
       {/* RESTRICTIONS */}
       <div className="border border-blue-300 prose">
         <h2 className="text-center">Restriction Info</h2>
-        <p>Functionality Goals: </p>
+        <p>
+          Functionality Goals: Gather any food restrictions from diet,
+          allergies, dislikes. Use API to check if it is a real food (or at
+          least a real word).
+        </p>
+        {/* diet */}
+        <div className="">
+          <h3 className="text-center">Dietary Restrictions</h3>
+          <div className="flex flex-wrap">
+            {diets.map((diet) => (
+              <label className=" w-1/2">
+                <input
+                  className="checkbox checkbox-primary mr-2"
+                  type="checkbox"
+                  id={diet}
+                  value={diet}
+                  onChange={(e) => handleDiet(e)}
+                />
+                {diet}
+              </label>
+            ))}
+          </div>
+
+          {/* allergies/dislikes */}
+          <div>
+            <h3 className="text-center">Allergies/Dislikes</h3>
+            <div className="w-full flex flex-wrap justify-center">
+              <div className="join">
+                <input
+                  ref={restrictionRef}
+                  className="input join-item"
+                  type="text"
+                  id=""
+                  minLength="3"
+                  maxLength="30"
+                  placeholder="Enter food item..."
+                  pattern="[A-Za-z]*"
+                  onChange={(e) => setRestrictionName(e.target.value)}
+                />
+                <button
+                  className="btn btn-primary join-item"
+                  onClick={handleRestrictions}
+                >
+                  +Add
+                </button>
+              </div>
+              <div className="w-8/12 h-60 bg-primary">
+                {foodRestrictions.map((foodItem) => (
+                  <div className="flex items-center">
+                    <button
+                      className="btn btn-secondary btn-sm mr-2"
+                      onClick={() => handleRemove(foodItem)}
+                    >
+                      X
+                    </button>
+                    <p>{foodItem}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {/* CONFIRMATION */}
       <div className="border border-green-300 prose">
