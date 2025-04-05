@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 function App() {
   // * guest info
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
-  const [guestNum, setGuestNum] = useState(0);
+  const [guestNum, setGuestNum] = useState(null);
 
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(
@@ -152,11 +152,16 @@ function App() {
             title="letters only"
             onChange={(e) => setGuestName(e.target.value)}
             onKeyDown={(e) => (e.key === "Enter" ? handleNewGuest() : null)}
+            disabled={guests.length >= guestNum}
           />
           <div className="validator-hint hidden">
             <p className="">Name must be 3 to 30 characters with no numbers</p>
           </div>
-          <button className="btn btn-primary" onClick={handleNewGuest}>
+          <button
+            className="btn btn-primary"
+            onClick={handleNewGuest}
+            disabled={guests.length >= guestNum}
+          >
             +Add
           </button>
           <div className="w-full h-fit flex justify-between">
@@ -193,6 +198,9 @@ function App() {
               </div>
             ))}
           </div>
+          <p>
+            Total number of guests: {guests.length}/{guestNum}
+          </p>
         </div>
       </div>
       {/* RESTRICTIONS */}
