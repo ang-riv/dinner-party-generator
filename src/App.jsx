@@ -18,6 +18,7 @@ function App() {
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
   const restrictionRef = useRef(null);
+  const restrictionArrRef = useRef([]);
 
   // * select number options
   const numOptions = [];
@@ -47,10 +48,64 @@ function App() {
     (acc, value) => acc + value,
     0
   );
+  // * food restrictions
+  const [foodRestrictions, setFoodRestrictions] = useState([]);
+  const [restrictionName, setRestrictionName] = useState("");
+  const [searchFood, setSearchFood] = useState("");
+  const [foodError, setFoodError] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
 
+  //* API - search foodItem and get random dishes
+  const [getDishes, setGetDishes] = useState(false);
+  const [assign, setAssign] = useState(false);
   useEffect(() => {
-    // disable subtract btns to not go into negatives
-  }, []);
+    // * search foodItem
+    const searchIngredient = async (ingredient) => {
+      const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(
+        ingredient
+      )}&search_simple=1&json=1`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("API request failed");
+
+        const data = await response.json();
+
+        // if it is a food
+        if (data.products.length > 0) {
+          setFoodRestrictions([...foodRestrictions, ingredient]);
+          console.log("is a food item!");
+        } else {
+          // if not
+          setFoodError(true);
+          console.log("Not a food item!");
+        }
+      } catch (error) {
+        console.log("Error fetching ingredient:", error);
+      }
+
+      // clear everything
+      setRestrictionName("");
+      setSearchFood("");
+      if (restrictionRef.current) {
+        restrictionRef.current.value = "";
+      }
+    };
+
+    if (searchFood != "") {
+      searchIngredient(searchFood);
+    }
+
+    if (foodError && isFocused) {
+      setFoodError(false);
+    }
+    // * get and assign
+    if (getDishes) {
+    }
+    if (assign) {
+    }
+  }, [getDishes, assign, searchFood, foodError, isFocused]);
 
   //* add new guest
   const handleNewGuest = () => {
@@ -71,11 +126,8 @@ function App() {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
   };
+
   // * food restrictions
-  const [foodRestrictions, setFoodRestrictions] = useState([]);
-  const [restrictionName, setRestrictionName] = useState("");
-  const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
-  // console.log(guests);
   const handleRestrictions = () => {
     setFoodRestrictions([...foodRestrictions, restrictionName]);
     if (restrictionRef.current) restrictionRef.current.value = "";
@@ -258,7 +310,8 @@ function App() {
                   ref={restrictionRef}
                   className="input join-item"
                   type="text"
-                  id=""
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                   minLength="3"
                   maxLength="30"
                   placeholder="Enter food item..."
@@ -267,10 +320,16 @@ function App() {
                 />
                 <button
                   className="btn btn-primary join-item"
-                  onClick={handleRestrictions}
+                  onClick={() => setSearchFood(restrictionName)}
                 >
                   +Add
                 </button>
+              </div>
+              <div
+                className="w-65 h-fit border border-primary"
+                hidden={foodError ? false : true}
+              >
+                <p>Not a food item!</p>
               </div>
               <div className="w-8/12 h-60 bg-primary">
                 {foodRestrictions.map((foodItem) => (
@@ -331,7 +390,22 @@ function App() {
       {/* MENU */}
       <div className="border border-purple-300 prose">
         <h2 className="text-center">Menu Info</h2>
-        <p>Functionality Goals: </p>
+        <p>
+          Functionality Goals: Using the spoonacular API, retrieve the random
+          recipes depending on the courses listed and the diet restrictions.
+        </p>
+        <div className="flex justify-around">
+          <button
+            className="btn btn-primary"
+            onClick={() => setGetDishes(true)}
+          >
+            Fetch Dishes
+          </button>
+          <button className="btn btn-secondary" onClick={() => setAssign(true)}>
+            Assign Dishes
+          </button>
+        </div>
+        <div className="flex flex-wrap w-full h-72 border border-blue-300"></div>
       </div>
     </>
   );
