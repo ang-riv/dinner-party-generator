@@ -100,6 +100,9 @@ function App() {
     if (foodError && isFocused) {
       setFoodError(false);
     }
+
+    // * fetch dishes
+    const fetchDishes = async();
     // * get and assign
     if (getDishes) {
     }
