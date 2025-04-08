@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 
 // ? courses = main categories, dishes = individual dishes within those categories
 function App() {
+  // * API
+  const apiKey = import.meta.env.VITE_APP_SPOONACULAR_KEY;
   // * guest info
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
   const [guestNum, setGuestNum] = useState(null);
@@ -14,6 +16,9 @@ function App() {
       return acc;
     }, {})
   );
+  // filter just in case they don't want specific categories
+  const filteredCourses = courses.filter((course) => numOfDishes[course] != 0);
+  //console.log(numOfDishes[filteredCourses[0]]);
   const [guests, setGuests] = useState([]);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
@@ -58,6 +63,7 @@ function App() {
 
   //* API - search foodItem and get random dishes
   const [getDishes, setGetDishes] = useState(false);
+  const [dishes, setDishes] = useState({});
   const [assign, setAssign] = useState(false);
   useEffect(() => {
     // * search foodItem
@@ -102,9 +108,25 @@ function App() {
     }
 
     // * fetch dishes
-    const fetchDishes = async();
+    const fetchDishes = async (course) => {
+      const specificCourse = course.toLowerCase();
+      const num = numOfDishes[course];
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/complexSearch?&apiKey=${apiKey}&type=${specificCourse}&number=${num}`
+      );
+      const data = await response.json();
+      let result = data.results.map((dish) => ({
+        title: dish.title,
+        sourceUrl: dish.sourceUrl,
+        image: dish.image,
+      }));
+      console.log(result);
+      setDishes(result);
+      setGetDishes(false);
+    };
     // * get and assign
     if (getDishes) {
+      fetchDishes(courses[0]);
     }
     if (assign) {
     }
