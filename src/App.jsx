@@ -55,6 +55,8 @@ function App() {
   // * food restrictions
   const [foodRestrictions, setFoodRestrictions] = useState([]);
   const [restrictionName, setRestrictionName] = useState("");
+  const [dietRestrictions, setDietRestrictions] = useState([]);
+
   const [searchFood, setSearchFood] = useState("");
   const [foodError, setFoodError] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -111,11 +113,20 @@ function App() {
       let specificCourse = "";
       if (course != "Entrees") specificCourse = course.toLowerCase();
       else specificCourse = "main course";
-
       const num = numOfDishes[course];
-      const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?&apiKey=${apiKey}&type=${specificCourse}&number=${num}`
-      );
+      const dietUrl =
+        dietRestrictions && dietRestrictions.length > 0
+          ? `diet=${dietRestrictions.toString()}`
+          : "";
+      const foodUrl =
+        foodRestrictions && foodRestrictions.length > 0
+          ? `excludeIngredients=${foodRestrictions.toString()}`
+          : "";
+      const mainUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&type=${specificCourse}&number=${num}${
+        dietRestrictions && dietRestrictions.length > 0 ? `&${dietUrl}` : ""
+      }${foodRestrictions && foodRestrictions.length > 0 ? `&${foodUrl}` : ""}`;
+
+      const response = await fetch(mainUrl);
       const data = await response.json();
       let result = data.results.map((dish) => ({
         title: dish.title,
@@ -126,12 +137,12 @@ function App() {
     };
     // * fetch for each course that isn't 0
     const fetchAll = async () => {
-      const getRecipes = filteredCourses.map((course) => fetchDishes(course));
-      const dishes = await Promise.all(getRecipes);
+      const fetchCourses = filteredCourses.map((course) => fetchDishes(course));
+      const dishes = await Promise.all(fetchCourses);
       setDishes(dishes.flat());
       setGetDishes(false);
     };
-    // * get and assign
+    // * get dishes
     getDishes && fetchAll();
 
     if (assign) {
@@ -159,11 +170,6 @@ function App() {
   };
 
   // * food restrictions
-  const handleRestrictions = () => {
-    setFoodRestrictions([...foodRestrictions, restrictionName]);
-    if (restrictionRef.current) restrictionRef.current.value = "";
-  };
-
   const handleRemove = (foodItem) => {
     const updatedArr = foodRestrictions.filter((food) => food != foodItem);
     setFoodRestrictions(updatedArr);
@@ -171,10 +177,10 @@ function App() {
 
   const handleDiet = (e) => {
     if (e.target.checked === true) {
-      setFoodRestrictions([...foodRestrictions, e.target.value]);
+      setDietRestrictions([...dietRestrictions, e.target.value]);
     } else {
       const newArr = foodRestrictions.filter((item) => item != e.target.value);
-      setFoodRestrictions(newArr);
+      setDietRestrictions(newArr);
     }
   };
   return (
@@ -371,6 +377,13 @@ function App() {
                     >
                       X
                     </button>
+                    <p>{foodItem}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="w-8/12 h-30 bg-secondary">
+                {dietRestrictions.map((foodItem) => (
+                  <div className="flex items-center">
                     <p>{foodItem}</p>
                   </div>
                 ))}
