@@ -18,7 +18,6 @@ function App() {
   );
   // filter just in case they don't want specific categories
   const filteredCourses = courses.filter((course) => numOfDishes[course] != 0);
-  //console.log(numOfDishes[filteredCourses[0]]);
   const [guests, setGuests] = useState([]);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
@@ -109,7 +108,10 @@ function App() {
 
     // * fetch dishes
     const fetchDishes = async (course) => {
-      const specificCourse = course.toLowerCase();
+      let specificCourse = "";
+      if (course != "Entrees") specificCourse = course.toLowerCase();
+      else specificCourse = "main course";
+
       const num = numOfDishes[course];
       const response = await fetch(
         `https://api.spoonacular.com/recipes/complexSearch?&apiKey=${apiKey}&type=${specificCourse}&number=${num}`
@@ -120,18 +122,22 @@ function App() {
         sourceUrl: dish.sourceUrl,
         image: dish.image,
       }));
-      console.log(result);
-      setDishes(result);
+      return result;
+    };
+    // * fetch for each course that isn't 0
+    const fetchAll = async () => {
+      const getRecipes = filteredCourses.map((course) => fetchDishes(course));
+      const dishes = await Promise.all(getRecipes);
+      setDishes(dishes.flat());
       setGetDishes(false);
     };
     // * get and assign
-    if (getDishes) {
-      fetchDishes(courses[0]);
-    }
+    getDishes && fetchAll();
+
     if (assign) {
     }
   }, [getDishes, assign, searchFood, foodError, isFocused]);
-
+  console.log(dishes);
   //* add new guest
   const handleNewGuest = () => {
     setGuests([...guests, { name: guestName, preference: "Any", recipe: "" }]);
