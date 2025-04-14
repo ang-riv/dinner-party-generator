@@ -13,7 +13,7 @@ const Steps = ({ active }) => {
       : steps.push(<li className={inactiveSteps}>{stepTitle}</li>);
   }
   return (
-    <div className="my-2">
+    <div className="h-1/12">
       <ul className="steps">{steps}</ul>
     </div>
   );
