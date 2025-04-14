@@ -1,5 +1,7 @@
 import { div, li } from "motion/react-client";
 import React, { useState, useEffect, useRef } from "react";
+import AssignDishes from "./AssignDishes";
+import filter from "daisyui/components/filter";
 
 // ? courses = main categories, dishes = individual dishes within those categories
 function App() {
@@ -64,7 +66,7 @@ function App() {
 
   //* API - search foodItem and get random dishes
   const [getDishes, setGetDishes] = useState(false);
-  const [dishes, setDishes] = useState({});
+  const [dishes, setDishes] = useState([]);
   const [assign, setAssign] = useState(false);
   useEffect(() => {
     // * search foodItem
@@ -128,10 +130,12 @@ function App() {
 
       const response = await fetch(mainUrl);
       const data = await response.json();
+      console.log(data.results);
       let result = data.results.map((dish) => ({
         title: dish.title,
         sourceUrl: dish.sourceUrl,
         image: dish.image,
+        course: course,
       }));
       return result;
     };
@@ -148,7 +152,6 @@ function App() {
     if (assign) {
     }
   }, [getDishes, assign, searchFood, foodError, isFocused]);
-  console.log(dishes);
   //* add new guest
   const handleNewGuest = () => {
     setGuests([...guests, { name: guestName, preference: "Any", recipe: "" }]);
@@ -183,6 +186,40 @@ function App() {
       setDietRestrictions(newArr);
     }
   };
+
+  // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
+  // dishOrder to match
+  const dishCourses = dishes.map((dish) => dish.course);
+  console.log(dishCourses);
+
+  // count of how many dish slots exist per course
+  const courseCount = {};
+  dishCourses.forEach((course) => {
+    courseCount[course] = (courseCount[course] || 0) + 1;
+  });
+  let final = [];
+  // result and copy of guests
+  const sortedGuests = [];
+  const remaining = [...guests];
+  const assigningDishes = () => {
+    console.log("working");
+
+    // loop through the desired order
+    for (const course of dishCourses) {
+      // finds the first guest in the guest arr that prefers that course
+      const index = remaining.findIndex((guest) => guest.pref === course);
+      // if found push into the sorted list and take them out of remaining so they aren't matched again
+      if (index !== -1) {
+        sortedGuests.push(remaining.splice(index, 1)[0]); // assign guest to course
+      }
+    }
+  };
+  // Add unmatched guests with Any at the end
+  sortedGuests.push(...remaining);
+  final = sortedGuests.map((guest, index) => ({
+    ...guest,
+    recipe: dishes[index],
+  }));
   return (
     <>
       <div className="prose">
@@ -445,11 +482,18 @@ function App() {
           >
             Fetch Dishes
           </button>
-          <button className="btn btn-secondary" onClick={() => setAssign(true)}>
+          <button className="btn btn-secondary" onClick={assigningDishes}>
             Assign Dishes
           </button>
         </div>
-        <div className="flex flex-wrap w-full h-72 border border-blue-300"></div>
+        <div className="prose border border-blue-300">
+          <h2 className="text-center">Preview Section</h2>
+          {final.map((guest) => (
+            <p>
+              {guest.name} is bringing {guest.recipe.title}.
+            </p>
+          ))}
+        </div>
       </div>
     </>
   );
