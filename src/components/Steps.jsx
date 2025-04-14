@@ -2,15 +2,19 @@ import { div } from "motion/react-client";
 import React from "react";
 
 const Steps = ({ active }) => {
+  const pageTitles = ["Dishes", "Names", "Diet", "Confirm", "Preview"];
+  const steps = [];
+  for (let i = 0; i < pageTitles.length; i++) {
+    const stepTitle = pageTitles[i];
+    const inactiveSteps = "step";
+    const activeSteps = "step step-primary";
+    i <= active
+      ? steps.push(<li className={activeSteps}>{stepTitle}</li>)
+      : steps.push(<li className={inactiveSteps}>{stepTitle}</li>);
+  }
   return (
     <div className="my-2">
-      <ul className="steps">
-        <li className="step">Dishes</li>
-        <li className="step">Names</li>
-        <li className="step">Diet</li>
-        <li className="step">Confirm</li>
-        <li className="step">Preview</li>
-      </ul>
+      <ul className="steps">{steps}</ul>
     </div>
   );
 };
