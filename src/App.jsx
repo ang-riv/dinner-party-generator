@@ -1,7 +1,4 @@
-import { div, li } from "motion/react-client";
 import React, { useState, useEffect, useRef } from "react";
-import AssignDishes from "./AssignDishes";
-import filter from "daisyui/components/filter";
 
 // ? courses = main categories, dishes = individual dishes within those categories
 function App() {
@@ -10,6 +7,8 @@ function App() {
   // * guest info
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
   const [guestNum, setGuestNum] = useState(null);
+  const [guests, setGuests] = useState([]);
+  const [guestName, setGuestName] = useState("");
 
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(
@@ -18,13 +17,12 @@ function App() {
       return acc;
     }, {})
   );
-  // filter just in case they don't want specific categories
+  // filter out unused categories
   const filteredCourses = courses.filter((course) => numOfDishes[course] != 0);
-  const [guests, setGuests] = useState([]);
-  const [guestName, setGuestName] = useState("");
+
+  // input refs
   const nameRef = useRef(null);
   const restrictionRef = useRef(null);
-  const restrictionArrRef = useRef([]);
 
   // * select number options
   const numOptions = [];
@@ -49,12 +47,12 @@ function App() {
     }));
   };
 
-  // * dish total
+  // * dishes in total
   const totalDishes = Object.values(numOfDishes).reduce(
     (acc, value) => acc + value,
     0
   );
-  // * food restrictions
+  // * food restrictions + search
   const [foodRestrictions, setFoodRestrictions] = useState([]);
   const [restrictionName, setRestrictionName] = useState("");
   const [dietRestrictions, setDietRestrictions] = useState([]);
@@ -110,7 +108,7 @@ function App() {
       setFoodError(false);
     }
 
-    // * fetch dishes
+    // * fetch dishes including restrictions
     const fetchDishes = async (course) => {
       let specificCourse = "";
       if (course != "Entrees") specificCourse = course.toLowerCase();
@@ -130,7 +128,7 @@ function App() {
 
       const response = await fetch(mainUrl);
       const data = await response.json();
-      console.log(data.results);
+
       let result = data.results.map((dish) => ({
         title: dish.title,
         sourceUrl: dish.sourceUrl,
@@ -148,17 +146,15 @@ function App() {
     };
     // * get dishes
     getDishes && fetchAll();
-
-    if (assign) {
-    }
   }, [getDishes, assign, searchFood, foodError, isFocused]);
+
   //* add new guest
   const handleNewGuest = () => {
     setGuests([...guests, { name: guestName, preference: "Any", recipe: "" }]);
     if (nameRef.current) nameRef.current.value = "";
   };
 
-  //* guest preference
+  //* set guest preferences
   const handlePref = (e, guestName) => {
     setGuests((prevGuests) =>
       prevGuests.map((guest) =>
@@ -172,7 +168,7 @@ function App() {
     setGuests(updatedArr);
   };
 
-  // * food restrictions
+  // * setting food restrictions
   const handleRemove = (foodItem) => {
     const updatedArr = foodRestrictions.filter((food) => food != foodItem);
     setFoodRestrictions(updatedArr);
@@ -210,11 +206,12 @@ function App() {
       const index = remaining.findIndex((guest) => guest.pref === course);
       // if found push into the sorted list and take them out of remaining so they aren't matched again
       if (index !== -1) {
-        sortedGuests.push(remaining.splice(index, 1)[0]); // assign guest to course
+        sortedGuests.push(remaining.splice(index, 1)[0]);
       }
     }
   };
-  // Add unmatched guests with Any at the end
+
+  // Add unmatched guests with Any at the end of the arr
   sortedGuests.push(...remaining);
   final = sortedGuests.map((guest, index) => ({
     ...guest,
