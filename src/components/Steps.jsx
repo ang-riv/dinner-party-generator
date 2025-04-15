@@ -1,4 +1,3 @@
-import { div } from "motion/react-client";
 import React from "react";
 
 const Steps = ({ active }) => {
@@ -13,7 +12,7 @@ const Steps = ({ active }) => {
       : steps.push(<li className={inactiveSteps}>{stepTitle}</li>);
   }
   return (
-    <div className="h-1/12">
+    <div className="h-fit">
       <ul className="steps">{steps}</ul>
     </div>
   );
