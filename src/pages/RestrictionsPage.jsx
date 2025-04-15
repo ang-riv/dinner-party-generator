@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 const RestrictionsPage = () => {
+  const {
+    dietRestrictions,
+    setDietRestrictions,
+    foodRestrictions,
+    setFoodRestrictions,
+  } = useContext(RestrictionsContext);
   const inputRef = useRef(null);
-  // * checkboxes
-  const [dietRestrictions, setDietRestrictions] = useState([]);
-  // * using input for allergies/dislikes
-  const [foodRestrictions, setFoodRestrictions] = useState([]);
   const [restrictionName, setRestrictionName] = useState("");
   const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
 
@@ -15,6 +18,7 @@ const RestrictionsPage = () => {
   const [search, setSearch] = useState("");
   const [showError, setShowError] = useState(false);
   const [restrictionCap, setRestrictionCap] = useState(false);
+
   useEffect(() => {
     // * search foodItem
     const searchIngredient = async (ingredient) => {
@@ -55,7 +59,9 @@ const RestrictionsPage = () => {
     }
 
     // cap off number of allergies/dislikes at 10
-    if (foodRestrictions.length >= 10) setRestrictionCap(true);
+    foodRestrictions.length >= 2
+      ? setRestrictionCap(true)
+      : setRestrictionCap(false);
   }, [search, foodRestrictions]);
 
   const handleDiet = (e) => {
@@ -68,6 +74,11 @@ const RestrictionsPage = () => {
       setDietRestrictions(newArr);
     }
   };
+
+  const handleRemove = (foodItem) => {
+    const updatedArr = foodRestrictions.filter((food) => food != foodItem);
+    setFoodRestrictions(updatedArr);
+  };
   return (
     <div className="h-10/12 px-2 flex flex-col justify-around">
       <h2 className="h-1/8 text-3xl text-center flex justify-center items-center">
@@ -75,7 +86,7 @@ const RestrictionsPage = () => {
       </h2>
       {/* diet restrictions checkboxes */}
       <div className="h-1/8">
-        <h3 className="text-center">Dietary Restrictions</h3>
+        <h3 className="text-center mb-1">Dietary Restrictions</h3>
         <div className="flex flex-wrap">
           {diets.map((diet) => (
             <label key={diet} className="w-1/2 mb-2">
@@ -93,7 +104,7 @@ const RestrictionsPage = () => {
       </div>
       {/* allergies/dislikes */}
       <div className="h-1/8">
-        <h3 className="text-center">Allergies/Dislikes</h3>
+        <h3 className="text-center mb-1">Allergies/Dislikes</h3>
         <div className="join w-full ">
           <input
             type="text"
@@ -107,10 +118,12 @@ const RestrictionsPage = () => {
             placeholder="Enter food item..."
             pattern="[A-Za-z]*"
             onChange={(e) => setRestrictionName(e.target.value)}
+            disabled={restrictionCap}
           />
           <button
             className="btn btn-primary join-item"
             onClick={() => setSearch(restrictionName)}
+            disabled={restrictionCap}
           >
             +Add
           </button>
@@ -143,8 +156,16 @@ const RestrictionsPage = () => {
             ) : (
               <div className="h-full w-full flex flex-col items-start p-1">
                 {foodRestrictions.map((foodItem) => (
-                  <div className="w-1/2 h-1/5 flex items-center mb-1">
-                    <button className="btn btn-primary btn-xs mr-1">X</button>
+                  <div
+                    key={foodItem}
+                    className="w-1/2 h-1/5 flex items-center mb-1"
+                  >
+                    <button
+                      className="btn btn-primary btn-xs mr-1"
+                      onClick={() => handleRemove(foodItem)}
+                    >
+                      X
+                    </button>
                     <p>{foodItem}</p>
                   </div>
                 ))}

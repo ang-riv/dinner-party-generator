@@ -8,8 +8,16 @@ const Steps = ({ active }) => {
     const inactiveSteps = "step";
     const activeSteps = "step step-primary";
     i <= active
-      ? steps.push(<li className={activeSteps}>{stepTitle}</li>)
-      : steps.push(<li className={inactiveSteps}>{stepTitle}</li>);
+      ? steps.push(
+          <li key={stepTitle} className={activeSteps}>
+            {stepTitle}
+          </li>
+        )
+      : steps.push(
+          <li key={stepTitle} className={inactiveSteps}>
+            {stepTitle}
+          </li>
+        );
   }
   return (
     <div className="h-fit">
