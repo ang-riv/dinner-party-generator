@@ -12,7 +12,7 @@ function MainApp() {
       <GuestProvider>
         <div className="border border-blue-400 flex flex-col justify-between h-10/14">
           <Steps active={0} />
-          <DishesPage />
+          <GuestNamePage />
           <NavButtons />
         </div>
       </GuestProvider>

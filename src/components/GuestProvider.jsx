@@ -5,7 +5,9 @@ function GuestProvider({ children }) {
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
   // page changes from buttons
   const [page, setPage] = useState("Intro");
-  const [guestNum, setGuestNum] = useState(0);
+
+  const [guests, setGuests] = useState([]);
+  const [guestNum, setGuestNum] = useState(5);
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(
     courses.reduce((acc, course) => {
@@ -23,6 +25,8 @@ function GuestProvider({ children }) {
         setGuestNum,
         numOfDishes,
         setNumOfDishes,
+        guests,
+        setGuests,
       }}
     >
       {children}
