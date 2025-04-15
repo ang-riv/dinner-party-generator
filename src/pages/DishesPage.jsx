@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { GuestContext } from "../components/GuestContext";
+import { GuestContext } from "../components/contexts/GuestContext";
 const DishesPage = () => {
   const { courses, guestNum, setGuestNum, numOfDishes, setNumOfDishes } =
     useContext(GuestContext);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GuestContext } from "../components/GuestContext";
+import { GuestContext } from "../components/contexts/GuestContext";
 const IntroPage = () => {
   const { setPage } = useContext(GuestContext);
   return (

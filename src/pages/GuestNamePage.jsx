@@ -1,10 +1,11 @@
 import React, { useRef, useContext, useState } from "react";
-import { GuestContext } from "../components/GuestContext";
+import { GuestContext } from "../components/contexts/GuestContext";
 
 const GuestNamePage = () => {
   const { courses, guests, setGuests, guestNum } = useContext(GuestContext);
-  const nameRef = useRef(null);
   const [guestName, setGuestName] = useState("");
+  const nameRef = useRef(null);
+
   //* add new guest
   const handleNewGuest = () => {
     setGuests([{ name: guestName, preference: "Any", recipe: "" }, ...guests]);
@@ -20,11 +21,11 @@ const GuestNamePage = () => {
     );
   };
 
+  //* remove guest
   const handleRemoveGuest = (guestName) => {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
   };
-  console.log(guests);
   return (
     <div className="h-10/12 flex flex-col justify-between px-2">
       {/* text */}
