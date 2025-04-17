@@ -6,7 +6,14 @@ function GuestProvider({ children }) {
   // page changes from buttons
   const [page, setPage] = useState("Intro");
 
-  const [guests, setGuests] = useState([]);
+  const [guests, setGuests] = useState([
+    { name: "Amanda", pref: "Appetizer" },
+    { name: "Shayne", pref: "Dessert" },
+    { name: "Alex", pref: "Any" },
+    { name: "Amanda", pref: "Appetizer" },
+    { name: "Shayne", pref: "Dessert" },
+    { name: "Alex", pref: "Any" },
+  ]);
   const [guestNum, setGuestNum] = useState(5);
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(

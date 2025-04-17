@@ -18,7 +18,10 @@ function MainApp() {
           {/* <RestrictionProvider>
             <RestrictionsPage />
           </RestrictionProvider> */}
-          <ConfirmPage />
+          <RestrictionProvider>
+            <ConfirmPage />
+          </RestrictionProvider>
+
           <NavButtons />
         </div>
       </GuestProvider>
