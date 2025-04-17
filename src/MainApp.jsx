@@ -5,6 +5,7 @@ import DishesPage from "./pages/DishesPage";
 import GuestNamePage from "./pages/GuestNamePage";
 import ConfirmPage from "./pages/ConfirmPage";
 import RestrictionsPage from "./pages/RestrictionsPage";
+import PreviewPage from "./pages/PreviewPage";
 import GuestProvider from "./components/contexts/GuestProvider";
 import RestrictionProvider from "./components/contexts/RestrictionProvider";
 import Steps from "./components/Steps";
@@ -13,13 +14,13 @@ function MainApp() {
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <GuestProvider>
-        <div className="border border-blue-400 flex flex-col justify-between h-11/14">
+        <div className="flex flex-col justify-between h-10/12">
           <Steps active={3} />
           {/* <RestrictionProvider>
             <RestrictionsPage />
           </RestrictionProvider> */}
           <RestrictionProvider>
-            <ConfirmPage />
+            <PreviewPage />
           </RestrictionProvider>
 
           <NavButtons />

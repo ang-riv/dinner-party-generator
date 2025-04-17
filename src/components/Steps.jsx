@@ -5,8 +5,8 @@ const Steps = ({ active }) => {
   const steps = [];
   for (let i = 0; i < pageTitles.length; i++) {
     const stepTitle = pageTitles[i];
-    const inactiveSteps = "step";
-    const activeSteps = "step step-primary";
+    const inactiveSteps = "step text-sm";
+    const activeSteps = "step step-primary text-sm";
     i <= active
       ? steps.push(
           <li key={stepTitle} className={activeSteps}>
