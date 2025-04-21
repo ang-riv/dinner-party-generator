@@ -7,7 +7,7 @@ const Steps = ({ active }) => {
     const stepTitle = pageTitles[i];
     const inactiveSteps = "step text-sm";
     const activeSteps = "step step-primary text-sm";
-    i <= active
+    i <= active - 1
       ? steps.push(
           <li key={stepTitle} className={activeSteps}>
             {stepTitle}

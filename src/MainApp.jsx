@@ -1,5 +1,5 @@
 // * acts like app since I made everything in app
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IntroPage from "./pages/IntroPage";
 import DishesPage from "./pages/DishesPage";
 import GuestNamePage from "./pages/GuestNamePage";
@@ -10,20 +10,42 @@ import GuestProvider from "./components/contexts/GuestProvider";
 import RestrictionProvider from "./components/contexts/RestrictionProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
+
 function MainApp() {
+  const [pageNum, setPageNum] = useState(0);
+
+  // navigating through the pages
+  const pages = [
+    <IntroPage setPageNum={setPageNum} />,
+    <DishesPage />,
+    <GuestNamePage />,
+    <RestrictionsPage />,
+    <ConfirmPage />,
+    <PreviewPage />,
+  ];
+
+  const [currentPage, setCurrentPage] = useState(pages[0]);
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <GuestProvider>
         <div className="flex flex-col justify-between h-10/12">
-          <Steps active={3} />
-          {/* <RestrictionProvider>
+          {pageNum === 0 ? (
+            <div className="flex items-center justify-center w-full h-full">
+              {pages[0]}
+            </div>
+          ) : (
+            <>
+              <Steps active={pageNum} />
+              {/* <RestrictionProvider>
             <RestrictionsPage />
           </RestrictionProvider> */}
-          <RestrictionProvider>
-            <PreviewPage />
-          </RestrictionProvider>
+              <RestrictionProvider>
+                <ConfirmPage />
+              </RestrictionProvider>
 
-          <NavButtons />
+              <NavButtons />
+            </>
+          )}
         </div>
       </GuestProvider>
     </div>

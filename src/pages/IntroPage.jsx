@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { GuestContext } from "../components/contexts/GuestContext";
-const IntroPage = () => {
-  const { setPage } = useContext(GuestContext);
+import React from "react";
+
+const IntroPage = ({ setPageNum }) => {
   return (
     <div className="prose">
       <h1 className="prose-h1 text-center text-6xl mb-8">
@@ -16,7 +15,7 @@ const IntroPage = () => {
       <div className="w-full flex justify-center">
         <button
           className="btn btn-primary rounded-md btn-md px-10"
-          onClick={() => setPage("Dishes")}
+          onClick={() => setPageNum(1)}
         >
           Start
         </button>
