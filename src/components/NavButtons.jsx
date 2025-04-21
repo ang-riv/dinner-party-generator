@@ -15,6 +15,7 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
         guests.length != guestNum ? setBtnState(true) : setBtnState(false);
         break;
       case 3:
+      case 4:
         setBtnState(false);
         break;
       case pageCap:

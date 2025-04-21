@@ -21,7 +21,7 @@ function MainApp() {
     <GuestNamePage />,
     <RestrictionsPage />,
     <ConfirmPage />,
-    <PreviewPage />,
+    <PreviewPage pageNum={pageNum} />,
   ];
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
