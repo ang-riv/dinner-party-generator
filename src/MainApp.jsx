@@ -25,6 +25,10 @@ function MainApp() {
   ];
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
+
+  useEffect(() => {
+    setCurrentPage(pages[pageNum]);
+  }, [pageNum]);
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <GuestProvider>
@@ -36,14 +40,8 @@ function MainApp() {
           ) : (
             <>
               <Steps active={pageNum} />
-              {/* <RestrictionProvider>
-            <RestrictionsPage />
-          </RestrictionProvider> */}
-              <RestrictionProvider>
-                <ConfirmPage />
-              </RestrictionProvider>
-
-              <NavButtons />
+              <RestrictionProvider>{currentPage}</RestrictionProvider>
+              <NavButtons pageNum={pageNum} setPageNum={setPageNum} />
             </>
           )}
         </div>
