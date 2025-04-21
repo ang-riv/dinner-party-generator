@@ -41,7 +41,11 @@ function MainApp() {
             <>
               <Steps active={pageNum} />
               <RestrictionProvider>{currentPage}</RestrictionProvider>
-              <NavButtons pageNum={pageNum} setPageNum={setPageNum} />
+              <NavButtons
+                pageNum={pageNum}
+                setPageNum={setPageNum}
+                pageCap={pages.length}
+              />
             </>
           )}
         </div>

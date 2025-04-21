@@ -3,8 +3,6 @@ import { GuestContext } from "./GuestContext";
 function GuestProvider({ children }) {
   // courses
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
-  // page changes from buttons
-  const [page, setPage] = useState("Intro");
 
   const [guests, setGuests] = useState([
     { name: "Amanda", pref: "Appetizer" },
@@ -14,7 +12,7 @@ function GuestProvider({ children }) {
     { name: "Shayne", pref: "Dessert" },
     { name: "Alex", pref: "Any" },
   ]);
-  const [guestNum, setGuestNum] = useState(5);
+  const [guestNum, setGuestNum] = useState(0);
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(
     courses.reduce((acc, course) => {
@@ -25,8 +23,6 @@ function GuestProvider({ children }) {
   return (
     <GuestContext
       value={{
-        page,
-        setPage,
         courses,
         guestNum,
         setGuestNum,
