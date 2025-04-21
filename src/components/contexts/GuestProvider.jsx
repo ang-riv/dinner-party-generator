@@ -4,14 +4,7 @@ function GuestProvider({ children }) {
   // courses
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
 
-  const [guests, setGuests] = useState([
-    { name: "Amanda", pref: "Appetizer" },
-    { name: "Shayne", pref: "Dessert" },
-    { name: "Alex", pref: "Any" },
-    { name: "Amanda", pref: "Appetizer" },
-    { name: "Shayne", pref: "Dessert" },
-    { name: "Alex", pref: "Any" },
-  ]);
+  const [guests, setGuests] = useState([]);
   const [guestNum, setGuestNum] = useState(0);
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(

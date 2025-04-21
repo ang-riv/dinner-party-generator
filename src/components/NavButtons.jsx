@@ -4,8 +4,8 @@ import { RestrictionsContext } from "./contexts/RestrictionsContext";
 const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
   const { guestNum, numOfDishes, guests } = useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
-  // each page will have requirements that need to be fulfilled to make the next button active
 
+  // each page will have requirements that need to be fulfilled to make the next button active
   useEffect(() => {
     switch (pageNum) {
       case 1:
@@ -17,7 +17,9 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
       case 3:
         setBtnState(false);
         break;
+      case pageCap:
       default:
+        setBtnState(true);
         break;
     }
   }, [pageNum, guestNum, guests]);

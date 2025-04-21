@@ -24,7 +24,7 @@ const ConfirmPage = () => {
                 <p className="relative top-2">{name}</p>
               </div>
               <div id={end} className="pl-1.5">
-                <p className="relative top-2">{guest.pref}</p>
+                <p className="relative top-2">{guest.preference}</p>
               </div>
 
               <Arrow
