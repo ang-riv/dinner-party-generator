@@ -59,39 +59,19 @@ const PreviewPage = () => {
       setIsLoading(false);
     };
 
-    //fetchAll();
+    fetchAll();
   }, []);
-  console.log(dishes);
   return (
     <>
       {isLoading ? (
         <div className="w-full h-full flex flex-col justify-center items-center">
           <h2 className="mb-3">Grabbing dishes...</h2>
           <span className="loading loading-spinner text-primary loading-xl"></span>
-          <AssignDishes dishes={dishes} />
         </div>
       ) : (
-        <div className=" w-full h-9/10">
-          <h2 className="flex justify-center items-center text-center text-4xl  h-2/10 ">
-            Courses
-          </h2>
-          <div className="overflow-y-scroll  w-full h-8/10">
-            {filteredCourses.map((course) => (
-              <div className="w-full h-fit ">
-                <div className="w-full h-fit mb-2">
-                  <h2 className="text-center text-xl font-bold py-2">
-                    {course}
-                  </h2>
-
-                  <div className="w-full h-fit flex flex-wrap justify-around">
-                    <PreviewCard title="Testing" name="Amanda" />
-                    <PreviewCard title="Testing" name="Amanda" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <>
+          <AssignDishes dishes={dishes} />
+        </>
       )}
     </>
   );
