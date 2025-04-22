@@ -69,8 +69,11 @@ const GuestNamePage = () => {
           <p>Preference</p>
         </div>
         <div className="w-full border border-blue-300 h-7/8 overflow-y-scroll">
-          {guests.map((guest) => (
-            <div className="flex justify-between items-baseline p-1">
+          {guests.map((guest, index) => (
+            <div
+              key={index}
+              className="flex justify-between items-baseline p-1"
+            >
               <div className="flex items-center">
                 <button
                   className="btn btn-primary btn-xs mr-1"

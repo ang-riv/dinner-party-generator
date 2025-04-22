@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PreviewCard from "./PreviewCard";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
+import AssignDishes from "../components/AssignDishes";
 
 const PreviewPage = () => {
   const { courses, numOfDishes } = useContext(GuestContext);
@@ -58,7 +59,7 @@ const PreviewPage = () => {
       setIsLoading(false);
     };
 
-    fetchAll();
+    //fetchAll();
   }, []);
   console.log(dishes);
   return (
@@ -67,6 +68,7 @@ const PreviewPage = () => {
         <div className="w-full h-full flex flex-col justify-center items-center">
           <h2 className="mb-3">Grabbing dishes...</h2>
           <span className="loading loading-spinner text-primary loading-xl"></span>
+          <AssignDishes dishes={dishes} />
         </div>
       ) : (
         <div className=" w-full h-9/10">
@@ -89,10 +91,6 @@ const PreviewPage = () => {
               </div>
             ))}
           </div>
-          {/* courses container */}
-          {/* <div className="overflow-y-scroll border border-green-800 w-full h-6/10">
-        
-      </div> */}
         </div>
       )}
     </>

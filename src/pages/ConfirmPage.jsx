@@ -19,7 +19,7 @@ const ConfirmPage = () => {
           const end = `to${index}`;
           const name = `${index + 1}) ${guest.name}`;
           return (
-            <div className="w-full flex justify-between mb-1">
+            <div key={index} className="w-full flex justify-between mb-1">
               <div id={start} className="pr-2">
                 <p className="relative top-2">{name}</p>
               </div>
