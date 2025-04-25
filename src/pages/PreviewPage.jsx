@@ -13,8 +13,14 @@ const PreviewPage = () => {
 
   // filter out unused categories
   const filteredCourses = courses.filter((course) => numOfDishes[course] != 0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [dishes, setDishes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dishes, setDishes] = useState([
+    { title: "A", preference: "", course: "Appetizers" },
+    { title: "E", preference: "", course: "Entrees" },
+    { title: "D", preference: "", course: "Desserts" },
+    { title: "D", preference: "", course: "Desserts" },
+    { title: "B", preference: "", course: "Beverages" },
+  ]);
   const [assigning, setAssigning] = useState([]);
 
   useEffect(() => {
@@ -59,7 +65,7 @@ const PreviewPage = () => {
       setIsLoading(false);
     };
 
-    fetchAll();
+    //fetchAll();
   }, []);
   return (
     <>
