@@ -14,6 +14,8 @@ const PreviewPage = () => {
   // filter out unused categories
   const filteredCourses = courses.filter((course) => numOfDishes[course] != 0);
   const [isLoading, setIsLoading] = useState(false);
+  //const [dishes, setDishes] = useState([]);
+
   const [dishes, setDishes] = useState([
     { title: "A", preference: "", course: "Appetizers" },
     { title: "E", preference: "", course: "Entrees" },
@@ -21,8 +23,9 @@ const PreviewPage = () => {
     { title: "D", preference: "", course: "Desserts" },
     { title: "B", preference: "", course: "Beverages" },
   ]);
-  const [assigning, setAssigning] = useState([]);
 
+  const [assigning, setAssigning] = useState([]);
+  const [fetchedDishes, setFetchedDishes] = useState(false);
   useEffect(() => {
     // * fetch dishes including restrictions
     const fetchDishes = async (course) => {
@@ -67,6 +70,13 @@ const PreviewPage = () => {
 
     //fetchAll();
   }, []);
+
+  useEffect(() => {
+    // either use a bool or use another arr to keep the new dishes
+    setFetchedDishes(true);
+  }, [dishes]);
+  // problem is that dishes need to be set first before they can be passed as a prop or it will just take the original value of empty
+  // ! implement a way to ensure that dishes is set first before assigning it as a prop
   return (
     <>
       {isLoading ? (
@@ -75,9 +85,7 @@ const PreviewPage = () => {
           <span className="loading loading-spinner text-primary loading-xl"></span>
         </div>
       ) : (
-        <>
-          <AssignDishes dishes={dishes} />
-        </>
+        <>{fetchedDishes && <AssignDishes dishes={dishes} />}</>
       )}
     </>
   );

@@ -14,7 +14,7 @@ const AssignDishes = ({ dishes }) => {
   // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
   // result and copy of guests
   const [sortedGuests, setSortedGuests] = useState([]);
-  const remainingGuests = [...testGuests];
+  const remainingGuests = [...guests];
 
   // result and copy of dishes
   const [sortedDishes, setSortedDishes] = useState([]);
