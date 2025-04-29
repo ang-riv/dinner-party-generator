@@ -28,12 +28,13 @@ const PreviewPage = () => {
   const [fetchedDishes, setFetchedDishes] = useState(false);
   useEffect(() => {
     //* testDishes
+    /*
     setDishes([
-      { title: "A", preference: "", course: "Appetizers" },
-      { title: "D", preference: "", course: "Desserts" },
-      { title: "B", preference: "", course: "Beverages" },
+      { title: "A", assigned: false, course: "Appetizers" },
+      { title: "D", assigned: false, course: "Desserts" },
+      { title: "B", assigned: false, course: "Beverages" },
     ]);
-
+*/
     // * fetch dishes including restrictions
     const fetchDishes = async (course) => {
       let specificCourse = "";
@@ -75,7 +76,7 @@ const PreviewPage = () => {
       setIsLoading(false);
     };
 
-    //fetchAll();
+    fetchAll();
   }, []);
 
   useEffect(() => {

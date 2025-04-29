@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState, useRef, useMemo } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 const AssignDishes = () => {
   const { courses, guests, numOfDishes, dishes } = useContext(GuestContext);
@@ -107,60 +107,66 @@ const AssignDishes = () => {
     return finalArr;
   };
 
-  const [finalSort, setFinalSort] = useState([]);
-  const [fullArr, setFullArr] = useState(false);
-  // initial render sort the guests
-  const renderCount = useRef(1); // starts at 1 for the initial render
+  const gCopy = useMemo(() => [...guests], [guests]);
+  const dCopy = useMemo(() => [...dishes], [dishes]);
 
-  useEffect(() => {
-    renderCount.current += 1;
-    console.log("Render count:", renderCount.current);
-    console.log("1) Sorting guests...");
-    const fetchArr = async () => {
-      const guestArr = await sortGuests();
-      if (!Array.isArray(guestArr)) {
-        console.error("sortGuests did not return an array:", guestArr);
-        return;
+  const [guestCopy, setGuestCopy] = useState([...guests]);
+  const [finalCopy, setFinalCopy] = useState([]);
+  const [finalRender, setFinalRender] = useState(false);
+  const [matchedGuests, setMatchedGuests] = useState([...guests]);
+  let dishCopy = [...dishes];
+  const [show, setShow] = useState(false);
+  const allocateDishes = () => {
+    // 1) take the guests and separate w/ local copies
+    const hasPrefs = guests.filter((guest) => guest.preference != "Any");
+    const noPrefs = guests.filter((guest) => guest.preference === "Any");
+    const updatedHasPrefs = [...hasPrefs];
+    const updatedDishes = [...dishCopy];
+    // 2) map over the dishes
+    for (let i = 0; i < updatedDishes.length; i++) {
+      const dish = updatedDishes[i];
+      const course = dish.course;
+
+      // 3) search the guests - find the the guest has the same course AND doesn't have a recipe yet.
+      const guestMatch = updatedHasPrefs.findIndex(
+        (guest) => guest.preference === course && guest.recipe === ""
+      );
+
+      // 4) assign that guest that recipe and change the assigned value to true for that dish
+      if (guestMatch != -1) {
+        updatedHasPrefs[guestMatch] = {
+          ...updatedHasPrefs[guestMatch],
+          recipe: dish,
+        };
+
+        dish.assigned = true;
+      } else {
+        dish.assigned = false;
       }
-      const matchedArr = await sortDishes(guestArr);
-      if (!Array.isArray(matchedArr)) {
-        console.error("sortDishes did not return a valid array");
-        return;
-      }
-      const final = matchedArr.map((guest) => <p>{guest.name}</p>);
-      setFinalSort(final);
-    };
+    }
 
-    fetchArr();
-  }, []);
+    // 5) filter out the dishes array for the ones that haven't been assigned yet
+    const leftoverDishes = updatedDishes.filter(
+      (dish) => dish.assigned === false
+    );
 
-  useEffect(() => {
-    console.log("working");
-    setFullArr(true);
-  }, [finalSort, fullArr]);
-  /*
-  useEffect(() => {
-    console.log("Guests sorted.");
-    console.log("2) Sorting dishes...");
-    //assign();
-  }, [sortedGuests]);
+    // 6) assign the leftover dishes to the guests that don't have a pref
+    const leftoverGuests = noPrefs.map((guest, index) => ({
+      ...guest,
+      recipe: leftoverDishes[index] || null,
+    }));
 
+    // 7) combine the guests and update
+    const assignedGuests = [...updatedHasPrefs, ...leftoverGuests];
+    setFinalCopy(assignedGuests);
+    setFinalRender(true);
+    console.log(assignedGuests);
+  };
   useEffect(() => {
-    console.log("Dishes sorted.");
-    console.log("3) Matching dishes to guests...");
-  }, [sortedDishes]);
+    if (gCopy.length && dCopy.length) allocateDishes();
+  }, [gCopy, dCopy]);
 
-  const [trigger, setTrigger] = useState(false);
-  useEffect(() => {
-    console.log("All matched.");
-    setTrigger(true);
-  }, [sorted]);
-
-  useEffect(() => {
-    console.log("Last render.");
-    console.log(sorted);
-  }, [trigger]);
-  */
+  // ? Different way of assigning the dishes without needing to sort too much
 
   return (
     <>
@@ -170,7 +176,14 @@ const AssignDishes = () => {
           <span className="loading loading-spinner text-primary loading-xl"></span>
         </>
       ) : (
-        <>{fullArr ? finalSort : <></>}</>
+        <>
+          {finalCopy.map((guest, index) => (
+            <p key={index}>
+              {guest.name}'s preference is {guest.preference}. They are bringing{" "}
+              {guest.recipe.title}.
+            </p>
+          ))}
+        </>
       )}
     </>
   );
