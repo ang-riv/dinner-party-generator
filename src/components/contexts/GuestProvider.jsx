@@ -13,6 +13,7 @@ function GuestProvider({ children }) {
       return acc;
     }, {})
   );
+  const [dishes, setDishes] = useState([]);
   return (
     <GuestContext
       value={{
@@ -23,6 +24,8 @@ function GuestProvider({ children }) {
         setNumOfDishes,
         guests,
         setGuests,
+        dishes,
+        setDishes,
       }}
     >
       {children}
