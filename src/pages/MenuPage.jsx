@@ -43,8 +43,8 @@ const MenuPage = () => {
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   console.log(guests);
   return (
-    <div className="w-[320px] h-full bg-blue-300 flex justify-center items-center">
-      <div className="w-11/12 min-h-11/12 bg-white rounded-t-full outline-3 outline-blue-400 absolute pt-10">
+    <div className="w-[320px] max-w-96 h-full bg-blue-300 flex justify-center items-center">
+      <div className="w-11/12 min-h-11/12 bg-white rounded-t-full outline-3 outline-blue-400 pt-10">
         <div className="relative -left-3 bottom-2">
           <LemonEmoji />
         </div>
