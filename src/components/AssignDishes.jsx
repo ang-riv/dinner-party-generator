@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
 import { GuestContext } from "./contexts/GuestContext";
+import { div, h2 } from "motion/react-client";
+import PreviewCard from "../pages/PreviewCard";
 const AssignDishes = () => {
-  const { courses, guests, dishes } = useContext(GuestContext);
+  const { courses, guests, dishes, numOfDishes } = useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
 
   // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
@@ -11,6 +13,8 @@ const AssignDishes = () => {
 
   const [finalCopy, setFinalCopy] = useState([]);
   const updatedDishes = useMemo(() => [...dishes], [dishes]);
+
+  const filtered = courses.filter((course) => numOfDishes[course] != 0);
 
   const allocateDishes = () => {
     // 1) take the guests and separate w/ local copies
@@ -79,11 +83,23 @@ const AssignDishes = () => {
         </>
       ) : (
         <>
-          {finalCopy.map((guest, index) => (
-            <p key={index}>
-              {guest.name}'s preference is {guest.preference}. They are bringing{" "}
-              {guest.recipe.title}.
-            </p>
+          {/* Appetizers */}
+          {filtered.map((course, index) => (
+            <div key={index}>
+              <h2 className="text-center">{course}</h2>
+              <div>
+                {finalCopy.map((guest, index) => {
+                  if (guest.recipe.course === course) {
+                    return (
+                      <PreviewCard
+                        name={guest.name}
+                        title={guest.recipe.title}
+                      />
+                    );
+                  }
+                })}
+              </div>
+            </div>
           ))}
         </>
       )}
