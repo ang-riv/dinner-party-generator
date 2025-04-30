@@ -4,6 +4,8 @@ function GuestProvider({ children }) {
   // courses
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
 
+  // filter out the courses that the user didn't pick
+
   const [guests, setGuests] = useState([]);
   const [guestNum, setGuestNum] = useState(0);
   // * object that holds the number of dishes
@@ -13,6 +15,8 @@ function GuestProvider({ children }) {
       return acc;
     }, {})
   );
+
+  const [filteredCourses, setFilteredCourses] = useState([]);
   const [dishes, setDishes] = useState([]);
   return (
     <GuestContext
@@ -26,6 +30,8 @@ function GuestProvider({ children }) {
         setGuests,
         dishes,
         setDishes,
+        setFilteredCourses,
+        filteredCourses,
       }}
     >
       {children}

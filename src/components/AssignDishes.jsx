@@ -1,16 +1,8 @@
-import React, { useContext, useEffect, useState, useRef, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 const AssignDishes = () => {
-  const { courses, guests, numOfDishes, dishes } = useContext(GuestContext);
+  const { courses, guests, dishes } = useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  const testGuests = [
-    { name: "A", preference: "Beverages" },
-    { name: "B", preference: "Desserts" },
-    { name: "C", preference: "Any" },
-    { name: "D", preference: "Any" },
-    { name: "E", preference: "Appetizers" },
-  ];
 
   // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
 
@@ -26,6 +18,7 @@ const AssignDishes = () => {
     const noPrefs = guests.filter((guest) => guest.preference === "Any");
     const updatedHasPrefs = [...hasPrefs];
     const updatedDishesCopy = [...updatedDishes];
+
     // 2) map over the dishes
     for (let i = 0; i < updatedDishesCopy.length; i++) {
       const dish = updatedDishesCopy[i];
@@ -69,7 +62,12 @@ const AssignDishes = () => {
 
   useEffect(() => {
     // run only when they aren't empty
-    if (guestCopy.length && dishesCopy.length) allocateDishes();
+    if (guestCopy.length && dishesCopy.length) {
+      setIsLoading(false);
+      allocateDishes();
+    } else {
+      setIsLoading(true);
+    }
   }, [guestCopy, dishesCopy]);
 
   return (

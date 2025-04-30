@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 const DishesPage = () => {
   const { courses, guestNum, setGuestNum, numOfDishes, setNumOfDishes } =
@@ -59,7 +59,7 @@ const DishesPage = () => {
       </div>
       {/* number of dishes per course */}
       <div className=" h-4/8 flex flex-col justify-center">
-        <p className="mb-1.5">How many people will be cooking?</p>
+        <p className="mb-1.5">How many dishes per course?</p>
         <div className="w-full">
           {dishCounters.map((course) => (
             <div className="flex justify-between mb-2" key={course.title}>
@@ -72,7 +72,7 @@ const DishesPage = () => {
                 >
                   +
                 </button>
-                <p className="mx-1">
+                <p className="w-10 flex justify-center">
                   {numOfDishes[course.title]}/{guestNum}
                 </p>
                 <button

@@ -1,11 +1,22 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 
 const GuestNamePage = () => {
-  const { courses, guests, setGuests, guestNum } = useContext(GuestContext);
+  const {
+    courses,
+    guests,
+    setGuests,
+    guestNum,
+    numOfDishes,
+    setFilteredCourses,
+  } = useContext(GuestContext);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
 
+  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  useEffect(() => {
+    if (numOfDishes.length) setFilteredCourses(filtered);
+  }, []);
   //* add new guest
   const handleNewGuest = () => {
     setGuests([{ name: guestName, preference: "Any", recipe: "" }, ...guests]);
@@ -90,7 +101,7 @@ const GuestNamePage = () => {
                 <option key="Any" value="Any">
                   Any
                 </option>
-                {courses.map((course) => (
+                {filtered.map((course) => (
                   <option key={course} value={course}>
                     {course}
                   </option>
