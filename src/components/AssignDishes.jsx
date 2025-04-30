@@ -63,7 +63,6 @@ const AssignDishes = () => {
 
     setFinalCopy(assignedGuests);
     setGuests(assignedGuests);
-    console.log(assignedGuests);
   };
 
   useEffect(() => {

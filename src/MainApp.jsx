@@ -14,7 +14,7 @@ import MenuPage from "./pages/MenuPage";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-  const [menuStyling, setMenuStyling] = useState(false);
+  const menuStyling = false;
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -26,7 +26,6 @@ function MainApp() {
   ];
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
-  console.log("Page num:", pageNum);
   useEffect(() => {
     setCurrentPage(pages[pageNum]);
   }, [pageNum]);

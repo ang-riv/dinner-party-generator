@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 const DishesPage = () => {
   const { courses, guestNum, setGuestNum, numOfDishes, setNumOfDishes } =

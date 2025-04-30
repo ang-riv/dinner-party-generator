@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GuestContext } from "./contexts/GuestContext";
-import { RestrictionsContext } from "./contexts/RestrictionsContext";
-import { p } from "motion/react-client";
 const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
-  const { guestNum, numOfDishes, guests } = useContext(GuestContext);
+  const { guestNum, guests } = useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
 
   // each page will have requirements that need to be fulfilled to make the next button active

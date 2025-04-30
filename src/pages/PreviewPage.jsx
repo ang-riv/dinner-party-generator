@@ -5,7 +5,7 @@ import { RestrictionsContext } from "../components/contexts/RestrictionsContext"
 import AssignDishes from "../components/AssignDishes";
 
 const PreviewPage = () => {
-  const { courses, numOfDishes, dishes, setDishes } = useContext(GuestContext);
+  const { courses, numOfDishes, setDishes } = useContext(GuestContext);
   const { dietRestrictions, foodRestrictions } =
     useContext(RestrictionsContext);
 
