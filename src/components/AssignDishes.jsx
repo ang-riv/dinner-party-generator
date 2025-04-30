@@ -85,15 +85,17 @@ const AssignDishes = () => {
         <>
           {/* Appetizers */}
           {filtered.map((course, index) => (
-            <div key={index}>
-              <h2 className="text-center">{course}</h2>
-              <div>
+            <div key={index} className="my-2">
+              <h2 className="text-center text-2xl py-2">{course}</h2>
+              <div className=" flex justify-around flex-wrap">
                 {finalCopy.map((guest, index) => {
                   if (guest.recipe.course === course) {
                     return (
                       <PreviewCard
+                        key={index}
                         name={guest.name}
                         title={guest.recipe.title}
+                        image={guest.recipe.image}
                       />
                     );
                   }
