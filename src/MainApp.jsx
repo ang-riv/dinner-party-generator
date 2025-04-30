@@ -14,7 +14,7 @@ import MenuPage from "./pages/MenuPage";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-  const [menuStyling, setMenuStyling] = useState(true);
+  const [menuStyling, setMenuStyling] = useState(false);
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,

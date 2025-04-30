@@ -3,7 +3,8 @@ import { GuestContext } from "./contexts/GuestContext";
 import { div, h2 } from "motion/react-client";
 import PreviewCard from "../pages/PreviewCard";
 const AssignDishes = () => {
-  const { courses, guests, dishes, numOfDishes } = useContext(GuestContext);
+  const { courses, guests, setGuests, dishes, numOfDishes } =
+    useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
 
   // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
@@ -61,6 +62,7 @@ const AssignDishes = () => {
     const assignedGuests = [...updatedHasPrefs, ...leftoverGuests];
 
     setFinalCopy(assignedGuests);
+    setGuests(assignedGuests);
     console.log(assignedGuests);
   };
 
