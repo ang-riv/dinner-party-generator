@@ -1,5 +1,6 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
+import { div } from "motion/react-client";
 
 const GuestNamePage = () => {
   const {
@@ -12,16 +13,28 @@ const GuestNamePage = () => {
   } = useContext(GuestContext);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
-
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  const [alert, setAlert] = useState(false);
+
   useEffect(() => {
     if (numOfDishes.length) setFilteredCourses(filtered);
   }, []);
+
   //* add new guest
   const handleNewGuest = () => {
-    const properName =
-      guestName.charAt(0).toUpperCase() + guestName.slice(1).toLowerCase();
-    setGuests([{ name: properName, preference: "Any", recipe: "" }, ...guests]);
+    // check if the name is valid first
+    if (nameRef.current.checkValidity()) {
+      const properName =
+        guestName.charAt(0).toUpperCase() + guestName.slice(1).toLowerCase();
+      setGuests([
+        { name: properName, preference: "Any", recipe: "" },
+        ...guests,
+      ]);
+      // if previously had an alert but is now valid, reset alert
+      setAlert(false);
+    } else {
+      setAlert(true);
+    }
     if (nameRef.current) nameRef.current.value = "";
   };
 
@@ -56,7 +69,8 @@ const GuestNamePage = () => {
           <input
             ref={nameRef}
             type="text"
-            className="input join-item"
+            placeholder="Enter a guest name..."
+            className="input join-item invalid:border-red-400"
             spellCheck={false}
             pattern="[A-Za-z]*"
             minLength="3"
@@ -74,6 +88,13 @@ const GuestNamePage = () => {
             +Add
           </button>
         </div>
+        {alert && (
+          <div>
+            <p className="text-xs text-red-400">
+              Must be longer than 3 letters with no characters.
+            </p>
+          </div>
+        )}
       </div>
       {/* display names + prefs */}
       <div className="h-3/8 mb-1">
