@@ -10,10 +10,11 @@ import GuestProvider from "./components/contexts/GuestProvider";
 import RestrictionProvider from "./components/contexts/RestrictionProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
+import MenuPage from "./pages/MenuPage";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-
+  const [menuStyling, setMenuStyling] = useState(true);
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -25,30 +26,36 @@ function MainApp() {
   ];
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
-
+  console.log("Page num:", pageNum);
   useEffect(() => {
     setCurrentPage(pages[pageNum]);
   }, [pageNum]);
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <GuestProvider>
-        <div className="flex flex-col justify-between h-10/12">
-          {pageNum === 0 ? (
-            <div className="flex items-center justify-center w-full h-full">
-              {pages[0]}
+        {pageNum != 6 && menuStyling === false ? (
+          <>
+            <div className="flex flex-col justify-between h-10/12">
+              {pageNum === 0 ? (
+                <div className="flex items-center justify-center w-full h-full">
+                  {pages[0]}
+                </div>
+              ) : (
+                <>
+                  <Steps active={pageNum} />
+                  <RestrictionProvider>{currentPage}</RestrictionProvider>
+                  <NavButtons
+                    pageNum={pageNum}
+                    setPageNum={setPageNum}
+                    pageCap={pages.length}
+                  />
+                </>
+              )}
             </div>
-          ) : (
-            <>
-              <Steps active={pageNum} />
-              <RestrictionProvider>{currentPage}</RestrictionProvider>
-              <NavButtons
-                pageNum={pageNum}
-                setPageNum={setPageNum}
-                pageCap={pages.length}
-              />
-            </>
-          )}
-        </div>
+          </>
+        ) : (
+          <MenuPage />
+        )}
       </GuestProvider>
     </div>
   );

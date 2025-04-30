@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 import { RestrictionsContext } from "./contexts/RestrictionsContext";
+import { p } from "motion/react-client";
 const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
   const { guestNum, numOfDishes, guests } = useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
@@ -18,7 +19,7 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
       case 4:
         setBtnState(false);
         break;
-      case pageCap:
+      case 5:
       default:
         setBtnState(true);
         break;
@@ -26,21 +27,38 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
   }, [pageNum, guestNum, guests]);
   return (
     <div className="flex justify-between h-fit items-end">
-      <button
-        className="btn btn-secondary"
-        onClick={() => setPageNum((prev) => prev - 1)}
-        disabled={pageNum === 0}
-      >
-        {pageNum != 4 ? "Back" : "Go Back"}
-      </button>
-      <button
-        className="btn btn-primary"
-        onClick={() => setPageNum((prev) => prev + 1)}
-        disabled={btnState}
-      >
-        {/* Changing the text based on page */}
-        {pageNum != 4 ? "Next" : "Confirm"}
-      </button>
+      {pageNum != 5 ? (
+        <>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setPageNum((prev) => prev - 1)}
+            disabled={pageNum === 0}
+          >
+            {pageNum != 4 ? "Back" : "Go Back"}
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => setPageNum((prev) => prev + 1)}
+            disabled={btnState}
+          >
+            {/* Changing the text based on page */}
+            {pageNum != 4 ? "Next" : "Confirm"}
+          </button>
+        </>
+      ) : (
+        <>
+          <p>Generate menu invites?</p>
+          <div>
+            <button
+              className="btn btn-secondary mr-1"
+              onClick={() => setPageNum((prev) => prev + 1)}
+            >
+              Yes
+            </button>
+            <button className="btn btn-primary">No</button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
