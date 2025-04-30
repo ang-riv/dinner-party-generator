@@ -19,7 +19,9 @@ const GuestNamePage = () => {
   }, []);
   //* add new guest
   const handleNewGuest = () => {
-    setGuests([{ name: guestName, preference: "Any", recipe: "" }, ...guests]);
+    const properName =
+      guestName.charAt(0).toUpperCase() + guestName.slice(1).toLowerCase();
+    setGuests([{ name: properName, preference: "Any", recipe: "" }, ...guests]);
     if (nameRef.current) nameRef.current.value = "";
   };
 
