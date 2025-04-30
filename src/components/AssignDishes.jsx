@@ -75,19 +75,20 @@ const AssignDishes = () => {
   }, [guestCopy, dishesCopy]);
 
   return (
-    <>
+    <div className="size-full">
       {isLoading ? (
-        <>
+        <div className="size-full flex flex-col justify-center items-center">
           <h3>Assigning Dishes...</h3>
           <span className="loading loading-spinner text-primary loading-xl"></span>
-        </>
+        </div>
       ) : (
         <>
-          {/* Appetizers */}
+          {/* courses */}
           {filtered.map((course, index) => (
             <div key={index} className="my-2">
               <h2 className="text-center text-2xl py-2">{course}</h2>
               <div className=" flex justify-around flex-wrap">
+                {/* dishes per course */}
                 {finalCopy.map((guest, index) => {
                   if (guest.recipe.course === course) {
                     return (
@@ -105,7 +106,7 @@ const AssignDishes = () => {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 };
 
