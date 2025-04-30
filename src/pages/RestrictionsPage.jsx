@@ -10,6 +10,7 @@ const RestrictionsPage = () => {
   const inputRef = useRef(null);
   const [restrictionName, setRestrictionName] = useState("");
   const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
+  const [alert, setAlert] = useState(false);
 
   //* loading for api
   const [isLoading, setIsLoading] = useState(false);
@@ -31,10 +32,12 @@ const RestrictionsPage = () => {
         if (!response.ok) throw new Error("API request failed");
 
         const data = await response.json();
-
+        const capitalIngredient =
+          ingredient.charAt(0).toUpperCase() +
+          ingredient.slice(1).toLowerCase();
         // if it is a food, add to array
         if (data.products.length > 0) {
-          setFoodRestrictions([...foodRestrictions, ingredient]);
+          setFoodRestrictions([...foodRestrictions, capitalIngredient]);
           setIsLoading(false);
           console.log("is a food item!");
         } else {
@@ -58,8 +61,8 @@ const RestrictionsPage = () => {
       searchIngredient(search);
     }
 
-    // cap off number of allergies/dislikes at 10
-    foodRestrictions.length >= 2
+    // cap off number of allergies/dislikes at 5
+    foodRestrictions.length >= 5
       ? setRestrictionCap(true)
       : setRestrictionCap(false);
   }, [search, foodRestrictions]);
@@ -75,6 +78,14 @@ const RestrictionsPage = () => {
     }
   };
 
+  const handleAdd = () => {
+    if (inputRef.current.checkValidity()) {
+      setSearch(restrictionName);
+      setAlert(false);
+    } else {
+      setAlert(true);
+    }
+  };
   const handleRemove = (foodItem) => {
     const updatedArr = foodRestrictions.filter((food) => food != foodItem);
     setFoodRestrictions(updatedArr);
@@ -109,7 +120,7 @@ const RestrictionsPage = () => {
           <input
             type="text"
             ref={inputRef}
-            className="input join-item"
+            className="input join-item invalid:border-red-400"
             name="allergies"
             id="allergies"
             minLength="3"
@@ -122,12 +133,19 @@ const RestrictionsPage = () => {
           />
           <button
             className="btn btn-primary join-item"
-            onClick={() => setSearch(restrictionName)}
+            onClick={handleAdd}
             disabled={restrictionCap}
           >
             +Add
           </button>
         </div>
+        {alert && (
+          <div>
+            <p className="text-xs text-red-400">
+              Must be more than 3 letters and characters only.
+            </p>
+          </div>
+        )}
       </div>
       {/* display */}
       <div className="h-3/8 border border-blue-400">
