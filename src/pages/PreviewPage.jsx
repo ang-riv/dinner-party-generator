@@ -5,14 +5,16 @@ import { RestrictionsContext } from "../components/contexts/RestrictionsContext"
 import AssignDishes from "../components/AssignDishes";
 
 const PreviewPage = () => {
-  const { courses, numOfDishes, dishes, setDishes, filteredCourses } =
-    useContext(GuestContext);
+  const { courses, numOfDishes, dishes, setDishes } = useContext(GuestContext);
   const { dietRestrictions, foodRestrictions } =
     useContext(RestrictionsContext);
 
   const apiKey = import.meta.env.VITE_APP_SPOONACULAR_KEY;
 
   // filter out unused categories
+  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+
+  console.log(filtered);
   const [isLoading, setIsLoading] = useState(false);
 
   /*
@@ -24,17 +26,8 @@ const PreviewPage = () => {
     { title: "B", preference: "", course: "Beverages" },
   ]);
 */
-  const [assigning, setAssigning] = useState([]);
-  const [fetchedDishes, setFetchedDishes] = useState(false);
+
   useEffect(() => {
-    //* testDishes
-    /*
-    setDishes([
-      { title: "A", assigned: false, course: "Appetizers" },
-      { title: "D", assigned: false, course: "Desserts" },
-      { title: "B", assigned: false, course: "Beverages" },
-    ]);
-*/
     // * fetch dishes including restrictions
     const fetchDishes = async (course) => {
       let specificCourse = "";
@@ -70,7 +63,7 @@ const PreviewPage = () => {
     };
     // * fetch for each course that isn't 0
     const fetchAll = async () => {
-      const fetchCourses = filteredCourses.map((course) => fetchDishes(course));
+      const fetchCourses = filtered.map((course) => fetchDishes(course));
       const dishes = await Promise.all(fetchCourses);
       setDishes(dishes.flat());
       setIsLoading(false);
@@ -78,13 +71,6 @@ const PreviewPage = () => {
 
     fetchAll();
   }, []);
-
-  useEffect(() => {
-    // either use a bool or use another arr to keep the new dishes
-    //setFetchedDishes(true);
-  }, [dishes]);
-  // problem is that dishes need to be set first before they can be passed as a prop or it will just take the original value of empty
-  // ! implement a way to ensure that dishes is set first before assigning it as a prop
   return (
     <>
       {isLoading ? (

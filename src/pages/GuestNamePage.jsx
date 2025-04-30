@@ -3,22 +3,12 @@ import { GuestContext } from "../components/contexts/GuestContext";
 import { div } from "motion/react-client";
 
 const GuestNamePage = () => {
-  const {
-    courses,
-    guests,
-    setGuests,
-    guestNum,
-    numOfDishes,
-    setFilteredCourses,
-  } = useContext(GuestContext);
+  const { courses, guests, setGuests, guestNum, numOfDishes } =
+    useContext(GuestContext);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const [alert, setAlert] = useState(false);
-
-  useEffect(() => {
-    if (numOfDishes.length) setFilteredCourses(filtered);
-  }, []);
 
   //* add new guest
   const handleNewGuest = () => {

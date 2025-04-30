@@ -49,8 +49,8 @@ const ConfirmPage = () => {
         <h3 className="text-center">
           Dietary Restrictions, Allergies, Dislikes:
         </h3>
-        <p>➢{dietRestrictions.join(", ")}</p>
-        <p>➢{foodRestrictions.join(", ")}</p>
+        {dietRestrictions.length > 0 && <p>➢{dietRestrictions.join(", ")}</p>}
+        {foodRestrictions.length > 0 && <p>➢{foodRestrictions.join(", ")}</p>}
       </div>
     </div>
   );
