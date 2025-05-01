@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 
 const GuestNamePage = () => {
@@ -8,6 +8,47 @@ const GuestNamePage = () => {
   const nameRef = useRef(null);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const [alert, setAlert] = useState(false);
+
+  //* making sure that the prefs match the amount of dishes picked
+  const prefCounter = {};
+  for (let i = 0; i < filtered.length; i++) {
+    const course = filtered[i];
+    prefCounter[course] = 0;
+  }
+
+  const testCounter = { Appetizers: 0, Desserts: 0, Beverages: 0 };
+  // check how many times a course was chosen/pref made
+  const prefFreq = (arr, target) => {
+    // prevent it from doing it by making sure it only happens when that course is empty
+    if (testCounter[target] === 0) {
+      for (let i = 0; i < arr.length; i++) {
+        const pref = arr[i];
+        if (pref === target) {
+          testCounter[target] += 1;
+        }
+      }
+    } else {
+      console.log("Already ran once.");
+    }
+  };
+
+  const prefChecker = () => {
+    const testPrefs = [
+      "Appetizers",
+      "Appetizers",
+      "Desserts",
+      "Beverages",
+      "Beverages",
+    ];
+    const testCourses = ["Appetizers", "Desserts", "Beverages"];
+    const guestPrefs = guests.map((guest) => guest.preference);
+    // loop over the course categories chosen then find how many times it shows up in the prefs arr
+    for (const course in testCourses) {
+      prefFreq(testPrefs, testCourses[course]);
+    }
+    console.log("Test counter: ", testCounter);
+    console.log("Needs to match: ", numOfDishes);
+  };
 
   //* add new guest
   const handleNewGuest = () => {
@@ -27,7 +68,7 @@ const GuestNamePage = () => {
     if (nameRef.current) nameRef.current.value = "";
   };
 
-  //* set guest preferences
+  //* set guest preferences for select onChange
   const handlePref = (e, guestName) => {
     setGuests((prevGuests) =>
       prevGuests.map((guest) =>
@@ -41,6 +82,7 @@ const GuestNamePage = () => {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
   };
+
   return (
     <div className="h-10/12 flex flex-col justify-between px-2">
       {/* text */}
@@ -71,7 +113,7 @@ const GuestNamePage = () => {
           />
           <button
             className="join-item btn btn-primary"
-            onClick={handleNewGuest}
+            onClick={prefChecker}
             disabled={guests.length >= guestNum}
           >
             +Add
