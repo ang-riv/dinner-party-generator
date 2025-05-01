@@ -8,7 +8,8 @@ const GuestNamePage = () => {
   const nameRef = useRef(null);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const [alert, setAlert] = useState(false);
-
+  const [guestsAdded, setGuestsAdded] = useState(0);
+  const guestsLength = guests.length;
   //* making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
@@ -24,14 +25,19 @@ const GuestNamePage = () => {
   const testCourses = ["Appetizers", "Desserts", "Beverages"];
   const guestPrefs = guests.map((guest) => guest.preference);
 
+  useEffect(() => {
+    if (guestsLength === Number(guestNum)) {
+      console.log("Cap! All guests have been added");
+    }
+  }, [guestsLength]);
   // check how many times a course was chosen/pref made
   const prefFreq = (arr, target) => {
     // prevent it from doing it by making sure it only happens when that course is empty
-    if (testCounter[target] === 0) {
+    if (prefCounter[target] === 0) {
       for (let i = 0; i < arr.length; i++) {
         const pref = arr[i];
         if (pref === target) {
-          testCounter[target] += 1;
+          prefCounter[target] += 1;
         }
       }
     } else {
@@ -41,8 +47,8 @@ const GuestNamePage = () => {
 
   const prefChecker = () => {
     // loop over the course categories chosen then find how many times it shows up in the prefs arr
-    for (const course in testCourses) {
-      prefFreq(testPrefs, testCourses[course]);
+    for (const course in filtered) {
+      prefFreq(guestPrefs, filtered[course]);
     }
 
     // check if it matches or is less than the course category
@@ -52,11 +58,11 @@ const GuestNamePage = () => {
       0
     );
 
-    if (prefTotal <= testGuestNum) {
+    if (prefTotal <= guestNum) {
       // 2) loop through each and check the amounts under each course
-      for (const course in testCounter) {
-        let courseValue = testCounter[course];
-        if (courseValue <= testNumOfDishes[course]) {
+      for (const course in prefCounter) {
+        let courseValue = prefCounter[course];
+        if (courseValue <= numOfDishes[course]) {
           console.log("Valid!");
         } else {
           console.log("Invalid. This course has more than it should: ", course);
@@ -64,8 +70,8 @@ const GuestNamePage = () => {
       }
     }
 
-    console.log("Test counter: ", testCounter);
-    console.log("Needs to match: ", testNumOfDishes);
+    console.log("Test counter: ", prefCounter);
+    console.log("Needs to match: ", numOfDishes);
   };
 
   //* add new guest
@@ -101,6 +107,9 @@ const GuestNamePage = () => {
     setGuests(updatedArr);
   };
 
+  const test = () => {
+    console.log("Testing button.");
+  };
   return (
     <div className="h-10/12 flex flex-col justify-between px-2">
       {/* text */}
@@ -131,7 +140,7 @@ const GuestNamePage = () => {
           />
           <button
             className="join-item btn btn-primary"
-            onClick={prefChecker}
+            onClick={handleNewGuest}
             disabled={guests.length >= guestNum}
           >
             +Add
@@ -182,6 +191,9 @@ const GuestNamePage = () => {
             </div>
           ))}
         </div>
+        <button className="btn btn-primary" onClick={prefChecker}>
+          Pref Checker
+        </button>
       </div>
     </div>
   );
