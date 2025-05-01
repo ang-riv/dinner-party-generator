@@ -16,7 +16,14 @@ const GuestNamePage = () => {
     prefCounter[course] = 0;
   }
 
-  const testCounter = { Appetizers: 0, Desserts: 0, Beverages: 0 };
+  // ? testing variables
+  const testCounter = { Appetizers: 0, Entrees: 0, Beverages: 0 };
+  const testGuestNum = 6;
+  const testNumOfDishes = { Appetizers: 1, Entrees: 2, Beverages: 1 };
+  const testPrefs = ["Entrees", "Any", "Any", "Entrees", "Beverages"];
+  const testCourses = ["Appetizers", "Desserts", "Beverages"];
+  const guestPrefs = guests.map((guest) => guest.preference);
+
   // check how many times a course was chosen/pref made
   const prefFreq = (arr, target) => {
     // prevent it from doing it by making sure it only happens when that course is empty
@@ -33,21 +40,32 @@ const GuestNamePage = () => {
   };
 
   const prefChecker = () => {
-    const testPrefs = [
-      "Appetizers",
-      "Appetizers",
-      "Desserts",
-      "Beverages",
-      "Beverages",
-    ];
-    const testCourses = ["Appetizers", "Desserts", "Beverages"];
-    const guestPrefs = guests.map((guest) => guest.preference);
     // loop over the course categories chosen then find how many times it shows up in the prefs arr
     for (const course in testCourses) {
       prefFreq(testPrefs, testCourses[course]);
     }
+
+    // check if it matches or is less than the course category
+    // 1) compare the pref number, should be <= guestNum as everyone or a few can make a pref
+    const prefTotal = Object.values(prefCounter).reduce(
+      (acc, num) => acc + num,
+      0
+    );
+
+    if (prefTotal <= testGuestNum) {
+      // 2) loop through each and check the amounts under each course
+      for (const course in testCounter) {
+        let courseValue = testCounter[course];
+        if (courseValue <= testNumOfDishes[course]) {
+          console.log("Valid!");
+        } else {
+          console.log("Invalid. This course has more than it should: ", course);
+        }
+      }
+    }
+
     console.log("Test counter: ", testCounter);
-    console.log("Needs to match: ", numOfDishes);
+    console.log("Needs to match: ", testNumOfDishes);
   };
 
   //* add new guest
