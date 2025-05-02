@@ -182,6 +182,7 @@ const GuestNamePage = () => {
                 <button
                   className="btn btn-primary btn-xs mr-1"
                   onClick={() => handleRemoveGuest(guest.name)}
+                  disabled={prefsValid}
                 >
                   X
                 </button>
@@ -190,6 +191,7 @@ const GuestNamePage = () => {
               <select
                 className="select select-primary select-md w-[50%]"
                 onChange={(e) => handlePref(e.target.value, guest.name)}
+                disabled={prefsValid}
               >
                 <option key="Any" value="Any">
                   Any
