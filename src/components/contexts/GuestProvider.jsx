@@ -18,6 +18,7 @@ function GuestProvider({ children }) {
 
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [dishes, setDishes] = useState([]);
+  const [prefsValid, setPrefsValid] = useState(false);
   return (
     <GuestContext
       value={{
@@ -32,6 +33,8 @@ function GuestProvider({ children }) {
         setDishes,
         setFilteredCourses,
         filteredCourses,
+        prefsValid,
+        setPrefsValid,
       }}
     >
       {children}

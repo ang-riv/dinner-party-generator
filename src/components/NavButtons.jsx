@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GuestContext } from "./contexts/GuestContext";
-const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
-  const { guestNum, guests } = useContext(GuestContext);
+const NavButtons = ({ pageNum, setPageNum }) => {
+  const { guestNum, guests, prefsValid } = useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
 
   // each page will have requirements that need to be fulfilled to make the next button active
@@ -11,7 +11,9 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
         guestNum != 0 ? setBtnState(false) : setBtnState(true);
         break;
       case 2:
-        guests.length != guestNum ? setBtnState(true) : setBtnState(false);
+        guests.length === Number(guestNum) && prefsValid === true
+          ? setBtnState(false)
+          : setBtnState(true);
         break;
       case 3:
       case 4:
@@ -22,7 +24,9 @@ const NavButtons = ({ pageNum, setPageNum, pageCap }) => {
         setBtnState(true);
         break;
     }
-  }, [pageNum, guestNum, guests]);
+    console.log("Guests and guestNum: ", guests.length, guestNum);
+    console.log("Prefs Valid State:", prefsValid);
+  }, [pageNum, guestNum, guests, prefsValid]);
   return (
     <div className="flex justify-between h-fit items-end">
       {pageNum != 5 ? (

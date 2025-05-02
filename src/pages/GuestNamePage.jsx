@@ -2,14 +2,23 @@ import React, { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 
 const GuestNamePage = () => {
-  const { courses, guests, setGuests, guestNum, numOfDishes } =
-    useContext(GuestContext);
+  const {
+    courses,
+    guests,
+    setGuests,
+    guestNum,
+    numOfDishes,
+    setPrefsValid,
+    prefsValid,
+  } = useContext(GuestContext);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const [alert, setAlert] = useState(false);
   const [guestsAdded, setGuestsAdded] = useState(0);
   const guestsLength = guests.length;
+  const [submitDisabled, isSubmitDisabled] = useState(true);
+  const invalidPrefs = [];
   //* making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
@@ -27,9 +36,14 @@ const GuestNamePage = () => {
 
   useEffect(() => {
     if (guestsLength === Number(guestNum)) {
-      console.log("Cap! All guests have been added");
+      console.log("Cap! All guests have been added. Activate checker.");
+      isSubmitDisabled(false);
     }
-  }, [guestsLength]);
+    if (prefsValid) {
+      isSubmitDisabled(true);
+    }
+  }, [guestsLength, submitDisabled, prefsValid]);
+
   // check how many times a course was chosen/pref made
   const prefFreq = (arr, target) => {
     // prevent it from doing it by making sure it only happens when that course is empty
@@ -66,11 +80,13 @@ const GuestNamePage = () => {
           console.log("Valid!");
         } else {
           console.log("Invalid. This course has more than it should: ", course);
+          invalidPrefs.push(course);
         }
       }
     }
-
-    console.log("Test counter: ", prefCounter);
+    invalidPrefs != 0 ? setPrefsValid(false) : setPrefsValid(true);
+    console.log("Invalid courses: ", invalidPrefs.length);
+    console.log("Pref counter: ", prefCounter);
     console.log("Needs to match: ", numOfDishes);
   };
 
@@ -105,10 +121,6 @@ const GuestNamePage = () => {
   const handleRemoveGuest = (guestName) => {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
-  };
-
-  const test = () => {
-    console.log("Testing button.");
   };
   return (
     <div className="h-10/12 flex flex-col justify-between px-2">
@@ -191,9 +203,15 @@ const GuestNamePage = () => {
             </div>
           ))}
         </div>
-        <button className="btn btn-primary" onClick={prefChecker}>
-          Pref Checker
-        </button>
+        <div className="flex justify-center">
+          <button
+            className="btn btn-primary"
+            onClick={prefChecker}
+            disabled={submitDisabled}
+          >
+            Submit Guests
+          </button>
+        </div>
       </div>
     </div>
   );
