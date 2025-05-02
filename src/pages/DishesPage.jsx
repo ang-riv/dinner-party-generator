@@ -33,58 +33,63 @@ const DishesPage = () => {
     0
   );
   return (
-    <div className="h-10/12 flex flex-col px-2 justify-between">
+    <div className="min-h-10/12 h-full flex flex-col px-2 justify-around">
       <h2 className="flex justify-center items-center text-center text-4xl  h-2/8">
         Dish Info
       </h2>
       {/* guest number */}
-      <div className="h-1/8">
-        <p className="mb-1.5">How many people will be cooking?</p>
-        <select
-          defaultValue="0"
-          className="select select-primary"
-          name="dishes"
-          id="dishes"
-          onChange={(e) => setGuestNum(e.target.value)}
-        >
-          <option disabled={true} value={0} key={0}>
-            Select number of guests...
-          </option>
-          {numOptions.map((num) => (
-            <option className="option" key={num} value={num}>
-              {num}
+      <div className="flex items-center justify-center w-full">
+        <div className="flex flex-col justify-center w-full max-w-[340px]">
+          <p className="mb-1.5">How many people will be cooking?</p>
+          <select
+            defaultValue="0"
+            className="select select-primary"
+            name="dishes"
+            id="dishes"
+            onChange={(e) => setGuestNum(e.target.value)}
+          >
+            <option disabled={true} value={0} key={0}>
+              Select number of guests...
             </option>
-          ))}
-        </select>
+            {numOptions.map((num) => (
+              <option className="option" key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+
       {/* number of dishes per course */}
-      <div className=" h-4/8 flex flex-col justify-center">
-        <p className="mb-1.5">How many dishes per course?</p>
-        <div className="w-full">
-          {dishCounters.map((course) => (
-            <div className="flex justify-between mb-2" key={course.title}>
-              <p>{course.title}</p>
-              <div className="flex items-baseline">
-                <button
-                  className="btn btn-xs btn-primary"
-                  onClick={() => handleAdd(course.title)}
-                  disabled={totalDishes >= guestNum}
-                >
-                  +
-                </button>
-                <p className="w-10 flex justify-center">
-                  {numOfDishes[course.title]}/{guestNum}
-                </p>
-                <button
-                  className="btn btn-xs btn-primary"
-                  onClick={() => handleSubtract(course.title)}
-                  disabled={numOfDishes[course.title] === 0}
-                >
-                  -
-                </button>
+      <div className=" h-3/8 flex flex-col items-center w-full">
+        <div className="flex flex-col max-w-[340px] w-full h-full justify-center">
+          <p className="mb-1.5">How many dishes per course?</p>
+          <div className="w-full">
+            {dishCounters.map((course) => (
+              <div className="flex justify-between mb-2" key={course.title}>
+                <p>{course.title}</p>
+                <div className="flex items-baseline">
+                  <button
+                    className="btn btn-xs btn-primary"
+                    onClick={() => handleAdd(course.title)}
+                    disabled={totalDishes >= guestNum}
+                  >
+                    +
+                  </button>
+                  <p className="w-10 flex justify-center">
+                    {numOfDishes[course.title]}/{guestNum}
+                  </p>
+                  <button
+                    className="btn btn-xs btn-primary"
+                    onClick={() => handleSubtract(course.title)}
+                    disabled={numOfDishes[course.title] === 0}
+                  >
+                    -
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

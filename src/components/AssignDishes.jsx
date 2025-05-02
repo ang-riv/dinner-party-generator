@@ -61,7 +61,6 @@ const AssignDishes = () => {
     const leftoverDishes = updatedDishesCopy.filter(
       (dish) => dish.assigned === false
     );
-
     // 6) assign the leftover dishes to the guests that don't have a pref
     const leftoverGuests = noPrefs.map((guest, index) => ({
       ...guest,

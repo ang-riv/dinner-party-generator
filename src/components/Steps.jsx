@@ -20,8 +20,8 @@ const Steps = ({ active }) => {
         );
   }
   return (
-    <div className="h-fit">
-      <ul className="steps">{steps}</ul>
+    <div className="h-fit flex justify-center w-full min-w-[320px]">
+      <ul className="steps w-full">{steps}</ul>
     </div>
   );
 };
