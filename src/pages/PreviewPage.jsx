@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import PreviewCard from "./PreviewCard";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import AssignDishes from "../components/AssignDishes";
 
 const PreviewPage = () => {
-  const { courses, numOfDishes, setDishes } = useContext(GuestContext);
+  const { courses, numOfDishes, setDishes, dishes } = useContext(GuestContext);
   const { dietRestrictions, foodRestrictions } =
     useContext(RestrictionsContext);
-
   const apiKey = import.meta.env.VITE_APP_SPOONACULAR_KEY;
 
   // filter out unused categories
@@ -71,6 +69,7 @@ const PreviewPage = () => {
 
     fetchAll();
   }, []);
+  console.log(dishes);
   return (
     <>
       {isLoading ? (

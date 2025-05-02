@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { GuestContext } from "./contexts/GuestContext";
 import { div, h2 } from "motion/react-client";
 import PreviewCard from "../pages/PreviewCard";
@@ -17,12 +23,16 @@ const AssignDishes = () => {
 
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
 
-  const allocateDishes = () => {
+  const allocateDishes = useCallback(() => {
     // 1) take the guests and separate w/ local copies
     const hasPrefs = guests.filter((guest) => guest.preference != "Any");
     const noPrefs = guests.filter((guest) => guest.preference === "Any");
     const updatedHasPrefs = [...hasPrefs];
     const updatedDishesCopy = [...updatedDishes];
+
+    //* testing
+    console.log("Guests with prefs: ", hasPrefs);
+    console.log("Guest without prefs: ", noPrefs);
 
     // 2) map over the dishes
     for (let i = 0; i < updatedDishesCopy.length; i++) {
@@ -61,9 +71,12 @@ const AssignDishes = () => {
     // 7) combine the guests and update
     const assignedGuests = [...updatedHasPrefs, ...leftoverGuests];
 
-    setFinalCopy(assignedGuests);
-    setGuests(assignedGuests);
-  };
+    // since it's in useEffect, prevent an infinite loop
+    if (finalCopy.length === 0) {
+      setFinalCopy(assignedGuests);
+      setGuests(assignedGuests);
+    }
+  }, [guests, updatedDishes, finalCopy]);
 
   useEffect(() => {
     // run only when they aren't empty
@@ -73,7 +86,7 @@ const AssignDishes = () => {
     } else {
       setIsLoading(true);
     }
-  }, [guestCopy, dishesCopy, isLoading, allocateDishes]);
+  }, [guestCopy, dishesCopy, allocateDishes]);
 
   return (
     <div className="size-full">
