@@ -73,7 +73,7 @@ const AssignDishes = () => {
     } else {
       setIsLoading(true);
     }
-  }, [guestCopy, dishesCopy]);
+  }, [guestCopy, dishesCopy, isLoading, allocateDishes]);
 
   return (
     <div className="size-full">

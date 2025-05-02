@@ -14,15 +14,18 @@ const GuestNamePage = () => {
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
-  const [alert, setAlert] = useState(false);
-  const [guestsAdded, setGuestsAdded] = useState(0);
   const guestsLength = guests.length;
   const [submitDisabled, isSubmitDisabled] = useState(true);
-  const invalidPrefs = [];
-  const [invalidCourses, setInvalidCourses] = useState([]);
-  let invalidLength = 0;
-  const [count, setCount] = useState({});
+
+  // * error name input
+  const [alert, setAlert] = useState(false);
+  // * error guests prefs don't match numOfDishes
   const [prefError, setPrefError] = useState(false);
+  const [count, setCount] = useState({});
+  const [invalidCourses, setInvalidCourses] = useState([]);
+  const invalidPrefs = [];
+  let invalidLength = 0;
+
   //* making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
@@ -30,12 +33,6 @@ const GuestNamePage = () => {
     prefCounter[course] = 0;
   }
 
-  // ? testing variables
-  const testCounter = { Appetizers: 0, Entrees: 0, Beverages: 0 };
-  const testGuestNum = 6;
-  const testNumOfDishes = { Appetizers: 1, Entrees: 2, Beverages: 1 };
-  const testPrefs = ["Entrees", "Any", "Any", "Entrees", "Beverages"];
-  const testCourses = ["Appetizers", "Desserts", "Beverages"];
   const guestPrefs = guests.map((guest) => guest.preference);
 
   useEffect(() => {
@@ -226,7 +223,6 @@ const GuestNamePage = () => {
             className="btn btn-primary"
             onClick={prefChecker}
             disabled={submitDisabled}
-            hidden={prefError}
           >
             Submit Guests
           </button>
