@@ -19,6 +19,10 @@ const GuestNamePage = () => {
   const guestsLength = guests.length;
   const [submitDisabled, isSubmitDisabled] = useState(true);
   const invalidPrefs = [];
+  const [invalidCourses, setInvalidCourses] = useState([]);
+  let invalidLength = 0;
+  const [count, setCount] = useState({});
+  const [prefError, setPrefError] = useState(false);
   //* making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
@@ -35,14 +39,16 @@ const GuestNamePage = () => {
   const guestPrefs = guests.map((guest) => guest.preference);
 
   useEffect(() => {
-    if (guestsLength === Number(guestNum)) {
+    if (guestsLength === Number(guestNum) || prefError) {
       console.log("Cap! All guests have been added. Activate checker.");
       isSubmitDisabled(false);
     }
     if (prefsValid) {
       isSubmitDisabled(true);
     }
-  }, [guestsLength, submitDisabled, prefsValid]);
+    invalidLength = invalidCourses.length;
+    console.log("InvalidLength: ", invalidLength);
+  }, [guestsLength, submitDisabled, prefsValid, prefError, invalidLength]);
 
   // check how many times a course was chosen/pref made
   const prefFreq = (arr, target) => {
@@ -84,7 +90,17 @@ const GuestNamePage = () => {
         }
       }
     }
-    invalidPrefs != 0 ? setPrefsValid(false) : setPrefsValid(true);
+
+    if (invalidPrefs != 0) {
+      setPrefsValid(false);
+      setPrefError(true);
+      setInvalidCourses([...invalidPrefs]);
+      setCount({ ...prefCounter });
+    } else {
+      setPrefsValid(true);
+      setPrefError(false);
+    }
+
     console.log("Invalid courses: ", invalidPrefs.length);
     console.log("Pref counter: ", prefCounter);
     console.log("Needs to match: ", numOfDishes);
@@ -123,7 +139,7 @@ const GuestNamePage = () => {
     setGuests(updatedArr);
   };
   return (
-    <div className="h-10/12 flex flex-col justify-between px-2">
+    <div className="min-h-10/12 flex flex-col justify-between px-2">
       {/* text */}
       <h2 className="h-2/8 flex justify-center items-center text-center text-4xl  ">
         Guest Names
@@ -210,10 +226,34 @@ const GuestNamePage = () => {
             className="btn btn-primary"
             onClick={prefChecker}
             disabled={submitDisabled}
+            hidden={prefError}
           >
             Submit Guests
           </button>
         </div>
+        {prefError && (
+          <div className="flex justify-center items-center flex-col outline outline-purple-300">
+            <p className="text-center text-sm">
+              Error: Preferences do not match dish number. Please adjust to
+              match.
+            </p>
+            <div className="flex flex-col justify-center w-3/6">
+              {invalidCourses.map((course, index) => (
+                <div key={index} className="flex justify-between">
+                  <p>{course}</p>
+                  <div>
+                    <p>
+                      <span className="text-red-400 font-semibold">
+                        {count[course]}
+                      </span>
+                      /{numOfDishes[course]}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
