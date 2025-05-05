@@ -15,7 +15,7 @@ import TestStyles from "./TestStyles";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-  const menuStyling = true;
+  const menuStyling = false;
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -35,7 +35,7 @@ function MainApp() {
       <GuestProvider>
         {pageNum != 6 && menuStyling === false ? (
           <>
-            <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-pink-400 py-3 overflow-y-scroll">
+            <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-pink-400 py-3">
               {pageNum === 0 ? (
                 <div className="flex items-center justify-center w-full h-full">
                   {pages[0]}

@@ -21,3 +21,7 @@ h1 {
   stroke-width: 1.5;
   stroke-linecap: round;
 }
+
+h3 {
+  font-size: 1.13em;
+}
