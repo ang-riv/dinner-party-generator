@@ -8,6 +8,7 @@ import RestrictionsPage from "./pages/RestrictionsPage";
 import PreviewPage from "./pages/PreviewPage";
 import GuestProvider from "./components/contexts/GuestProvider";
 import RestrictionProvider from "./components/contexts/RestrictionProvider";
+import StylingProvider from "./components/contexts/StylingProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
@@ -33,29 +34,31 @@ function MainApp() {
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <GuestProvider>
-        {pageNum != 6 && menuStyling === false ? (
-          <>
-            <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-pink-400 py-3">
-              {pageNum === 0 ? (
-                <div className="flex items-center justify-center w-full h-full">
-                  {pages[0]}
-                </div>
-              ) : (
-                <>
-                  <Steps active={pageNum} />
-                  <RestrictionProvider>{currentPage}</RestrictionProvider>
-                  <NavButtons
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    pageCap={pages.length}
-                  />
-                </>
-              )}
-            </div>
-          </>
-        ) : (
-          <TestStyles />
-        )}
+        <StylingProvider>
+          {pageNum != 6 && menuStyling === false ? (
+            <>
+              <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-pink-400 py-3">
+                {pageNum === 0 ? (
+                  <div className="flex items-center justify-center w-full h-full">
+                    {pages[0]}
+                  </div>
+                ) : (
+                  <>
+                    <Steps active={pageNum} />
+                    <RestrictionProvider>{currentPage}</RestrictionProvider>
+                    <NavButtons
+                      pageNum={pageNum}
+                      setPageNum={setPageNum}
+                      pageCap={pages.length}
+                    />
+                  </>
+                )}
+              </div>
+            </>
+          ) : (
+            <TestStyles />
+          )}
+        </StylingProvider>
       </GuestProvider>
     </div>
   );

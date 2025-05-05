@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
+import { StylingContext } from "../components/contexts/StylingContext";
 const DishesPage = () => {
+  const { styles } = useContext(StylingContext);
   const { courses, guestNum, setGuestNum, numOfDishes, setNumOfDishes } =
     useContext(GuestContext);
 
@@ -33,7 +35,7 @@ const DishesPage = () => {
     0
   );
   return (
-    <div className="min-h-10/12 h-full flex flex-col overflow-y-scroll px-2">
+    <div className={styles.mainContentWrapper}>
       <h2 className="flex justify-center items-center text-center text-4xl h-2/8">
         Dish Info
       </h2>
