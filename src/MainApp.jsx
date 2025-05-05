@@ -11,10 +11,11 @@ import RestrictionProvider from "./components/contexts/RestrictionProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
+import TestStyles from "./TestStyles";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-  const menuStyling = false;
+  const menuStyling = true;
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -53,7 +54,7 @@ function MainApp() {
             </div>
           </>
         ) : (
-          <MenuPage />
+          <TestStyles />
         )}
       </GuestProvider>
     </div>
