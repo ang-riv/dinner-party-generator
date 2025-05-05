@@ -36,11 +36,9 @@ const DishesPage = () => {
   );
   return (
     <div className={styles.mainContentWrapper}>
-      <h2 className="flex justify-center items-center text-center text-4xl h-2/8">
-        Dish Info
-      </h2>
+      <h2 className={styles.sectionTitle}>Dish Info</h2>
       {/* content-wrapper */}
-      <div className=" min-h-6/8 flex flex-col justify-around">
+      <div className={styles.sectionContentWrapper}>
         {/* guest number */}
         <div className="flex items-center justify-center w-full">
           <div className="flex flex-col justify-center w-full max-w-[340px]">

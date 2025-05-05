@@ -1,7 +1,8 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
-
+import { StylingContext } from "../components/contexts/StylingContext";
 const GuestNamePage = () => {
+  const { styles } = useContext(StylingContext);
   const {
     courses,
     guests,
@@ -136,120 +137,121 @@ const GuestNamePage = () => {
     setGuests(updatedArr);
   };
   return (
-    <div className="min-h-10/12 flex flex-col justify-between px-2">
+    <div className={styles.mainContentWrapper}>
       {/* text */}
-      <h2 className="h-2/8 flex justify-center items-center text-center text-4xl  ">
-        Guest Names
-      </h2>
-      <p className="h-2/8 text-sm text-center">
-        Enter the name of each guest and their preference in what course they
-        would like to make. If they have no preference, then they will be
-        assigned a random category.
-      </p>
-      {/* name input */}
-      <div className="h-1/8">
-        <div className="join w-full">
-          <input
-            ref={nameRef}
-            type="text"
-            placeholder="Enter a guest name..."
-            className="input join-item invalid:border-red-400"
-            spellCheck={false}
-            pattern="[A-Za-z]*"
-            minLength="3"
-            maxLength="30"
-            title="letters only"
-            onChange={(e) => setGuestName(e.target.value)}
-            onKeyDown={(e) => (e.key === "Enter" ? handleNewGuest() : null)}
-            disabled={guests.length >= guestNum}
-          />
-          <button
-            className="join-item btn btn-primary"
-            onClick={handleNewGuest}
-            disabled={guests.length >= guestNum}
-          >
-            +Add
-          </button>
-        </div>
-        {alert && (
-          <div>
-            <p className="text-xs text-red-400">
-              Must be longer than 3 letters with no characters.
-            </p>
-          </div>
-        )}
-      </div>
-      {/* display names + prefs */}
-      <div className="h-3/8 mb-1">
-        <div className="w-full flex justify-between h-1/8 text-sm">
-          <p>Name</p>
-          <p>Preference</p>
-        </div>
-        <div className="w-full border border-blue-300 h-7/8 overflow-y-scroll">
-          {guests.map((guest, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-baseline p-1"
+      <h2 className={styles.sectionTitle}>Guest Names</h2>
+      <div className={styles.sectionContentWrapper}>
+        <p className="h-2/8 text-center">
+          Enter the name of each guest and their preference in what course they
+          would like to make. If they have no preference, then they will be
+          assigned a random category.
+        </p>
+
+        {/* name input */}
+        <div className="h-1/8 w-full flex justify-center items-center">
+          <div className="join max-w-[310px] w-full">
+            <input
+              ref={nameRef}
+              type="text"
+              placeholder="Enter a guest name..."
+              className="input join-item invalid:border-red-400"
+              spellCheck={false}
+              pattern="[A-Za-z]*"
+              minLength="3"
+              maxLength="30"
+              title="letters only"
+              onChange={(e) => setGuestName(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter" ? handleNewGuest() : null)}
+              disabled={guests.length >= guestNum}
+            />
+            <button
+              className="join-item btn btn-primary"
+              onClick={handleNewGuest}
+              disabled={guests.length >= guestNum}
             >
-              <div className="flex items-center">
-                <button
-                  className="btn btn-primary btn-xs mr-1"
-                  onClick={() => handleRemoveGuest(guest.name)}
+              +Add
+            </button>
+          </div>
+          {alert && (
+            <div>
+              <p className="text-xs text-red-400">
+                Must be longer than 3 letters with no characters.
+              </p>
+            </div>
+          )}
+        </div>
+        {/* display names + prefs */}
+        <div className="h-3/8 mb-1">
+          <div className="w-full flex justify-between h-1/8 text-sm">
+            <p>Name</p>
+            <p>Preference</p>
+          </div>
+          <div className="w-full border border-blue-300 h-7/8 overflow-y-scroll">
+            {guests.map((guest, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-baseline p-1"
+              >
+                <div className="flex items-center">
+                  <button
+                    className="btn btn-primary btn-xs mr-1"
+                    onClick={() => handleRemoveGuest(guest.name)}
+                    disabled={prefsValid}
+                  >
+                    X
+                  </button>
+                  <p className="font-semibold">{guest.name}</p>
+                </div>
+                <select
+                  className="select select-primary select-md w-[50%]"
+                  onChange={(e) => handlePref(e.target.value, guest.name)}
                   disabled={prefsValid}
                 >
-                  X
-                </button>
-                <p className="font-semibold">{guest.name}</p>
-              </div>
-              <select
-                className="select select-primary select-md w-[50%]"
-                onChange={(e) => handlePref(e.target.value, guest.name)}
-                disabled={prefsValid}
-              >
-                <option key="Any" value="Any">
-                  Any
-                </option>
-                {filtered.map((course) => (
-                  <option key={course} value={course}>
-                    {course}
+                  <option key="Any" value="Any">
+                    Any
                   </option>
-                ))}
-              </select>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="btn btn-primary"
-            onClick={prefChecker}
-            disabled={submitDisabled}
-          >
-            Submit Guests
-          </button>
-        </div>
-        {prefError && (
-          <div className="flex justify-center items-center flex-col outline outline-purple-300">
-            <p className="text-center text-sm">
-              Error: Preferences do not match dish number. Please adjust to
-              match.
-            </p>
-            <div className="flex flex-col justify-center w-3/6">
-              {invalidCourses.map((course, index) => (
-                <div key={index} className="flex justify-between">
-                  <p>{course}</p>
-                  <div>
-                    <p>
-                      <span className="text-red-400 font-semibold">
-                        {count[course]}
-                      </span>
-                      /{numOfDishes[course]}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  {filtered.map((course) => (
+                    <option key={course} value={course}>
+                      {course}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
           </div>
-        )}
+          {prefError && (
+            <div className="flex justify-center items-center flex-col my-2 outline outline-red-400">
+              <p className="text-center text-sm">
+                Error: Preferences do not match dish number. Please adjust to
+                match and re-submit.
+              </p>
+              <div className="flex flex-col justify-center w-3/6">
+                {invalidCourses.map((course, index) => (
+                  <div key={index} className="flex justify-between">
+                    <p>{course}</p>
+                    <div>
+                      <p>
+                        <span className="text-red-400 font-semibold">
+                          {count[course]}
+                        </span>
+                        /{numOfDishes[course]}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="flex justify-center">
+            <button
+              className="btn btn-primary my-3"
+              onClick={prefChecker}
+              disabled={submitDisabled}
+            >
+              Submit Guests
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
