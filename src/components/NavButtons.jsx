@@ -28,7 +28,7 @@ const NavButtons = ({ pageNum, setPageNum }) => {
     console.log("Prefs Valid State:", prefsValid);
   }, [pageNum, guestNum, guests, prefsValid]);
   return (
-    <div className="flex justify-between items-end h-1/10 px-1.5">
+    <div className="flex justify-between items-end h-1/10 px-1.5 w-full">
       {pageNum != 5 ? (
         <>
           <button
