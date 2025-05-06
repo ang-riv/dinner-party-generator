@@ -24,8 +24,6 @@ const NavButtons = ({ pageNum, setPageNum }) => {
         setBtnState(true);
         break;
     }
-    console.log("Guests and guestNum: ", guests.length, guestNum);
-    console.log("Prefs Valid State:", prefsValid);
   }, [pageNum, guestNum, guests, prefsValid]);
   return (
     <div className="flex justify-between items-end h-1/10 px-1.5 w-full">
@@ -49,15 +47,15 @@ const NavButtons = ({ pageNum, setPageNum }) => {
         </>
       ) : (
         <>
-          <p>Generate menu invites?</p>
+          <p>Generate menu invitations?</p>
           <div>
+            <button className="btn btn-secondary mr-1">No</button>
             <button
-              className="btn btn-secondary mr-1"
+              className="btn btn-primary"
               onClick={() => setPageNum((prev) => prev + 1)}
             >
               Yes
             </button>
-            <button className="btn btn-primary">No</button>
           </div>
         </>
       )}
