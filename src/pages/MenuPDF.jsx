@@ -40,7 +40,7 @@ function LemonEmoji(props) {
 }
 
 const MenuPDF = () => {
-  const testing = true;
+  const testing = false;
 
   const targetRef = useRef();
   const { guests, numOfDishes, courses } = useContext(GuestContext);
@@ -50,7 +50,6 @@ const MenuPDF = () => {
     <div className="flex flex-col justify-center items-center min-h-screen w-full pt-34 pb-5">
       {testing ? (
         <div
-          ref={targetRef}
           className="size-24"
           style={{ backgroundColor: "white", color: "black" }}
         >
@@ -61,15 +60,24 @@ const MenuPDF = () => {
           <div
             className="w-[320px] max-w-96 h-fit py-6 flex justify-center items-center"
             style={{ backgroundColor: "#93c5fd" }}
+            ref={targetRef}
           >
             <div
-              className="w-11/12 min-h-11/12 bg-white rounded-t-full  pt-10"
-              style={{ outline: `2px solid ${primaryBlue}` }}
+              className="w-11/12 min-h-11/12 rounded-t-full  pt-10"
+              style={{
+                outlineWidth: "2px",
+                outlineColor: "#60a5fa",
+                outlineStyle: "solid",
+                backgroundColor: "white",
+              }}
             >
               <div className="relative -left-3 bottom-2">
                 <LemonEmoji />
               </div>
-              <h1 className="text-blue-400 text-[55px] leading-none text-center mb-8">
+              <h1
+                className="text-[55px] leading-none text-center mb-8"
+                style={{ color: primaryBlue }}
+              >
                 Dinner Party Menu
               </h1>
 
@@ -86,7 +94,10 @@ const MenuPDF = () => {
                         {guests.map((guest) => {
                           if (guest.recipe.course === course) {
                             return (
-                              <p className="text-neutral-800 text-center px-5">
+                              <p
+                                className="text-center px-5"
+                                style={{ color: "#2d3748" }}
+                              >
                                 {guest.recipe.title}
                               </p>
                             );
