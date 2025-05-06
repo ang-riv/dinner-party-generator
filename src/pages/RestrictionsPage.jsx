@@ -132,6 +132,7 @@ const RestrictionsPage = () => {
               placeholder="Enter food item..."
               pattern="[A-Za-z]*"
               onChange={(e) => setRestrictionName(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter" ? handleAdd() : null)}
               disabled={restrictionCap}
             />
             <button

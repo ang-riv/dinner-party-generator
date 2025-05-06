@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
-import { div } from "motion/react-client";
 
 function LemonEmoji(props) {
   return (
@@ -43,7 +42,7 @@ const MenuPage = () => {
   const { guests, numOfDishes, courses } = useContext(GuestContext);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-center items-center min-h-screen w-full pt-34 pb-5">
       <div className="w-[320px] max-w-96 h-fit py-6 bg-blue-300 flex justify-center items-center">
         <div className="w-11/12 min-h-11/12 bg-white rounded-t-full outline-3 outline-blue-400 pt-10">
           <div className="relative -left-3 bottom-2">
@@ -82,7 +81,7 @@ const MenuPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-around mt-2">
+      <div className="flex justify-around mt-2 max-w-[360px] w-full">
         <button className="btn btn-secondary btn-lg text-lg">Print</button>
         <button className="btn btn-primary btn-lg text-lg">Start Over</button>
       </div>

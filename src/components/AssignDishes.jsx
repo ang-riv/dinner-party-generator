@@ -6,9 +6,10 @@ import React, {
   useCallback,
 } from "react";
 import { GuestContext } from "./contexts/GuestContext";
-import { div, h2 } from "motion/react-client";
+import { StylingContext } from "./contexts/StylingContext";
 import PreviewCard from "../pages/PreviewCard";
 const AssignDishes = () => {
+  const { styles } = useContext(StylingContext);
   const { courses, guests, setGuests, dishes, numOfDishes } =
     useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +89,7 @@ const AssignDishes = () => {
   }, [guestCopy, dishesCopy, allocateDishes]);
 
   return (
-    <div className="size-full">
+    <div className={styles.mainContentWrapper}>
       {isLoading ? (
         <div className="size-full flex flex-col justify-center items-center">
           <h3>Assigning Dishes...</h3>
