@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
+import { div } from "motion/react-client";
 
 function LemonEmoji(props) {
   return (
@@ -42,42 +43,48 @@ const MenuPage = () => {
   const { guests, numOfDishes, courses } = useContext(GuestContext);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   return (
-    <div className="w-[320px] max-w-96 h-full bg-blue-300 flex justify-center items-center">
-      <div className="w-11/12 min-h-11/12 bg-white rounded-t-full outline-3 outline-blue-400 pt-10">
-        <div className="relative -left-3 bottom-2">
-          <LemonEmoji />
-        </div>
-        <h1 className="text-blue-400 text-[55px] leading-none text-center mb-8">
-          Dinner Party Menu
-        </h1>
+    <div className="flex flex-col">
+      <div className="w-[320px] max-w-96 h-fit py-6 bg-blue-300 flex justify-center items-center">
+        <div className="w-11/12 min-h-11/12 bg-white rounded-t-full outline-3 outline-blue-400 pt-10">
+          <div className="relative -left-3 bottom-2">
+            <LemonEmoji />
+          </div>
+          <h1 className="text-blue-400 text-[55px] leading-none text-center mb-8">
+            Dinner Party Menu
+          </h1>
 
-        {/* courses + dishes */}
-        <div className="">
-          {filtered.map((course) => {
-            const courseTitle = course.toUpperCase();
-            return (
-              <div className="mb-10">
-                <h2 className="font-bold underline text-center text-blue-400">
-                  {courseTitle}
-                </h2>
-                <div>
-                  {guests.map((guest) => {
-                    if (guest.recipe.course === course) {
-                      return (
-                        <p className="text-neutral-800 text-center px-5">
-                          {guest.recipe.title}
-                        </p>
-                      );
-                    }
-                  })}
+          {/* courses + dishes */}
+          <div className="">
+            {filtered.map((course) => {
+              const courseTitle = course.toUpperCase();
+              return (
+                <div className="mb-10">
+                  <h2 className="font-bold underline text-center text-blue-400">
+                    {courseTitle}
+                  </h2>
+                  <div>
+                    {guests.map((guest) => {
+                      if (guest.recipe.course === course) {
+                        return (
+                          <p className="text-neutral-800 text-center px-5">
+                            {guest.recipe.title}
+                          </p>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          <div className="relative scale-x-[-1] top-3 -right-3">
+            <LemonEmoji />
+          </div>
         </div>
-        <div className="relative scale-x-[-1] top-3 -right-3">
-          <LemonEmoji />
-        </div>
+      </div>
+      <div className="flex justify-around mt-2">
+        <button className="btn btn-secondary btn-lg text-lg">Print</button>
+        <button className="btn btn-primary btn-lg text-lg">Start Over</button>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
+import { StylingContext } from "../components/contexts/StylingContext";
 const RestrictionsPage = () => {
+  const { styles } = useContext(StylingContext);
   const {
     dietRestrictions,
     setDietRestrictions,
@@ -91,106 +93,108 @@ const RestrictionsPage = () => {
     setFoodRestrictions(updatedArr);
   };
   return (
-    <div className="h-10/12 px-2 flex flex-col justify-around">
-      <h2 className="h-1/8 text-3xl text-center flex justify-center items-center">
+    <div className={styles.mainContentWrapper}>
+      <h2 className={styles.sectionTitle}>
         Dietary Restrictions, Allergies, Dislikes
       </h2>
-      {/* diet restrictions checkboxes */}
-      <div className="h-1/8">
-        <h3 className="text-center mb-1">Dietary Restrictions</h3>
-        <div className="flex flex-wrap">
-          {diets.map((diet) => (
-            <label key={diet} className="w-1/2 mb-2">
-              <input
-                className="checkbox checkbox-primary mr-2"
-                type="checkbox"
-                id={diet}
-                value={diet}
-                onChange={(e) => handleDiet(e)}
-              />
-              {diet}
-            </label>
-          ))}
-        </div>
-      </div>
-      {/* allergies/dislikes */}
-      <div className="h-1/8">
-        <h3 className="text-center mb-1">Allergies/Dislikes</h3>
-        <div className="join w-full ">
-          <input
-            type="text"
-            ref={inputRef}
-            className="input join-item invalid:border-red-400"
-            name="allergies"
-            id="allergies"
-            minLength="3"
-            maxLength="30"
-            autoComplete="off"
-            placeholder="Enter food item..."
-            pattern="[A-Za-z]*"
-            onChange={(e) => setRestrictionName(e.target.value)}
-            disabled={restrictionCap}
-          />
-          <button
-            className="btn btn-primary join-item"
-            onClick={handleAdd}
-            disabled={restrictionCap}
-          >
-            +Add
-          </button>
-        </div>
-        {alert && (
-          <div>
-            <p className="text-xs text-red-400">
-              Must be more than 3 letters and characters only.
-            </p>
+      <div className={styles.sectionContentWrapper}>
+        {/* diet restrictions checkboxes */}
+        <div className="h-1/8 flex flex-col justify-center items-center">
+          <h3 className="text-center mb-1">Dietary Restrictions</h3>
+          <div className="flex flex-wrap max-w-[360px]">
+            {diets.map((diet) => (
+              <label key={diet} className="w-1/2 mb-2">
+                <input
+                  className="checkbox checkbox-primary mr-2"
+                  type="checkbox"
+                  id={diet}
+                  value={diet}
+                  onChange={(e) => handleDiet(e)}
+                />
+                {diet}
+              </label>
+            ))}
           </div>
-        )}
-      </div>
-      {/* display */}
-      <div className="h-3/8 border border-blue-400">
-        {showError ? (
-          <div className="h-full w-full flex flex-col justify-center items-center">
-            <p className="text-center mb-2">
-              Food item not found. <br /> Please enter a food item.
-            </p>
+        </div>
+        {/* allergies/dislikes */}
+        <div className="h-1/8 flex flex-col justify-center items-center">
+          <h3 className="text-center mb-1">Allergies/Dislikes</h3>
+          <div className="join w-full flex justify-center items-center">
+            <input
+              type="text"
+              ref={inputRef}
+              className="input join-item invalid:border-red-400"
+              name="allergies"
+              id="allergies"
+              minLength="3"
+              maxLength="30"
+              autoComplete="off"
+              placeholder="Enter food item..."
+              pattern="[A-Za-z]*"
+              onChange={(e) => setRestrictionName(e.target.value)}
+              disabled={restrictionCap}
+            />
             <button
-              className="btn btn-primary"
-              onClick={() => setShowError(false)}
+              className="btn btn-primary join-item"
+              onClick={handleAdd}
+              disabled={restrictionCap}
             >
-              OK
+              +Add
             </button>
           </div>
-        ) : (
-          <>
-            {isLoading ? (
-              <div className="h-full w-full flex flex-col justify-center items-center">
-                <p className="text-center text-sm">
-                  Searching <span className="font-bold">Open Food Facts</span>
-                  <br /> for food item...
-                </p>
-                <span className="loading loading-spinner text-primary"></span>
-              </div>
-            ) : (
-              <div className="h-full w-full flex flex-col items-start p-1">
-                {foodRestrictions.map((foodItem) => (
-                  <div
-                    key={foodItem}
-                    className="w-1/2 h-1/5 flex items-center mb-1"
-                  >
-                    <button
-                      className="btn btn-primary btn-xs mr-1"
-                      onClick={() => handleRemove(foodItem)}
+          {alert && (
+            <div>
+              <p className="text-xs text-red-400">
+                Must be more than 3 letters and characters only.
+              </p>
+            </div>
+          )}
+        </div>
+        {/* display */}
+        <div className="h-3/8 border border-blue-400">
+          {showError ? (
+            <div className="h-full w-full flex flex-col justify-center items-center">
+              <p className="text-center mb-2">
+                Food item not found. <br /> Please enter a food item.
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowError(false)}
+              >
+                OK
+              </button>
+            </div>
+          ) : (
+            <>
+              {isLoading ? (
+                <div className="h-full w-full flex flex-col justify-center items-center">
+                  <p className="text-center text-sm">
+                    Searching <span className="font-bold">Open Food Facts</span>
+                    <br /> for food item...
+                  </p>
+                  <span className="loading loading-spinner text-primary"></span>
+                </div>
+              ) : (
+                <div className="h-full w-full flex flex-col items-start p-1">
+                  {foodRestrictions.map((foodItem) => (
+                    <div
+                      key={foodItem}
+                      className="w-1/2 h-1/5 flex items-center mb-1"
                     >
-                      X
-                    </button>
-                    <p>{foodItem}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+                      <button
+                        className="btn btn-primary btn-xs mr-1"
+                        onClick={() => handleRemove(foodItem)}
+                      >
+                        X
+                      </button>
+                      <p>{foodItem}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

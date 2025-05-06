@@ -98,10 +98,6 @@ const GuestNamePage = () => {
       setPrefsValid(true);
       setPrefError(false);
     }
-
-    console.log("Invalid courses: ", invalidPrefs.length);
-    console.log("Pref counter: ", prefCounter);
-    console.log("Needs to match: ", numOfDishes);
   };
 
   //* add new guest

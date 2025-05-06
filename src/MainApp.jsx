@@ -56,7 +56,7 @@ function MainApp() {
               </div>
             </>
           ) : (
-            <TestStyles />
+            <MenuPage />
           )}
         </StylingProvider>
       </GuestProvider>
