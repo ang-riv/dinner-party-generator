@@ -32,6 +32,7 @@ function MainApp() {
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", "dinnerTheme");
     setCurrentPage(pages[pageNum]);
   }, [pageNum]);
   return (
