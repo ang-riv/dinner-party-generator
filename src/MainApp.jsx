@@ -12,10 +12,6 @@ import StylingProvider from "./components/contexts/StylingProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
-import MenuPrint from "./pages/MenuPrint";
-import TestStyles from "./TestStyles";
-import { PDFViewer } from "@react-pdf/renderer";
-import MenuPDF from "./pages/MenuPDF";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
@@ -32,11 +28,13 @@ function MainApp() {
 
   const [currentPage, setCurrentPage] = useState(pages[0]);
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "dinnerTheme");
     setCurrentPage(pages[pageNum]);
   }, [pageNum]);
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
+    <div
+      className="flex justify-center items-center w-screen h-screen"
+      data-theme="dinnerTheme"
+    >
       <GuestProvider>
         <StylingProvider>
           {pageNum != 6 && menuStyling === false ? (
@@ -58,12 +56,7 @@ function MainApp() {
               )}
             </>
           ) : (
-            /*
-            <PDFViewer style={{ width: "100%", height: "100%" }}>
-              <MenuPrint />
-            </PDFViewer>
-            */
-            <MenuPDF />
+            <MenuPage />
           )}
         </StylingProvider>
       </GuestProvider>
