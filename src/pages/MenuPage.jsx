@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
-
 function LemonEmoji(props) {
   return (
     <svg
@@ -82,7 +81,7 @@ const MenuPage = () => {
         </div>
       </div>
       <div className="flex justify-around mt-2 max-w-[360px] w-full">
-        <button className="btn btn-secondary btn-lg text-lg">Print</button>
+        <button className="btn btn-secondary btn-lg text-lg">Save PDF</button>
         <button className="btn btn-primary btn-lg text-lg">Start Over</button>
       </div>
     </div>

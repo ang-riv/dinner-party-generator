@@ -12,11 +12,14 @@ import StylingProvider from "./components/contexts/StylingProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
+import MenuPrint from "./pages/MenuPrint";
 import TestStyles from "./TestStyles";
+import { PDFViewer } from "@react-pdf/renderer";
+import MenuPDF from "./pages/MenuPDF";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
-  const menuStyling = false;
+  const menuStyling = true;
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -54,7 +57,12 @@ function MainApp() {
               )}
             </>
           ) : (
-            <MenuPage />
+            /*
+            <PDFViewer style={{ width: "100%", height: "100%" }}>
+              <MenuPrint />
+            </PDFViewer>
+            */
+            <MenuPDF />
           )}
         </StylingProvider>
       </GuestProvider>

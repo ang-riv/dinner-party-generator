@@ -23,23 +23,11 @@ const TestStyles = () => {
               ornare varius. Nulla vulputate bibendum tortor, et eleifend risus
               vehicula sit amet. Aliquam erat volutpat. Donec sed placerat
               purus. Nam consequat justo non lectus commodo, ac pellentesque
-              massa gravida. Fusce posuere ut nunc quis venenatis. Curabitur
-              vitae dolor ac risus tempor pretium. Duis ac neque eget nibh
-              dictum semper. Quisque non magna id mi lobortis elementum et vitae
-              neque. Sed viverra consectetur mollis. Nunc imperdiet ante mi, non
-              pharetra ex sagittis a. Quisque at sem sed nisl tristique interdum
-              id in ipsum. Aliquam erat volutpat. Sed feugiat neque et quam
-              ornare varius. Nulla vulputate bibendum tortor, et eleifend risus
-              vehicula sit amet. Aliquam erat volutpat. Donec sed placerat
-              purus. Nam consequat justo non lectus commodo, ac pellentesque
-              massa gravida. Fusce posuere ut nunc quis venenatis. Curabitur
-              vitae dolor ac risus tempor pretium. Duis ac neque eget nibh
-              dictum semper. Quisque non magna id mi lobortis elementum et vitae
-              neque.
+              massa gravida.
             </p>
           </div>
         </div>
-        <NavButtons />
+        <button className="btn btn-primary">Print</button>
       </div>
     </div>
   );
