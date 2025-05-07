@@ -3,7 +3,6 @@ import { GuestContext } from "./contexts/GuestContext";
 const NavButtons = ({ pageNum, setPageNum }) => {
   const { guestNum, guests, prefsValid } = useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
-
   // each page will have requirements that need to be fulfilled to make the next button active
   useEffect(() => {
     switch (pageNum) {

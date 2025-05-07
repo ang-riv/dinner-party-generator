@@ -135,14 +135,16 @@ const GuestNamePage = () => {
   return (
     <div className={styles.mainContentWrapper}>
       {/* text */}
-      <h2 className={styles.sectionTitle}>Guest Names</h2>
-      <div className={styles.sectionContentWrapper}>
-        <p className="h-2/8 text-center">
+      <div className="flex flex-col justify-center items-center py-11">
+        <h2 className="text-4xl text-center mb-4">Guest Names</h2>
+        <p className="text-center">
           Enter the name of each guest and their preference in what course they
           would like to make. If they have no preference, then they will be
           assigned a random category.
         </p>
+      </div>
 
+      <div className="min-h-4/8 flex flex-col justify-around">
         {/* name input */}
         <div className="h-1/8 w-full flex justify-center items-center">
           <div className="join max-w-[310px] w-full">
@@ -177,7 +179,7 @@ const GuestNamePage = () => {
           )}
         </div>
         {/* display names + prefs */}
-        <div className="h-3/8 mb-1">
+        <div className="h-5/8 mb-1">
           <div className="w-full flex justify-between h-1/8 text-sm">
             <p>Name</p>
             <p>Preference</p>
