@@ -4,6 +4,8 @@ import { RestrictionsContext } from "../components/contexts/RestrictionsContext"
 const IntroPage = ({ setPageNum }) => {
   const { handleGuestReset } = useContext(GuestContext);
   const { handleFoodReset } = useContext(RestrictionsContext);
+
+  // sets initial values for both first time render and reset
   const handleReset = async () => {
     await handleGuestReset();
     await handleFoodReset();
@@ -11,8 +13,8 @@ const IntroPage = ({ setPageNum }) => {
 
   useEffect(() => {
     handleReset();
-    console.log("Everything's reset.");
   }, []);
+
   return (
     <div className="prose">
       <h1 className="prose-h1 text-center text-6xl mb-8 text-primary">

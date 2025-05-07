@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { RestrictionsContext } from "./RestrictionsContext";
 function RestrictionProvider({ children }) {
   // * diet checkboxes
-  const [dietRestrictions, setDietRestrictions] = useState([]);
+  const [dietRestrictions, setDietRestrictions] = useState(null);
   // * input for allergies/dislikes
-  const [foodRestrictions, setFoodRestrictions] = useState([]);
+  const [foodRestrictions, setFoodRestrictions] = useState(null);
 
   const handleFoodReset = async () => {
     setDietRestrictions([]);
