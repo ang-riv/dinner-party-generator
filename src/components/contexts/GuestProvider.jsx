@@ -9,7 +9,7 @@ function GuestProvider({ children }) {
 
   // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(null);
-
+  const [dishesSelected, setDishesSelected] = useState(null);
   const [filteredCourses, setFilteredCourses] = useState(null);
   const [dishes, setDishes] = useState(null);
   const [prefsValid, setPrefsValid] = useState(null);
@@ -25,6 +25,7 @@ function GuestProvider({ children }) {
     );
     setDishes([]);
     setPrefsValid(false);
+    setDishesSelected(false);
   };
   return (
     <GuestContext
@@ -43,6 +44,8 @@ function GuestProvider({ children }) {
         prefsValid,
         setPrefsValid,
         handleGuestReset,
+        dishesSelected,
+        setDishesSelected,
       }}
     >
       {children}

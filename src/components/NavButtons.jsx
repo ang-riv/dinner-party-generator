@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 const NavButtons = ({ pageNum, setPageNum }) => {
-  const { guestNum, guests, prefsValid } = useContext(GuestContext);
+  const { guestNum, guests, prefsValid, dishesSelected } =
+    useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
   // each page will have requirements that need to be fulfilled to make the next button active
   useEffect(() => {
     switch (pageNum) {
       case 1:
-        guestNum != 0 ? setBtnState(false) : setBtnState(true);
+        dishesSelected ? setBtnState(false) : setBtnState(true);
         break;
       case 2:
         guests.length === Number(guestNum) && prefsValid === true
@@ -23,7 +24,7 @@ const NavButtons = ({ pageNum, setPageNum }) => {
         setBtnState(true);
         break;
     }
-  }, [pageNum, guestNum, guests, prefsValid]);
+  }, [pageNum, guestNum, guests, prefsValid, dishesSelected]);
   return (
     <div className="flex justify-between items-end h-1/10 px-1.5 w-full">
       {pageNum != 5 ? (

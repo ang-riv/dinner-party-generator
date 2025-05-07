@@ -1,10 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { StylingContext } from "../components/contexts/StylingContext";
 const DishesPage = () => {
   const { styles } = useContext(StylingContext);
-  const { courses, guestNum, setGuestNum, numOfDishes, setNumOfDishes } =
-    useContext(GuestContext);
+  const {
+    courses,
+    guestNum,
+    setGuestNum,
+    numOfDishes,
+    setNumOfDishes,
+    dishesSelected,
+    setDishesSelected,
+  } = useContext(GuestContext);
 
   // * select number options
   const numOptions = [];
@@ -34,6 +41,12 @@ const DishesPage = () => {
     (acc, value) => acc + value,
     0
   );
+
+  useEffect(() => {
+    totalDishes >= guestNum && guestNum > 0
+      ? setDishesSelected(true)
+      : setDishesSelected(false);
+  }, [totalDishes]);
   return (
     <div className={styles.mainContentWrapper}>
       <h2 className={styles.sectionTitle}>Dish Info</h2>
@@ -74,7 +87,7 @@ const DishesPage = () => {
                     <button
                       className="btn btn-xs btn-primary"
                       onClick={() => handleAdd(course.title)}
-                      disabled={totalDishes >= guestNum}
+                      disabled={dishesSelected}
                     >
                       +
                     </button>
