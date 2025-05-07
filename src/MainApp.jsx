@@ -37,29 +37,29 @@ function MainApp() {
     >
       <GuestProvider>
         <StylingProvider>
-          {pageNum != 6 && menuStyling === false ? (
-            <>
-              {pageNum === 0 ? (
-                <div className="flex items-center justify-center max-w-[449px] max-h-[449px] outline outline-primary p-1 py-10">
-                  {pages[0]}
-                </div>
-              ) : (
-                <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-primary py-3">
-                  <Steps active={pageNum} />
-                  <RestrictionProvider>{currentPage}</RestrictionProvider>
-                  <NavButtons
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    pageCap={pages.length}
-                  />
-                </div>
-              )}
-            </>
-          ) : (
-            <RestrictionProvider>
+          <RestrictionProvider>
+            {pageNum != 6 && menuStyling === false ? (
+              <>
+                {pageNum === 0 ? (
+                  <div className="flex items-center justify-center max-w-[449px] max-h-[449px] outline outline-primary p-1 py-10">
+                    {pages[0]}
+                  </div>
+                ) : (
+                  <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline outline-primary py-3">
+                    <Steps active={pageNum} />
+                    {currentPage}
+                    <NavButtons
+                      pageNum={pageNum}
+                      setPageNum={setPageNum}
+                      pageCap={pages.length}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
               <MenuPage pageNum={pageNum} setPageNum={setPageNum} />
-            </RestrictionProvider>
-          )}
+            )}
+          </RestrictionProvider>
         </StylingProvider>
       </GuestProvider>
     </div>

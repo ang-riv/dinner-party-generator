@@ -4,20 +4,15 @@ function GuestProvider({ children }) {
   // courses
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
 
-  const [guests, setGuests] = useState([]);
-  const [guestNum, setGuestNum] = useState(0);
+  const [guests, setGuests] = useState(null);
+  const [guestNum, setGuestNum] = useState(null);
 
   // * object that holds the number of dishes
-  const [numOfDishes, setNumOfDishes] = useState(
-    courses.reduce((acc, course) => {
-      acc[course] = 0;
-      return acc;
-    }, {})
-  );
+  const [numOfDishes, setNumOfDishes] = useState(null);
 
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [dishes, setDishes] = useState([]);
-  const [prefsValid, setPrefsValid] = useState(false);
+  const [filteredCourses, setFilteredCourses] = useState(null);
+  const [dishes, setDishes] = useState(null);
+  const [prefsValid, setPrefsValid] = useState(null);
 
   const handleGuestReset = async () => {
     setGuests([]);

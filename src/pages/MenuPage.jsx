@@ -1,6 +1,5 @@
 import React, { useContext, useRef } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
-import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import generatePDF from "react-to-pdf";
 function LemonEmoji(props) {
   return (
@@ -41,20 +40,9 @@ function LemonEmoji(props) {
 
 const MenuPage = ({ setPageNum }) => {
   const targetRef = useRef();
-  const { guests, numOfDishes, courses, handleGuestReset } =
-    useContext(GuestContext);
-  const { handleFoodReset } = useContext(RestrictionsContext);
+  const { guests, numOfDishes, courses } = useContext(GuestContext);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const primaryBlue = "#60a5fa";
-
-  // * reset everything
-  const handleReset = async () => {
-    //setPageNum(0);
-    await handleGuestReset();
-    await handleFoodReset();
-    setPageNum(0);
-  };
-
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full pt-34 pb-5">
       <div
@@ -125,7 +113,7 @@ const MenuPage = ({ setPageNum }) => {
         </button>
         <button
           className="btn btn-primary btn-lg text-lg"
-          onClick={handleReset}
+          onClick={() => setPageNum(0)}
         >
           Start Over
         </button>
