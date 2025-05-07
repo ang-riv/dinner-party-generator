@@ -32,7 +32,7 @@ function MainApp() {
   }, [pageNum]);
   return (
     <div
-      className="flex justify-center items-center w-screen h-screen"
+      className="flex justify-center items-center w-screen h-screen overflow-y-scroll"
       data-theme="dinnerTheme"
     >
       <GuestProvider>
