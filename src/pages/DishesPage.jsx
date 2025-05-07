@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { StylingContext } from "../components/contexts/StylingContext";
 const DishesPage = () => {
@@ -42,11 +42,15 @@ const DishesPage = () => {
     0
   );
 
+  // disabled state of the add btn
+  const [disableAdd, setDisableAdd] = useState(true);
   useEffect(() => {
     totalDishes >= guestNum && guestNum > 0
       ? setDishesSelected(true)
       : setDishesSelected(false);
-  }, [totalDishes]);
+
+    guestNum > 0 ? setDisableAdd(false) : setDisableAdd(true);
+  }, [totalDishes, guestNum]);
   return (
     <div className={styles.mainContentWrapper}>
       <h2 className={styles.sectionTitle}>Dish Info</h2>
@@ -87,7 +91,7 @@ const DishesPage = () => {
                     <button
                       className="btn btn-xs btn-primary"
                       onClick={() => handleAdd(course.title)}
-                      disabled={dishesSelected}
+                      disabled={disableAdd}
                     >
                       +
                     </button>
