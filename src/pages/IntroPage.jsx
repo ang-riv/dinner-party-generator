@@ -22,9 +22,9 @@ const IntroPage = ({ setPageNum }) => {
         Generator
       </h1>
       <p className="prose-p text-md text-center leading-normal">
-        You’re having a party, but who’s cooking what? Let go of all the
+        You’re having a party, but who’s cooking what? Let go of all that
         pressure and generate a delicious menu that assigns everyone a random
-        starter, entree, or dessert!
+        starter, entree, dessert, or beverage!
       </p>
       <div className="w-full flex justify-center">
         <button
