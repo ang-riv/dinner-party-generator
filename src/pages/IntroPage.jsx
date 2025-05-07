@@ -3,7 +3,7 @@ import React from "react";
 const IntroPage = ({ setPageNum }) => {
   return (
     <div className="prose">
-      <h1 className="prose-h1 text-center text-6xl mb-8">
+      <h1 className="prose-h1 text-center text-6xl mb-8 text-primary">
         Dinner Party <br />
         Generator
       </h1>

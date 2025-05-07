@@ -53,7 +53,7 @@ h1 {
 }
 
 .arrow__path {
-  stroke: #fff;
+  stroke: #000;
   fill: transparent;
   stroke-dasharray: 0.5 8;
   stroke-width: 1.5;

@@ -1,5 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
+import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import generatePDF from "react-to-pdf";
 function LemonEmoji(props) {
   return (
@@ -38,11 +39,22 @@ function LemonEmoji(props) {
   );
 }
 
-const MenuPage = () => {
+const MenuPage = ({ setPageNum }) => {
   const targetRef = useRef();
-  const { guests, numOfDishes, courses } = useContext(GuestContext);
+  const { guests, numOfDishes, courses, handleGuestReset } =
+    useContext(GuestContext);
+  const { handleFoodReset } = useContext(RestrictionsContext);
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
   const primaryBlue = "#60a5fa";
+
+  // * reset everything
+  const handleReset = async () => {
+    //setPageNum(0);
+    await handleGuestReset();
+    await handleFoodReset();
+    setPageNum(0);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full pt-34 pb-5">
       <div
@@ -69,10 +81,10 @@ const MenuPage = () => {
 
           {/* courses + dishes */}
           <div className="">
-            {filtered.map((course) => {
+            {filtered.map((course, index) => {
               const courseTitle = course.toUpperCase();
               return (
-                <div className="mb-10">
+                <div className="mb-10" key={index}>
                   <h2
                     className="font-bold underline text-center"
                     style={{ color: primaryBlue }}
@@ -105,11 +117,18 @@ const MenuPage = () => {
       <div className="flex justify-around mt-2 max-w-[360px] w-full">
         <button
           className="btn btn-secondary btn-lg text-lg"
-          onClick={() => generatePDF(targetRef, { filename: "page.pdf" })}
+          onClick={() =>
+            generatePDF(targetRef, { filename: "menu-invitation.pdf" })
+          }
         >
           Save PDF
         </button>
-        <button className="btn btn-primary btn-lg text-lg">Start Over</button>
+        <button
+          className="btn btn-primary btn-lg text-lg"
+          onClick={handleReset}
+        >
+          Start Over
+        </button>
       </div>
     </div>
   );

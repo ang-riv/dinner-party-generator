@@ -5,6 +5,11 @@ function RestrictionProvider({ children }) {
   const [dietRestrictions, setDietRestrictions] = useState([]);
   // * input for allergies/dislikes
   const [foodRestrictions, setFoodRestrictions] = useState([]);
+
+  const handleFoodReset = async () => {
+    setDietRestrictions([]);
+    setFoodRestrictions([]);
+  };
   return (
     <RestrictionsContext
       value={{
@@ -12,6 +17,7 @@ function RestrictionProvider({ children }) {
         setDietRestrictions,
         foodRestrictions,
         setFoodRestrictions,
+        handleFoodReset,
       }}
     >
       {children}
