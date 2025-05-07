@@ -47,14 +47,13 @@ const NavButtons = ({ pageNum, setPageNum }) => {
         </>
       ) : (
         <>
-          <p>Generate menu invitations?</p>
+          <p>Create menu invitations ⟶</p>
           <div>
-            <button className="btn btn-secondary mr-1">No</button>
             <button
               className="btn btn-primary"
               onClick={() => setPageNum((prev) => prev + 1)}
             >
-              Yes
+              OK
             </button>
           </div>
         </>

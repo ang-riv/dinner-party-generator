@@ -144,7 +144,7 @@ const GuestNamePage = () => {
         </p>
       </div>
 
-      <div className="max-h-4/8 flex flex-col justify-around">
+      <div className="max-h-4/8 h-full flex flex-col justify-around">
         {/* name input */}
         <div className="h-1/8 w-full flex justify-center items-center">
           <div className="join max-w-[310px] w-full">
@@ -179,12 +179,12 @@ const GuestNamePage = () => {
           )}
         </div>
         {/* display names + prefs */}
-        <div className="max-h-5/8 mb-1">
+        <div className="max-h-5/8 h-full mb-1">
           <div className="w-full flex justify-between h-1/8 text-sm">
             <p>Name</p>
             <p>Preference</p>
           </div>
-          <div className="w-full border border-blue-300 max-h-7/8 overflow-y-scroll">
+          <div className="w-full h-full border border-blue-300 max-h-7/8 overflow-y-scroll">
             {guests.map((guest, index) => (
               <div
                 key={index}
