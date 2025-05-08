@@ -15,24 +15,15 @@ const PreviewPage = () => {
   console.log(filtered);
   const [isLoading, setIsLoading] = useState(false);
 
-  /*
-  const [dishes, setDishes] = useState([
-    { title: "A", preference: "", course: "Appetizers" },
-    { title: "E", preference: "", course: "Entrees" },
-    { title: "D", preference: "", course: "Desserts" },
-    { title: "D", preference: "", course: "Desserts" },
-    { title: "B", preference: "", course: "Beverages" },
-  ]);
-*/
-
   useEffect(() => {
-    // * fetch dishes including restrictions
+    // * fetch the total number of dishes within a course including restrictions
     const fetchDishes = async (course) => {
       let specificCourse = "";
       // spoonacular doesn't use the term entrees
       if (course != "Entrees") specificCourse = course.toLowerCase();
       else specificCourse = "main course";
 
+      // dishes we need from this course
       const num = numOfDishes[course];
 
       // restrictions urls
@@ -44,14 +35,26 @@ const PreviewPage = () => {
         foodRestrictions && foodRestrictions.length > 0
           ? `excludeIngredients=${foodRestrictions.toString()}`
           : "";
-      const mainUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&type=${specificCourse}&number=${num}${
+      const mainUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&type=${specificCourse}${
         dietRestrictions && dietRestrictions.length > 0 ? `&${dietUrl}` : ""
       }${foodRestrictions && foodRestrictions.length > 0 ? `&${foodUrl}` : ""}`;
 
+      // first call to get the totalResults - need to do or it will pick the first dish every single time
       const response = await fetch(mainUrl);
       const data = await response.json();
 
-      let result = data.results.map((dish) => ({
+      const totalResults = data.totalResults - num;
+      console.log(totalResults);
+
+      // pick random num for dishes
+      const randomDishNum = Math.floor(Math.random() * totalResults);
+
+      // second call for the dishes
+      const dishUrl = `${mainUrl}&offset=${randomDishNum}&number=${num}`;
+      const dishRes = await fetch(dishUrl);
+      const dishData = await dishRes.json();
+
+      let result = dishData.results.map((dish) => ({
         title: dish.title,
         sourceUrl: dish.sourceUrl,
         image: dish.image,
@@ -59,9 +62,14 @@ const PreviewPage = () => {
       }));
       return result;
     };
+
+    // * fetch the correct number of dishes based on the random numbers
+
     // * fetch for each course that isn't 0
     const fetchAll = async () => {
+      // grab the number of dishes per course
       const fetchCourses = filtered.map((course) => fetchDishes(course));
+      // puts all the fetched dishes under each course together
       const dishes = await Promise.all(fetchCourses);
       setDishes(dishes.flat());
       setIsLoading(false);
