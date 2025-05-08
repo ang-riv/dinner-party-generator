@@ -13,6 +13,7 @@
     "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.1.2",
     "dotenv": "^16.4.7",
+    "motion": "^12.10.4",
     "react": "^19.0.0",
     "react-arrows": "^1.2.0",
     "react-dom": "^19.0.0",
