@@ -84,10 +84,16 @@ const MenuPage = ({ setPageNum }) => {
                       if (guest.recipe.course === course) {
                         return (
                           <p
-                            className="text-center px-5"
+                            className="text-center px-5 hover:text-primary"
                             style={{ color: "#2d3748" }}
                           >
-                            {guest.recipe.title}
+                            <a
+                              href={guest.recipe.sourceUrl}
+                              target="_blank"
+                              className="hover:text-primary hover:underline"
+                            >
+                              {guest.recipe.title}
+                            </a>
                           </p>
                         );
                       }
