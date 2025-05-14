@@ -45,11 +45,20 @@ const DishesPage = () => {
   // disabled state of the add btn
   const [disableAdd, setDisableAdd] = useState(true);
   useEffect(() => {
-    totalDishes >= guestNum && guestNum > 0
-      ? setDishesSelected(true)
-      : setDishesSelected(false);
-
-    guestNum > 0 ? setDisableAdd(false) : setDisableAdd(true);
+    // dishesSelected = nav next btn
+    if (guestNum > 0) {
+      // allow user to add guests until it matches guestNum
+      setDisableAdd(false);
+      // prevent user from adding more
+      if (totalDishes === Number(guestNum)) {
+        setDisableAdd(true);
+        setDishesSelected(true);
+      } else {
+        setDishesSelected(false);
+      }
+    } else {
+      setDisableAdd(true);
+    }
   }, [totalDishes, guestNum]);
   return (
     <div className={styles.mainContentWrapper}>

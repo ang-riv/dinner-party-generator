@@ -12,10 +12,12 @@ import StylingProvider from "./components/contexts/StylingProvider";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
+import { motion, AnimatePresence } from "motion/react";
 
 function MainApp() {
   const [pageNum, setPageNum] = useState(0);
   const menuStyling = false;
+
   // navigating through the pages
   const pages = [
     <IntroPage setPageNum={setPageNum} />,
@@ -30,6 +32,13 @@ function MainApp() {
   useEffect(() => {
     setCurrentPage(pages[pageNum]);
   }, [pageNum]);
+
+  const variants = {
+    initial: { y: 10, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: -10, opacity: 0 },
+    transition: { duration: 0.8 },
+  };
   return (
     <div
       className="flex justify-center items-center w-screen h-screen overflow-y-scroll"
@@ -38,27 +47,44 @@ function MainApp() {
       <GuestProvider>
         <StylingProvider>
           <RestrictionProvider>
-            {pageNum != 6 && menuStyling === false ? (
-              <>
-                {pageNum === 0 ? (
-                  <div className="flex items-center justify-center max-w-[449px] max-h-[449px] outline-2 outline-primary p-1 py-10 shadow-xl shadow-base-200">
-                    {pages[0]}
-                  </div>
-                ) : (
-                  <div className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline-2 outline-primary py-3 shadow-xl shadow-base-200">
-                    <Steps active={pageNum} />
-                    {currentPage}
-                    <NavButtons
-                      pageNum={pageNum}
-                      setPageNum={setPageNum}
-                      pageCap={pages.length}
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <MenuPage pageNum={pageNum} setPageNum={setPageNum} />
-            )}
+            <AnimatePresence mode="wait">
+              {pageNum != 6 && menuStyling === false ? (
+                <>
+                  {pageNum === 0 ? (
+                    <motion.div
+                      key={0}
+                      variants={variants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      className="flex items-center justify-center max-w-[449px] max-h-[449px] outline-2 outline-primary p-1 py-10 shadow-xl shadow-base-200"
+                    >
+                      {pages[0]}
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key={pageNum}
+                      variants={variants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      transition="transition"
+                      className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline-2 outline-primary py-3 shadow-xl shadow-base-200"
+                    >
+                      <Steps active={pageNum} />
+                      {currentPage}
+                      <NavButtons
+                        pageNum={pageNum}
+                        setPageNum={setPageNum}
+                        pageCap={pages.length}
+                      />
+                    </motion.div>
+                  )}
+                </>
+              ) : (
+                <MenuPage key={7} pageNum={pageNum} setPageNum={setPageNum} />
+              )}
+            </AnimatePresence>
           </RestrictionProvider>
         </StylingProvider>
       </GuestProvider>

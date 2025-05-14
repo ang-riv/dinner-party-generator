@@ -50,10 +50,13 @@ const PreviewPage = () => {
       const randomDishNum = Math.floor(Math.random() * totalResults);
 
       // second call for the dishes
-      const dishUrl = `${mainUrl}&offset=${randomDishNum}&number=${num}`;
+      // ? ADD IN addRecipeInformation=true to get the sourceUrl!
+      const dishUrl = `${mainUrl}&offset=${randomDishNum}&number=${num}&addRecipeInformation=true`;
       const dishRes = await fetch(dishUrl);
       const dishData = await dishRes.json();
+      console.log("Results", dishData.results);
 
+      // might need a third call for recipe links, since it isn't included in the complexSearch call
       let result = dishData.results.map((dish) => ({
         title: dish.title,
         sourceUrl: dish.sourceUrl,

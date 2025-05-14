@@ -109,6 +109,7 @@ const AssignDishes = () => {
                       <PreviewCard
                         key={index}
                         name={guest.name}
+                        url={guest.recipe.sourceUrl}
                         title={guest.recipe.title}
                         image={guest.recipe.image}
                       />
