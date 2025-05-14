@@ -8,7 +8,7 @@ import RestrictionsPage from "./pages/RestrictionsPage";
 import PreviewPage from "./pages/PreviewPage";
 import GuestProvider from "./components/contexts/GuestProvider";
 import { RestrictionProvider } from "./components/contexts/RestrictionsContext";
-import StylingProvider from "./components/contexts/StylingProvider";
+import { StylingProvider } from "./components/contexts/StylingContext";
 import Steps from "./components/Steps";
 import NavButtons from "./components/NavButtons";
 import MenuPage from "./pages/MenuPage";
