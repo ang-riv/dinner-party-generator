@@ -18,16 +18,20 @@ const GuestNamePage = () => {
   const guestsLength = guests.length;
   const [submitDisabled, isSubmitDisabled] = useState(true);
 
-  // * error name input
+  // *** ERRORS ***
+  // error name input
   const [alert, setAlert] = useState(false);
-  // * error guests prefs don't match numOfDishes
+  // error guests prefs don't match numOfDishes
   const [prefError, setPrefError] = useState(false);
+
+  // check if prefs are valid
   const [count, setCount] = useState({});
   const [invalidCourses, setInvalidCourses] = useState([]);
   const invalidPrefs = [];
   let invalidLength = 0;
 
-  //* making sure that the prefs match the amount of dishes picked
+  // *** CHECKING PREFS ***
+  // making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
     const course = filtered[i];
@@ -37,20 +41,16 @@ const GuestNamePage = () => {
   const guestPrefs = guests.map((guest) => guest.preference);
 
   useEffect(() => {
-    if (guestsLength === Number(guestNum) || prefError) {
-      console.log("Cap! All guests have been added. Activate checker.");
-      isSubmitDisabled(false);
-    }
-    if (prefsValid) {
-      isSubmitDisabled(true);
-    }
+    if (guestsLength === Number(guestNum) || prefError) isSubmitDisabled(false);
+
+    if (prefsValid) isSubmitDisabled(true);
+
     invalidLength = invalidCourses.length;
-    console.log("InvalidLength: ", invalidLength);
   }, [guestsLength, submitDisabled, prefsValid, prefError, invalidLength]);
 
   // check how many times a course was chosen/pref made
   const prefFreq = (arr, target) => {
-    // prevent it from doing it by making sure it only happens when that course is empty
+    // prevent it from running again by making sure it only happens when that course is empty
     if (prefCounter[target] === 0) {
       for (let i = 0; i < arr.length; i++) {
         const pref = arr[i];
@@ -58,26 +58,24 @@ const GuestNamePage = () => {
           prefCounter[target] += 1;
         }
       }
-    } else {
-      console.log("Already ran once.");
     }
   };
 
   const prefChecker = () => {
-    // loop over the course categories chosen then find how many times it shows up in the prefs arr
+    // loop over the courses chosen, find how many times it shows up in the prefs arr
     for (const course in filtered) {
       prefFreq(guestPrefs, filtered[course]);
     }
 
-    // check if it matches or is less than the course category
-    // 1) compare the pref number, should be <= guestNum as everyone or a few can make a pref
+    // 1) compare the pref number, should be <= guestNum as everyone or some can make a pref
     const prefTotal = Object.values(prefCounter).reduce(
       (acc, num) => acc + num,
       0
     );
 
     if (prefTotal <= guestNum) {
-      // 2) loop through each and check the amounts under each course
+      // 2) loop through each and check the amounts under each course and compare to the numOfDishes at that course that was requested
+      // if it matches, it's valid. if not put into the invalidPrefs arr
       for (const course in prefCounter) {
         let courseValue = prefCounter[course];
         if (courseValue <= numOfDishes[course]) {
@@ -89,6 +87,7 @@ const GuestNamePage = () => {
       }
     }
 
+    // check presence of invalids + show how much they are over by if invalid
     if (invalidPrefs != 0) {
       setPrefsValid(false);
       setPrefError(true);
@@ -100,9 +99,10 @@ const GuestNamePage = () => {
     }
   };
 
+  // *** EVENT HANDLERS
   //* add new guest
   const handleNewGuest = () => {
-    // check if the name is valid first
+    // check if the name is valid
     if (nameRef.current.checkValidity()) {
       const properName =
         guestName.charAt(0).toUpperCase() + guestName.slice(1).toLowerCase();
