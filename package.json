@@ -1,5 +1,6 @@
 {
   "name": "dinner-party-generator",
+  "homepage": "https://ang-riv.github.io/dinner-party-generator/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,12 +8,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": " gh-pages -d dist"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.1.2",
     "dotenv": "^16.4.7",
+    "gh-pages": "^6.3.0",
     "motion": "^12.10.4",
     "react": "^19.0.0",
     "react-arrows": "^1.2.0",
