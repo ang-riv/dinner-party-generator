@@ -31,10 +31,6 @@ const AssignDishes = () => {
     const updatedHasPrefs = [...hasPrefs];
     const updatedDishesCopy = [...updatedDishes];
 
-    //* testing
-    console.log("Guests with prefs: ", hasPrefs);
-    console.log("Guest without prefs: ", noPrefs);
-
     // 2) map over the dishes
     for (let i = 0; i < updatedDishesCopy.length; i++) {
       const dish = updatedDishesCopy[i];

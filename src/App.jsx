@@ -1,4 +1,3 @@
-// * acts like app since I made everything in app
 import React, { useEffect, useState } from "react";
 import IntroPage from "./pages/IntroPage";
 import DishesPage from "./pages/DishesPage";

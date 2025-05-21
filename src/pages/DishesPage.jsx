@@ -9,9 +9,11 @@ const DishesPage = () => {
     setGuestNum,
     numOfDishes,
     setNumOfDishes,
-    dishesSelected,
     setDishesSelected,
   } = useContext(GuestContext);
+
+  //* disabled state of the add btn
+  const [disableAdd, setDisableAdd] = useState(true);
 
   // * select number options
   const numOptions = [];
@@ -42,8 +44,6 @@ const DishesPage = () => {
     0
   );
 
-  // disabled state of the add btn
-  const [disableAdd, setDisableAdd] = useState(true);
   useEffect(() => {
     // dishesSelected = nav next btn
     if (guestNum > 0) {

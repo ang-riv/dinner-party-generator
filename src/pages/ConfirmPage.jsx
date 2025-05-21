@@ -6,11 +6,6 @@ const ConfirmPage = () => {
   const { guests } = useContext(GuestContext);
   const { foodRestrictions, dietRestrictions } =
     useContext(RestrictionsContext);
-  useEffect(() => {
-    if (guests.length) {
-      console.log(guests);
-    }
-  }, []);
   return (
     <div className="h-10/12 px-2">
       <h2 className="h-2/10 flex justify-center items-center text-4xl">
@@ -53,8 +48,8 @@ const ConfirmPage = () => {
         <h3 className="text-center">
           Dietary Restrictions, Allergies, Dislikes:
         </h3>
-        {dietRestrictions.length > 0 && <p>➢{dietRestrictions.join(", ")}</p>}
-        {foodRestrictions.length > 0 && <p>➢{foodRestrictions.join(", ")}</p>}
+        {dietRestrictions.length > 0 && <p>➢ {dietRestrictions.join(", ")}</p>}
+        {foodRestrictions.length > 0 && <p>➢ {foodRestrictions.join(", ")}</p>}
       </div>
     </div>
   );

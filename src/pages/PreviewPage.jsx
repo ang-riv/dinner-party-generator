@@ -12,7 +12,6 @@ const PreviewPage = () => {
   // filter out unused categories
   const filtered = courses.filter((course) => numOfDishes[course] != 0);
 
-  console.log(filtered);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -39,24 +38,20 @@ const PreviewPage = () => {
         dietRestrictions && dietRestrictions.length > 0 ? `&${dietUrl}` : ""
       }${foodRestrictions && foodRestrictions.length > 0 ? `&${foodUrl}` : ""}`;
 
-      // first call to get the totalResults - need to do or it will pick the first dish every single time
+      // ** first call to get the totalResults - need to do or it won't be random, will pick the first dish every single time
       const response = await fetch(mainUrl);
       const data = await response.json();
 
       const totalResults = data.totalResults - num;
-      console.log(totalResults);
 
       // pick random num for dishes
       const randomDishNum = Math.floor(Math.random() * totalResults);
 
-      // second call for the dishes
-      // ? ADD IN addRecipeInformation=true to get the sourceUrl!
+      // ** second call for random dishes
       const dishUrl = `${mainUrl}&offset=${randomDishNum}&number=${num}&addRecipeInformation=true`;
       const dishRes = await fetch(dishUrl);
       const dishData = await dishRes.json();
-      console.log("Results", dishData.results);
 
-      // might need a third call for recipe links, since it isn't included in the complexSearch call
       let result = dishData.results.map((dish) => ({
         title: dish.title,
         sourceUrl: dish.sourceUrl,
@@ -67,8 +62,6 @@ const PreviewPage = () => {
     };
 
     // * fetch the correct number of dishes based on the random numbers
-
-    // * fetch for each course that isn't 0
     const fetchAll = async () => {
       // grab the number of dishes per course
       const fetchCourses = filtered.map((course) => fetchDishes(course));
@@ -80,7 +73,6 @@ const PreviewPage = () => {
 
     fetchAll();
   }, []);
-  console.log(dishes);
   return (
     <>
       {isLoading ? (

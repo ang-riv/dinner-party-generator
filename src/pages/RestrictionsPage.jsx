@@ -41,12 +41,10 @@ const RestrictionsPage = () => {
         if (data.products.length > 0) {
           setFoodRestrictions([...foodRestrictions, capitalIngredient]);
           setIsLoading(false);
-          console.log("is a food item!");
         } else {
           // if not
           setIsLoading(false);
           setShowError(true);
-          console.log("Not a food item!");
         }
       } catch (error) {
         console.log("Error fetching ingredient:", error);
@@ -69,6 +67,7 @@ const RestrictionsPage = () => {
       : setRestrictionCap(false);
   }, [search, foodRestrictions]);
 
+  // *** EVENT HANDLERS ***
   const handleDiet = (e) => {
     // if checked, add to arr
     if (e.target.checked === true) {
@@ -92,6 +91,7 @@ const RestrictionsPage = () => {
     const updatedArr = foodRestrictions.filter((food) => food != foodItem);
     setFoodRestrictions(updatedArr);
   };
+
   return (
     <div className={styles.mainContentWrapper}>
       <h2 className={styles.sectionTitle}>

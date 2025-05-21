@@ -1,4 +1,3 @@
-import React from "react";
 const PreviewCard = ({ title, image, name, url }) => {
   return (
     <div className="flex flex-col justify-between items-center w-38">
