@@ -52,7 +52,7 @@ function App() {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="flex items-center justify-center max-w-[449px] max-h-[449px] outline-2 outline-primary p-1 py-10 shadow-xl shadow-base-200"
+                  className="flex items-center justify-center max-w-[449px] h-fit outline-2 outline-primary py-10 shadow-xl shadow-base-200"
                 >
                   {pages[0]}
                 </motion.div>
