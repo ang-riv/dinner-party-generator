@@ -5,8 +5,8 @@ import { LemonEmoji } from "../components/Icons";
 
 const MenuPage = ({ setPageNum }) => {
   const targetRef = useRef();
-  const { guests, numOfDishes, courses } = useContext(GuestContext);
-  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  const { guests, numOfDishes, filteredCourses } = useContext(GuestContext);
+  const filtered = filteredCourses(numOfDishes);
   const primaryBlue = "#60a5fa";
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full pt-34 pb-5">

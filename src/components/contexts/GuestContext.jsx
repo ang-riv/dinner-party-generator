@@ -15,6 +15,10 @@ export const GuestProvider = ({ children }) => {
   const [dishes, setDishes] = useState(null);
   const [prefsValid, setPrefsValid] = useState(null);
 
+  const filteredCourses = (dishNum) => {
+    const filtered = courses.filter((course) => dishNum[course] != 0);
+    return filtered;
+  };
   const handleGuestReset = async () => {
     setGuests([]);
     setGuestNum(0);
@@ -40,6 +44,7 @@ export const GuestProvider = ({ children }) => {
         setGuests,
         dishes,
         setDishes,
+        filteredCourses,
         prefsValid,
         setPrefsValid,
         handleGuestReset,

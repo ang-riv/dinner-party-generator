@@ -5,17 +5,17 @@ import { Checkmark } from "../components/Icons";
 const GuestNamePage = () => {
   const { styles } = useContext(StylingContext);
   const {
-    courses,
     guests,
     setGuests,
     guestNum,
     numOfDishes,
+    filteredCourses,
     setPrefsValid,
     prefsValid,
   } = useContext(GuestContext);
   const [guestName, setGuestName] = useState("");
   const nameRef = useRef(null);
-  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  const filtered = filteredCourses(numOfDishes);
   const guestsLength = guests.length;
   const [submitDisabled, isSubmitDisabled] = useState(true);
 

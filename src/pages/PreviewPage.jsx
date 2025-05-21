@@ -4,13 +4,12 @@ import { RestrictionsContext } from "../components/contexts/RestrictionsContext"
 import AssignDishes from "../components/AssignDishes";
 
 const PreviewPage = () => {
-  const { courses, numOfDishes, setDishes, dishes } = useContext(GuestContext);
+  const { numOfDishes, setDishes, filteredCourses } = useContext(GuestContext);
   const { dietRestrictions, foodRestrictions } =
     useContext(RestrictionsContext);
   const apiKey = import.meta.env.VITE_APP_SPOONACULAR_KEY;
 
-  // filter out unused categories
-  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  const filtered = filteredCourses(numOfDishes);
 
   const [isLoading, setIsLoading] = useState(false);
 

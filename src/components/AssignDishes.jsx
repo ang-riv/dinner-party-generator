@@ -4,7 +4,7 @@ import { StylingContext } from "./contexts/StylingContext";
 import PreviewCard from "../pages/PreviewCard";
 const AssignDishes = () => {
   const { styles } = useContext(StylingContext);
-  const { courses, guests, setGuests, dishes, numOfDishes } =
+  const { guests, setGuests, dishes, numOfDishes, filteredCourses } =
     useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,7 +16,7 @@ const AssignDishes = () => {
   const [finalCopy, setFinalCopy] = useState([]);
   const updatedDishes = useMemo(() => [...dishes], [dishes]);
 
-  const filtered = courses.filter((course) => numOfDishes[course] != 0);
+  const filtered = filteredCourses(numOfDishes);
 
   const allocateDishes = useCallback(() => {
     // 1) take the guests and separate w/ local copies
