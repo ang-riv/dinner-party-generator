@@ -163,7 +163,7 @@ const GuestNamePage = () => {
 
       <div className="max-h-4/8 h-full flex flex-col justify-around">
         {/* name input */}
-        <div className="h-1/8 w-full flex justify-center items-center">
+        <div className="h-1/8 w-full flex justify-center items-center flex-col">
           <div className="join max-w-[310px] w-full">
             <input
               ref={nameRef}
