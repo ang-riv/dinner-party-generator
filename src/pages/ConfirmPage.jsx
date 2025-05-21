@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import { GuestContext } from "../components/contexts/GuestContext";
 import Arrow, { DIRECTION } from "react-arrows";

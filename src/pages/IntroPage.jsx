@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import cloche from "../assets/cloche.svg";

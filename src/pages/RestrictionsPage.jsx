@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import { StylingContext } from "../components/contexts/StylingContext";
 const RestrictionsPage = () => {

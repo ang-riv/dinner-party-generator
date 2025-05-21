@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 const NavButtons = ({ pageNum, setPageNum }) => {
   const { guestNum, guests, prefsValid, dishesSelected } =
     useContext(GuestContext);
   const [btnState, setBtnState] = useState(true);
-  // each page will have requirements that need to be fulfilled to make the next button active
+
+  // **each page will have requirements that need to be fulfilled to make the next button active
   useEffect(() => {
     switch (pageNum) {
       case 1:

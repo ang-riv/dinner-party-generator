@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import IntroPage from "./pages/IntroPage";
 import DishesPage from "./pages/DishesPage";
 import GuestNamePage from "./pages/GuestNamePage";

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { StylingContext } from "../components/contexts/StylingContext";
 const DishesPage = () => {

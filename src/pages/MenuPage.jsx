@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import generatePDF from "react-to-pdf";
 import { LemonEmoji } from "../components/Icons";

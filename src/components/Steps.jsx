@@ -1,5 +1,3 @@
-import React from "react";
-
 const Steps = ({ active }) => {
   const pageTitles = ["Dishes", "Names", "Diet", "Confirm", "Preview"];
   const steps = [];

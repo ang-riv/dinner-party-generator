@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from "react";
+import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 import { StylingContext } from "./contexts/StylingContext";
 import PreviewCard from "../pages/PreviewCard";

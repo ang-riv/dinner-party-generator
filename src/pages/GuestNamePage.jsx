@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { StylingContext } from "../components/contexts/StylingContext";
 import { Checkmark } from "../components/Icons";

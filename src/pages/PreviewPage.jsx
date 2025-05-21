@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GuestContext } from "../components/contexts/GuestContext";
 import { RestrictionsContext } from "../components/contexts/RestrictionsContext";
 import AssignDishes from "../components/AssignDishes";
