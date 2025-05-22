@@ -6,7 +6,7 @@ A React app that makes deciding what dishes to make for a dinner party a whole l
 
 ### Built with:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white) ![DaisyUI](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)
- - ![react-to-pdf](https://www.npmjs.com/package/react-to-pdf)
+ - [react-to-pdf](https://www.npmjs.com/package/react-to-pdf)
  - Styling
 	 - Motion (formerly Framer Motion)
 	 - [react-arrows](https://www.npmjs.com/package/react-arrows) - Menu leaders
