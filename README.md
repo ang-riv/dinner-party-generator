@@ -9,13 +9,13 @@ A React app that makes deciding what dishes to make for a dinner party a whole l
  - ![react-to-pdf](https://www.npmjs.com/package/react-to-pdf)
  - Styling
 	 - Motion (formerly Framer Motion)
-	 - ![react-arrows](https://www.npmjs.com/package/react-arrows) - Menu leaders
+	 - [react-arrows](https://www.npmjs.com/package/react-arrows) - Menu leaders
 - Icons
 	- Iconify - Lemon Emoji and Checkmark
 	- SVG Repo - Cloche icons
  - API
-	 - ![Spoonacular API](https://spoonacular.com/food-api) - Random recipes
-	 - ![Open Food Facts API](https://openfoodfacts.github.io/openfoodfacts-server/api/) - Verifying if the inputted text is an actual food or not
+	 - [Spoonacular API](https://spoonacular.com/food-api) - Random recipes
+	 - [Open Food Facts API](https://openfoodfacts.github.io/openfoodfacts-server/api/) - Verifying if the inputted text is an actual food or not
 
 ### Deployment
 https://ang-riv.github.io/dinner-party-generator/
