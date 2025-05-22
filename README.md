@@ -5,7 +5,7 @@ Who’s making what??
 A React app that makes deciding on what dishes to make for a dinner party a whole lot easier. It takes the guests entered, obtains a dish from the Spoonacular API to assign to each guest, and generates a simple yet elegant printable menu. 
 
 ### Built with:
- - React
+ - ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
  - Vite
  - VSCode
  - react to PDF
