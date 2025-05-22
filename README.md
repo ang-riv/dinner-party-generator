@@ -2,26 +2,22 @@
 
 Who’s making what??
 
-A React app that makes deciding on what dishes to make for a dinner party a whole lot easier. It takes the guests entered, obtains a dish from the Spoonacular API to assign to each guest, and generates a simple yet elegant printable menu. 
+A React app that makes deciding what dishes to make for a dinner party a whole lot easier. It takes the guests entered, obtains a dish from the Spoonacular API to assign to each guest, and generates a simple yet elegant printable menu. 
 
 ### Built with:
- - ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
- - Vite
- - VSCode
- - react to PDF
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white) ![DaisyUI](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)
+ - ![react-to-pdf](https://www.npmjs.com/package/react-to-pdf)
  - Styling
 	 - Motion (formerly Framer Motion)
-	 - TailwindCSS
-	 - DaisyUI
-	 - reactArrows - Menu leaders
+	 - ![react-arrows](https://www.npmjs.com/package/react-arrows) - Menu leaders
 - Icons
 	- Iconify - Lemon Emoji and Checkmark
 	- SVG Repo - Cloche icons
  - API
-	 - Spoonacular API - Random recipes
-	 - Open Food Facts API - Verifying if the inputted text is an actual food or not
+	 - ![Spoonacular API](https://spoonacular.com/food-api) - Random recipes
+	 - ![Open Food Facts API](https://openfoodfacts.github.io/openfoodfacts-server/api/) - Verifying if the inputted text is an actual food or not
 
-### Link to GH-Pages
+### Deployment
 https://ang-riv.github.io/dinner-party-generator/
 
 ## Introduction
