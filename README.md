@@ -19,8 +19,6 @@ A React app that makes deciding what dishes to make for a dinner party a whole l
   - [Spoonacular API](https://spoonacular.com/food-api) - Random recipes
   - [Open Food Facts API](https://openfoodfacts.github.io/openfoodfacts-server/api/) - Verifying if the inputted text is an actual food or not
 
-![Mobile View](./src/assets/imgs/iPhone16.jpeg)
-![Tablet View](./src/assets/imgs/iPad.jpeg)
 ![Desktop View](./src/assets/imgs/MacbookPro.jpeg)
 
 ### Deployment
