@@ -51,7 +51,7 @@ function App() {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="flex items-center justify-center max-w-[449px] h-fit outline-2 outline-primary py-10 shadow-xl shadow-base-200"
+                  className="flex items-center justify-center max-w-[449px] h-fit sm:outline-2 sm:outline-primary py-10 sm:shadow-xl sm:shadow-base-200"
                 >
                   {pages[0]}
                 </motion.div>
@@ -63,7 +63,7 @@ function App() {
                   animate="animate"
                   exit="exit"
                   transition="transition"
-                  className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] outline-2 outline-primary py-3 shadow-xl shadow-base-200"
+                  className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] sm:outline-2 sm:outline-primary py-3 sm:shadow-xl sm:shadow-base-200"
                 >
                   <Steps active={pageNum} />
                   {currentPage}

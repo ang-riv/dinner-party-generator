@@ -91,7 +91,7 @@ const AssignDishes = () => {
           {filtered.map((course, index) => (
             <div key={index} className="my-2">
               <h2 className="text-center text-2xl py-2">{course}</h2>
-              <div className=" flex justify-around flex-wrap">
+              <div className=" flex justify-around flex-wrap gap-y-4">
                 {/* dishes per course */}
                 {finalCopy.map((guest, index) => {
                   if (guest.recipe.course === course) {
