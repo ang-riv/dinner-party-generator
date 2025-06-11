@@ -228,7 +228,7 @@ const GuestNamePage = () => {
           </div>
           {prefError && (
             <div className="flex justify-center items-center flex-col my-2 outline outline-red-400">
-              <p className="text-center text-sm">
+              <p className="text-center text-sm p-1">
                 Error: Preferences do not match dish number. Please adjust to
                 match and re-submit.
               </p>
