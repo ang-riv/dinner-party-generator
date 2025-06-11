@@ -132,15 +132,24 @@ const GuestNamePage = () => {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
   };
+
+  const prefSelect = () => {
+    // if guests.length is less than guestNum, disable
+    if (guests.length < guestNum || prefsValid === true) {
+      return true;
+    } else if (guests.length === guestNum || prefsValid === false) {
+      return false;
+    }
+  };
   return (
     <div className={styles.mainContentWrapper}>
       {/* text */}
-      <div className="flex flex-col justify-center items-center py-11">
+      <div className="flex flex-col justify-center items-center py-10">
         <h2 className="text-4xl text-center mb-4">Guest Names</h2>
         <p className="text-center">
-          Enter the name of each guest and their preference in what course they
-          would like to make. If they have no preference, then they will be
-          assigned a random category.
+          Enter the name of each guest. Once all guests have been added,
+          preferences in what course they would like to make can be selected. If
+          they have no preference, then they will be assigned a random category.
         </p>
       </div>
 
@@ -155,7 +164,7 @@ const GuestNamePage = () => {
               className="input join-item invalid:border-red-400"
               spellCheck={false}
               pattern="[A-Za-z]*"
-              minLength="3"
+              minLength="1"
               maxLength="30"
               title="letters only"
               onChange={(e) => setGuestName(e.target.value)}
@@ -173,7 +182,7 @@ const GuestNamePage = () => {
           {alert && (
             <div className="mt-1.5">
               <p className="text-xs text-red-400 font-bold">
-                Must be longer than 3 letters with no characters.
+                Names must have letters only, no characters.
               </p>
             </div>
           )}
@@ -203,7 +212,7 @@ const GuestNamePage = () => {
                 <select
                   className="select select-primary select-md w-[50%]"
                   onChange={(e) => handlePref(e.target.value, guest.name)}
-                  disabled={prefsValid}
+                  disabled={prefSelect()}
                 >
                   <option key="Any" value="Any">
                     Any
