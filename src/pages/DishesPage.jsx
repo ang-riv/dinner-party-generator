@@ -62,12 +62,13 @@ const DishesPage = () => {
         {/* guest number */}
         <div className="flex items-center justify-center w-full">
           <div className="flex flex-col justify-center w-full max-w-[340px]">
+            <label htmlFor="dishesInput" className="sr-only"></label>
             <h3 className="mb-2">How many people will be cooking?</h3>
             <select
               defaultValue="0"
               className="select select-primary"
               name="dishes"
-              id="dishes"
+              id="dishesInput"
               onChange={(e) => setGuestNum(e.target.value)}
             >
               <option disabled={true} value={0} key={0}>

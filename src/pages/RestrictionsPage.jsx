@@ -116,12 +116,13 @@ const RestrictionsPage = () => {
         <div className="h-1/8 flex flex-col justify-center items-center">
           <h3 className="text-center mb-1">Allergies/Dislikes</h3>
           <div className="join w-full flex justify-center items-center">
+            <label htmlFor="allergiesInput" className="sr-only"></label>
             <input
               type="text"
               ref={inputRef}
               className="input join-item invalid:border-red-400"
               name="allergies"
-              id="allergies"
+              id="allergiesInput"
               minLength="3"
               maxLength="30"
               autoComplete="off"

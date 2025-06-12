@@ -150,10 +150,12 @@ const GuestNamePage = () => {
       <div className="max-h-4/8 h-full flex flex-col justify-around">
         {/* name input */}
         <div className="h-1/8 w-full flex justify-center items-center flex-col">
+        <label htmlFor="guestNameInput" className="sr-only"></label>
           <div className="join max-w-[310px] w-full">
             <input
               ref={nameRef}
               type="text"
+              id="guestNameInput"
               placeholder="Enter a guest name..."
               className="input join-item invalid:border-red-400"
               spellCheck={false}
@@ -203,8 +205,10 @@ const GuestNamePage = () => {
                   </button>
                   <p className="font-semibold">{guest.name}</p>
                 </div>
+                <label htmlFor="guestPrefSelect" className="sr-only"></label>
                 <select
                   className="select select-primary select-md w-[50%]"
+                  id="guestPrefSelect"
                   onChange={(e) => handlePref(e.target.value, guest.name)}
                   disabled={prefSelect()}
                 >
