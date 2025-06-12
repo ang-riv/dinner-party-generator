@@ -12,19 +12,17 @@ const DishesPage = () => {
     setDishesSelected,
   } = useContext(GuestContext);
 
-  //* disabled state of the add btn
   const [disableAdd, setDisableAdd] = useState(true);
 
-  // * select number options
   const numOptions = [];
   for (let i = 1; i <= 10; i++) numOptions.push(i);
 
-  // * num of dishes per course + button handlers for numOfDishes
   const dishCounters = courses.map((course) => ({
     title: course,
     counter: numOfDishes[course],
   }));
 
+  // * add + subtract btn handlers
   const handleAdd = (course) => {
     setNumOfDishes((prevNum) => ({
       ...prevNum,
@@ -38,18 +36,15 @@ const DishesPage = () => {
     }));
   };
 
-  // * dishes in total
   const totalDishes = Object.values(numOfDishes).reduce(
     (acc, value) => acc + value,
     0
   );
 
   useEffect(() => {
-    // dishesSelected = nav next btn
     if (guestNum > 0) {
-      // allow user to add guests until it matches guestNum
       setDisableAdd(false);
-      // prevent user from adding more
+      // prevent user from adding more 
       if (totalDishes === Number(guestNum)) {
         setDisableAdd(true);
         setDishesSelected(true);
@@ -63,7 +58,6 @@ const DishesPage = () => {
   return (
     <div className={styles.mainContentWrapper}>
       <h2 className={styles.sectionTitle}>Dish Info</h2>
-      {/* content-wrapper */}
       <div className={styles.sectionContentWrapper}>
         {/* guest number */}
         <div className="flex items-center justify-center w-full">
@@ -87,7 +81,6 @@ const DishesPage = () => {
             </select>
           </div>
         </div>
-
         {/* number of dishes per course */}
         <div className=" h-3/8 flex flex-col items-center w-full">
           <div className="flex flex-col max-w-[340px] w-full h-full justify-center">

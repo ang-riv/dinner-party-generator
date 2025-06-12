@@ -19,10 +19,8 @@ const GuestNamePage = () => {
   const guestsLength = guests.length;
   const [submitDisabled, isSubmitDisabled] = useState(true);
 
-  // *** ERRORS ***
-  // error name input
+  // *** ERRORS
   const [alert, setAlert] = useState(false);
-  // error guests prefs don't match numOfDishes
   const [prefError, setPrefError] = useState(false);
 
   // check if prefs are valid
@@ -31,7 +29,7 @@ const GuestNamePage = () => {
   const invalidPrefs = [];
   let invalidLength = 0;
 
-  // *** CHECKING PREFS - making sure that the prefs match the amount of dishes picked ***
+  // ** CHECKING PREFS - making sure that the prefs match the amount of dishes picked
   const prefCounter = {};
   for (let i = 0; i < filtered.length; i++) {
     const course = filtered[i];
@@ -62,20 +60,20 @@ const GuestNamePage = () => {
   };
 
   const prefChecker = () => {
-    // loop over the courses chosen, find how many times it shows up
+    // find how many times a course shows up
     for (const course in filtered) {
       prefFreq(guestPrefs, filtered[course]);
     }
 
-    // 1) compare the pref number, should be <= guestNum as everyone or some can make a pref
+    // pref number should be <= guestNum
     const prefTotal = Object.values(prefCounter).reduce(
       (acc, num) => acc + num,
       0
     );
 
     if (prefTotal <= guestNum) {
-      // 2) loop through, check the amounts under each course, compare to the numOfDishes at that course that was requested
-      // if it matches, it's valid. if not put into the invalidPrefs arr
+      // check the amounts under each course
+      // compare to that course in numOfDishes
       for (const course in prefCounter) {
         let courseValue = prefCounter[course];
         if (courseValue <= numOfDishes[course]) {
@@ -87,7 +85,7 @@ const GuestNamePage = () => {
       }
     }
 
-    // check presence of invalids + show how much they are over by if invalid
+    // check presence of invalids + show how much they are over by
     if (invalidPrefs != 0) {
       setPrefsValid(false);
       setPrefError(true);
@@ -99,8 +97,6 @@ const GuestNamePage = () => {
     }
   };
 
-  // *** EVENT HANDLERS
-  //* add new guest
   const handleNewGuest = () => {
     // check if the name is valid
     if (nameRef.current.checkValidity()) {
@@ -118,7 +114,6 @@ const GuestNamePage = () => {
     if (nameRef.current) nameRef.current.value = "";
   };
 
-  //* set guest preferences for select onChange
   const handlePref = (e, guestName) => {
     setGuests((prevGuests) =>
       prevGuests.map((guest) =>
@@ -127,14 +122,13 @@ const GuestNamePage = () => {
     );
   };
 
-  //* remove guest
   const handleRemoveGuest = (guestName) => {
     const updatedArr = guests.filter((guest) => guest.name != guestName);
     setGuests(updatedArr);
   };
 
+  // prevents user from making prefs until all guests are inputted
   const prefSelect = () => {
-    // if guests.length is less than guestNum, disable
     if (guests.length < guestNum || prefsValid === true) {
       return true;
     } else if (guests.length === guestNum || prefsValid === false) {

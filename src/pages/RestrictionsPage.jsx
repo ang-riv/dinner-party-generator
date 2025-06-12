@@ -14,10 +14,10 @@ const RestrictionsPage = () => {
   const diets = ["Vegan", "Vegetarian", "Gluten-free", "Dairy-free"];
   const [alert, setAlert] = useState(false);
 
-  //* loading for api
+  //* for api
   const [isLoading, setIsLoading] = useState(false);
 
-  //* for searching Open Food Facts API
+  //* searching Open Food Facts API
   const [search, setSearch] = useState("");
   const [showError, setShowError] = useState(false);
   const [restrictionCap, setRestrictionCap] = useState(false);
@@ -42,7 +42,6 @@ const RestrictionsPage = () => {
           setFoodRestrictions([...foodRestrictions, capitalIngredient]);
           setIsLoading(false);
         } else {
-          // if not
           setIsLoading(false);
           setShowError(true);
         }
@@ -61,15 +60,12 @@ const RestrictionsPage = () => {
       searchIngredient(search);
     }
 
-    // cap off number of allergies/dislikes at 5
     foodRestrictions.length >= 5
       ? setRestrictionCap(true)
       : setRestrictionCap(false);
   }, [search, foodRestrictions]);
 
-  // *** EVENT HANDLERS ***
   const handleDiet = (e) => {
-    // if checked, add to arr
     if (e.target.checked === true) {
       setDietRestrictions([...dietRestrictions, e.target.value]);
     } else {

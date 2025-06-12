@@ -37,16 +37,16 @@ const PreviewPage = () => {
         dietRestrictions && dietRestrictions.length > 0 ? `&${dietUrl}` : ""
       }${foodRestrictions && foodRestrictions.length > 0 ? `&${foodUrl}` : ""}`;
 
-      // ** first call to get the totalResults - need to do or it won't be random, will pick the first dish every single time
+      // ** first call to get the totalResults - need to do or it won't be random
+      // as api will pick the first dish every single time
       const response = await fetch(mainUrl);
       const data = await response.json();
 
       const totalResults = data.totalResults - num;
 
-      // pick random num for dishes
       const randomDishNum = Math.floor(Math.random() * totalResults);
 
-      // ** second call for random dishes
+      // ** second call for random dishes + dish info
       const dishUrl = `${mainUrl}&offset=${randomDishNum}&number=${num}&addRecipeInformation=true`;
       const dishRes = await fetch(dishUrl);
       const dishData = await dishRes.json();
@@ -62,9 +62,7 @@ const PreviewPage = () => {
 
     // * fetch the correct number of dishes based on the random numbers
     const fetchAll = async () => {
-      // grab the number of dishes per course
       const fetchCourses = filtered.map((course) => fetchDishes(course));
-      // puts all the fetched dishes under each course together
       const dishes = await Promise.all(fetchCourses);
       setDishes(dishes.flat());
       setIsLoading(false);
