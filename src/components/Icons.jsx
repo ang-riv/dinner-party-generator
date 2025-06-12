@@ -16,7 +16,7 @@ export function Checkmark(props) {
   );
 }
 
-// MenuPage - decorative lemons
+// MenuPage
 export function LemonEmoji(props) {
   return (
     <svg

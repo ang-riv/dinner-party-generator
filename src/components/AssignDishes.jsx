@@ -1,3 +1,5 @@
+// sort dishes and guest array to have preferences first then leftovers at the end
+// then match them up using indexes
 import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { GuestContext } from "./contexts/GuestContext";
 import { StylingContext } from "./contexts/StylingContext";
@@ -8,34 +10,30 @@ const AssignDishes = () => {
     useContext(GuestContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  // * sorting + assigning recipes --> goal is to sort dishes and guest array to have preferences first then leftovers at the end. Then match them up using indexes.
-
   const guestCopy = useMemo(() => [...guests], [guests]);
   const dishesCopy = useMemo(() => [...dishes], [dishes]);
-
   const [finalCopy, setFinalCopy] = useState([]);
   const updatedDishes = useMemo(() => [...dishes], [dishes]);
 
   const filtered = filteredCourses(numOfDishes);
 
   const allocateDishes = useCallback(() => {
-    // 1) take the guests and separate w/ local copies
+    // separate guests by prefs w/ local copies
     const hasPrefs = guests.filter((guest) => guest.preference != "Any");
     const noPrefs = guests.filter((guest) => guest.preference === "Any");
     const updatedHasPrefs = [...hasPrefs];
     const updatedDishesCopy = [...updatedDishes];
 
-    // 2) map over the dishes
     for (let i = 0; i < updatedDishesCopy.length; i++) {
       const dish = updatedDishesCopy[i];
       const course = dish.course;
 
-      // 3) search the guests - find the the guest has the same course AND doesn't have a recipe yet.
+      // find guest that has the same course AND doesn't have a recipe yet
       const guestMatch = updatedHasPrefs.findIndex(
         (guest) => guest.preference === course && guest.recipe === ""
       );
 
-      // 4) assign that guest that recipe and change the assigned value to true for that dish
+      // assign that guest that recipe
       if (guestMatch != -1) {
         updatedHasPrefs[guestMatch] = {
           ...updatedHasPrefs[guestMatch],
@@ -48,20 +46,19 @@ const AssignDishes = () => {
       }
     }
 
-    // 5) filter out the dishes array for the ones that haven't been assigned yet
+    // find unassigned dishes then assign to guests that don't have prefs
     const leftoverDishes = updatedDishesCopy.filter(
       (dish) => dish.assigned === false
     );
-    // 6) assign the leftover dishes to the guests that don't have a pref
     const leftoverGuests = noPrefs.map((guest, index) => ({
       ...guest,
       recipe: leftoverDishes[index] || null,
     }));
 
-    // 7) combine the guests and update
+    // combine the guests and update
     const assignedGuests = [...updatedHasPrefs, ...leftoverGuests];
 
-    // since it's in useEffect, prevent an infinite loop
+    // prevent an infinite loop since it's in useEffect
     if (finalCopy.length === 0) {
       setFinalCopy(assignedGuests);
       setGuests(assignedGuests);
@@ -69,7 +66,7 @@ const AssignDishes = () => {
   }, [guests, updatedDishes, finalCopy]);
 
   useEffect(() => {
-    // run only when they aren't empty
+    // run only when not empty
     if (guestCopy.length && dishesCopy.length) {
       setIsLoading(false);
       allocateDishes();

@@ -3,13 +3,11 @@ import { createContext, useState } from "react";
 export const GuestContext = createContext();
 
 export const GuestProvider = ({ children }) => {
-  // courses
   const courses = ["Appetizers", "Entrees", "Desserts", "Beverages"];
 
   const [guests, setGuests] = useState(null);
   const [guestNum, setGuestNum] = useState(null);
 
-  // * object that holds the number of dishes
   const [numOfDishes, setNumOfDishes] = useState(null);
   const [dishesSelected, setDishesSelected] = useState(null);
   const [dishes, setDishes] = useState(null);
