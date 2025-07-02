@@ -3,8 +3,8 @@ const Steps = ({ active }) => {
   const steps = [];
   for (let i = 0; i < pageTitles.length; i++) {
     const stepTitle = pageTitles[i];
-    const inactiveSteps = "step text-sm";
-    const activeSteps = "step step-primary text-sm";
+    const inactiveSteps = "step text-md";
+    const activeSteps = "step step-primary text-md font-bold";
     i <= active - 1
       ? steps.push(
           <li key={stepTitle} className={activeSteps}>

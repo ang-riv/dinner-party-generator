@@ -44,7 +44,7 @@ const DishesPage = () => {
   useEffect(() => {
     if (guestNum > 0) {
       setDisableAdd(false);
-      // prevent user from adding more 
+      // prevent user from adding more
       if (totalDishes === Number(guestNum)) {
         setDisableAdd(true);
         setDishesSelected(true);
@@ -62,8 +62,9 @@ const DishesPage = () => {
         {/* guest number */}
         <div className="flex items-center justify-center w-full">
           <div className="flex flex-col justify-center w-full max-w-[340px]">
-            <label htmlFor="dishesInput" className="sr-only"></label>
-            <h3 className="mb-2">How many people will be cooking?</h3>
+            <label htmlFor="dishesInput" className="mb-2">
+              How many people will be cooking?
+            </label>
             <select
               defaultValue="0"
               className="select select-primary"
@@ -92,7 +93,7 @@ const DishesPage = () => {
                   <p>{course.title}</p>
                   <div className="flex items-baseline">
                     <button
-                      className="btn btn-xs btn-primary"
+                      className="btn btn-xs btn-primary text-lg"
                       onClick={() => handleAdd(course.title)}
                       disabled={disableAdd}
                     >
@@ -102,7 +103,7 @@ const DishesPage = () => {
                       {numOfDishes[course.title]}/{guestNum}
                     </p>
                     <button
-                      className="btn btn-xs btn-primary"
+                      className="btn btn-xs btn-primary text-lg"
                       onClick={() => handleSubtract(course.title)}
                       disabled={numOfDishes[course.title] === 0}
                     >
