@@ -45,7 +45,7 @@ function App() {
           {pageNum != 6 ? (
             <>
               {pageNum === 0 ? (
-                <motion.div
+                <motion.main
                   key={0}
                   variants={variants}
                   initial="initial"
@@ -54,9 +54,9 @@ function App() {
                   className="flex items-center justify-center max-w-[449px] h-fit sm:outline-2 sm:outline-primary py-10 sm:shadow-xl sm:shadow-base-200"
                 >
                   {pages[0]}
-                </motion.div>
+                </motion.main>
               ) : (
-                <motion.div
+                <motion.main
                   key={pageNum}
                   variants={variants}
                   initial="initial"
@@ -72,7 +72,7 @@ function App() {
                     setPageNum={setPageNum}
                     pageCap={pages.length}
                   />
-                </motion.div>
+                </motion.main>
               )}
             </>
           ) : (
