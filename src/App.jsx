@@ -41,44 +41,46 @@ function App() {
       data-theme="dinnerTheme"
     >
       <AppProvider>
-        <AnimatePresence mode="wait">
-          {pageNum != 6 ? (
-            <>
-              {pageNum === 0 ? (
-                <motion.main
-                  key={0}
-                  variants={variants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  className="flex items-center justify-center max-w-[449px] h-fit sm:outline-2 sm:outline-primary py-10 sm:shadow-xl sm:shadow-base-200"
-                >
-                  {pages[0]}
-                </motion.main>
-              ) : (
-                <motion.main
-                  key={pageNum}
-                  variants={variants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition="transition"
-                  className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] sm:outline-2 sm:outline-primary py-3 sm:shadow-xl sm:shadow-base-200"
-                >
-                  <Steps active={pageNum} />
-                  {currentPage}
-                  <NavButtons
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    pageCap={pages.length}
-                  />
-                </motion.main>
-              )}
-            </>
-          ) : (
-            <MenuPage key={7} pageNum={pageNum} setPageNum={setPageNum} />
-          )}
-        </AnimatePresence>
+        <main className="w-full h-full flex justify-center items-center">
+          <AnimatePresence mode="wait">
+            {pageNum != 6 ? (
+              <>
+                {pageNum === 0 ? (
+                  <motion.div
+                    key={0}
+                    variants={variants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="flex items-center justify-center max-w-[449px] h-fit sm:outline-2 sm:outline-primary py-10 sm:shadow-xl sm:shadow-base-200"
+                  >
+                    {pages[0]}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={pageNum}
+                    variants={variants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition="transition"
+                    className="flex flex-col justify-between h-full max-h-[670px] min-h-[650px]  min-w-80 w-full max-w-[450px] sm:outline-2 sm:outline-primary py-3 sm:shadow-xl sm:shadow-base-200"
+                  >
+                    <Steps active={pageNum} />
+                    {currentPage}
+                    <NavButtons
+                      pageNum={pageNum}
+                      setPageNum={setPageNum}
+                      pageCap={pages.length}
+                    />
+                  </motion.div>
+                )}
+              </>
+            ) : (
+              <MenuPage key={7} pageNum={pageNum} setPageNum={setPageNum} />
+            )}
+          </AnimatePresence>
+        </main>
       </AppProvider>
     </div>
   );
